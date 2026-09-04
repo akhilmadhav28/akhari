@@ -21,7 +21,7 @@ export function Hero() {
     // centred once there is width to put it beside the type instead.
     <section
       id="top"
-      className="pointer-events-none relative flex min-h-svh items-start pt-32 pb-24 lg:items-center lg:pt-28"
+      className="pointer-events-none relative flex min-h-svh items-start pt-32 pb-24 lg:pt-40 lg:pb-32"
     >
       {/* Directional scrim: opaque under the type, clear over the graph. */}
       <div
