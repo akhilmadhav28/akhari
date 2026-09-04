@@ -24,7 +24,17 @@ export interface DeviceProfile {
   bloom: boolean
   /** Points along each connection curve. */
   curveSegments: number
-  /** Ambient dust particles behind the graph. */
+  /**
+   * Airborne dust motes (see components/3d/Atmosphere).
+   *
+   * These counts were guesses until the feature existed to consume them, and
+   * the original 220/90 turned out to be an order of magnitude short: the
+   * motes wrap in a box around the camera and only a tenth of that volume is
+   * ever inside the frustum, so 220 put roughly 25 specks on screen. Dust
+   * reads as atmosphere through density or not at all. The cost is negligible
+   * next to the shadow maps and the bloom chain — it is one draw call of
+   * point sprites with a dozen instructions of fragment shader.
+   */
   particles: number
   /** Environment reflections cost a cubemap render; skipped on low. */
   reflections: boolean
@@ -153,7 +163,7 @@ export function detectProfile(): DeviceProfile {
       shadows: true,
       bloom: true,
       curveSegments: 48,
-      particles: 220,
+      particles: 2400,
       reflections: true,
     },
     mid: {
@@ -161,7 +171,7 @@ export function detectProfile(): DeviceProfile {
       shadows: false,
       bloom: true,
       curveSegments: 28,
-      particles: 90,
+      particles: 1000,
       reflections: false,
     },
     low: {

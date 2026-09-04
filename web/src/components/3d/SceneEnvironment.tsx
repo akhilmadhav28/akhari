@@ -6,6 +6,7 @@ import type { DeviceProfile } from '@/lib/perf/device'
 import { scroll } from '@/lib/scroll/scrollStore'
 import { C } from '@/constants/brand'
 import { easeOutCubic } from '@/lib/animation/math'
+import { Atmosphere } from './Atmosphere'
 
 /**
  * Lighting, atmosphere and ground — a photographed rig on a dark table.
@@ -89,6 +90,9 @@ export function SceneEnvironment({ profile }: SceneEnvironmentProps) {
       )}
 
       <Ground shadows={shadows} />
+
+      {/* Suspended dust, which is also where the light shaft comes from. */}
+      <Atmosphere profile={profile} />
     </>
   )
 }
