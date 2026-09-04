@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Akhari — WebGL diagnostics</title>
+    <style>
+      :root { color-scheme: dark; }
+      body {
+        margin: 0; padding: 2rem 1.25rem 4rem;
+        background: #05070d; color: #edf3ff;
+        font: 15px/1.6 ui-monospace, "Cascadia Mono", Consolas, monospace;
+      }
+      h1 { font-size: 1.15rem; margin: 0 0 .35rem; letter-spacing: .02em; }
+      p.sub { color: #8093b0; margin: 0 0 2rem; font-size: .82rem; }
+      .row { display: flex; gap: 1rem; padding: .55rem 0; border-bottom: 1px solid #1b2740; }
+      .k { flex: 0 0 13rem; color: #8093b0; }
+      .v { flex: 1; word-break: break-word; }
+      .ok { color: #2bf0c4; } .bad { color: #ff6b6b; } .warn { color: #ffa83d; }
+      #stage { margin: 2rem 0; border: 1px solid #1b2740; border-radius: 10px; overflow: hidden; background: #03050a; }
+      canvas { display: block; width: 100%; height: 220px; }
+      #verdict {
+        margin-top: 2rem; padding: 1rem 1.15rem; border-radius: 10px;
+        border: 1px solid #1b2740; background: #0b1120; font-size: .95rem;
+      }
+      code { background: #111a2e; padding: .1rem .35rem; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>Akhari — WebGL diagnostics</h1>
+    <p class="sub">If the box below shows a spinning cyan triangle, WebGL works and the problem is elsewhere.</p>
+
+    <div id="stage"><canvas id="c"></canvas></div>
+    <div id="out"></div>
+    <div id="verdict">Running…</div>
+
+    <script>
+      const out = document.getElementById('out')
+      const add = (k, v, cls) => {
+        const row = document.createElement('div')
+        row.className = 'row'
+        row.innerHTML = `<div class="k">${k}</div><div class="v ${cls || ''}">${v}</div>`
+        out.appendChild(row)
+      }
+
+      const canvas = document.getElementById('c')
+      let gl = null
+      let version = 'none'
+
+      try {
+        gl = canvas.getContext('webgl2')
+        if (gl) version = 'WebGL 2'
+      } catch (e) { add('webgl2 threw', e.message, 'bad') }
+
+      if (!gl) {
+        try {
+          gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+          if (gl) version = 'WebGL 1'
+        } catch (e) { add('webgl1 threw', e.message, 'bad') }
+      }
+
+      add('Context', gl ? version : 'FAILED — no context', gl ? 'ok' : 'bad')
+
+      if (gl) {
+        const dbg = gl.getExtension('WEBGL_debug_renderer_info')
+        add('Renderer', dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : '(hidden by browser)')
+        add('Vendor', dbg ? gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL) : '(hidden by browser)')
+        add('Max texture size', gl.getParameter(gl.MAX_TEXTURE_SIZE))
+        add('Max varyings', gl.getParameter(gl.MAX_VARYING_VECTORS ?? gl.MAX_VARYING_COMPONENTS))
+      }
+
+      add('CPU cores', navigator.hardwareConcurrency ?? 'unknown')
+      add('Device memory', (navigator.deviceMemory ?? 'unknown') + ' GB')
+      add('Device pixel ratio', window.devicePixelRatio)
+      add('Viewport', innerWidth + ' x ' + innerHeight)
+      add('Reduced motion', matchMedia('(prefers-reduced-motion: reduce)').matches ? 'REDUCE' : 'no-preference')
+      add('User agent', navigator.userAgent)
+
+      // Does the site's own three.js chunk actually load?
+      const chunk = [...document.querySelectorAll('link')].length
+      fetch('/assets/', { method: 'HEAD' }).catch(() => {})
+
+      let verdict = ''
+      if (!gl) {
+        verdict =
+          '<b class="bad">WebGL is unavailable in this browser.</b><br>' +
+          'That is why the 3D modules are missing while the rest of the page renders. ' +
+          'Most common cause on Windows: hardware acceleration is switched off. ' +
+          'Check <code>edge://settings/system</code> or <code>chrome://settings/system</code> ' +
+          'and turn on "Use graphics acceleration when available", then restart the browser. ' +
+          'Also worth checking <code>edge://gpu</code> for a blocklisted driver.'
+      } else {
+        verdict =
+          '<b class="ok">WebGL works here.</b><br>' +
+          'If the triangle below is spinning but the site still shows no modules, the problem ' +
+          'is the three.js bundle failing to load rather than WebGL itself — open the console ' +
+          'on the site and look for a red error mentioning <code>three</code> or a failed chunk.'
+      }
+      document.getElementById('verdict').innerHTML = verdict
+
+      // Minimal spinning triangle — raw WebGL, no libraries, no imports.
+      if (gl) {
+        const vs = gl.createShader(gl.VERTEX_SHADER)
+        gl.shaderSource(vs, `attribute vec2 p; uniform float t;
+          void main(){ float c=cos(t),s=sin(t); gl_Position=vec4(mat2(c,-s,s,c)*p,0.,1.); }`)
+        gl.compileShader(vs)
+
+        const fs = gl.createShader(gl.FRAGMENT_SHADER)
+        gl.shaderSource(fs, `precision mediump float;
+          void main(){ gl_FragColor=vec4(0.24,0.91,1.0,1.0); }`)
+        gl.compileShader(fs)
+
+        const prog = gl.createProgram()
+        gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog)
+
+        if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+          add('Shader link', gl.getProgramInfoLog(prog) || 'FAILED', 'bad')
+        } else {
+          gl.useProgram(prog)
+          const buf = gl.createBuffer()
+          gl.bindBuffer(gl.ARRAY_BUFFER, buf)
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, .55, -.5, -.4, .5, -.4]), gl.STATIC_DRAW)
+          const loc = gl.getAttribLocation(prog, 'p')
+          gl.enableVertexAttribArray(loc)
+          gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
+          const tLoc = gl.getUniformLocation(prog, 't')
+
+          const draw = (ms) => {
+            canvas.width = canvas.clientWidth
+            canvas.height = canvas.clientHeight
+            gl.viewport(0, 0, canvas.width, canvas.height)
+            gl.clearColor(0.012, 0.02, 0.04, 1)
+            gl.clear(gl.COLOR_BUFFER_BIT)
+            gl.uniform1f(tLoc, ms / 1000)
+            gl.drawArrays(gl.TRIANGLES, 0, 3)
+            requestAnimationFrame(draw)
+          }
+          requestAnimationFrame(draw)
+        }
+      }
+    </script>
+  </body>
+</html>

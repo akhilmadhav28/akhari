@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# The diagnostics page is a debugging tool, not content.
+Disallow: /diag.html
+
+Sitemap: https://akhari.vercel.app/sitemap.xml

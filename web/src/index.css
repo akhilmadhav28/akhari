@@ -1,0 +1,502 @@
+@import 'tailwindcss';
+
+/* ============================================================================
+   AKHARI — design tokens
+
+   Warm dark. Espresso ground, bone type, copper accent.
+
+   Dark, but deliberately not the dark that every AI-generated site converges
+   on: electric cyan and violet neon on blue-black. The whole hue family here is
+   warm and desaturated, which reads as film, leather and analog instruments
+   rather than as a dashboard. Two supporting colours only — a faded sage and an
+   aged brass — both muted enough that copper stays the one thing that draws the
+   eye.
+
+   Practical rule for anything added later: if a colour looks like it belongs on
+   a synthwave album cover, it does not belong here.
+   ========================================================================= */
+@theme {
+  /* Ground */
+  --color-void: #0f0c0a;
+  --color-abyss: #080605;
+  --color-surface: #17130f;
+  --color-surface-2: #201a15;
+  --color-surface-3: #2a231d;
+
+  /* Ink */
+  --color-ink: #f2ede4;
+  --color-ink-dim: #cdc3b5;
+  /* Measured against the espresso ground: 6.3:1 and 5.0:1. Both re-derived
+     for this ground — contrast does not survive a palette inversion, and the
+     small monospace labels `faint` is used for need the full 4.5:1. */
+  --color-muted: #9c9184;
+  --color-faint: #8a7f70;
+
+  /* Rules */
+  --color-line: #2b241e;
+  --color-line-strong: #443a31;
+
+  /* The one colour. */
+  --color-accent: #e0803f;
+  --color-accent-deep: #b85f22;
+  --color-accent-wash: #241a12;
+
+  /* Supporting hues, used only inside the 3D scene so the modules aren't seven
+     identical slabs. Both are aged rather than saturated. */
+  --color-sage: #7e9c86;
+  --color-brass: #c9a227;
+  --color-rust: #a4472a;
+
+  /* Type
+     -------------------------------------------------------------------------
+     Three faces, each doing one job.
+
+     `display` is a high-contrast serif used at headline sizes only. It is the
+     single most consequential anti-template decision on the page: Inter is
+     what every generated site, starter template and one-click deploy ships
+     with, so a headline set in Inter reads as machine-made before a visitor
+     has processed a word of it. A serif with real stroke contrast, set against
+     industrial machinery and monospace labels, reads as a decision somebody
+     made.
+
+     It is deliberately not used below ~2rem. Instrument Serif is a display
+     face — its thin strokes go fragile and slightly awkward at body and
+     card-title sizes, which is why h3 and everything under it stay sans. */
+  --font-display: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-sans:
+    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --text-eyebrow: 0.6875rem;
+  --text-micro: 0.75rem;
+  --text-body: clamp(0.975rem, 0.92rem + 0.28vw, 1.125rem);
+  --text-lede: clamp(1.075rem, 0.99rem + 0.42vw, 1.3125rem);
+  --text-h3: clamp(1.25rem, 1.13rem + 0.55vw, 1.5rem);
+  --text-h2: clamp(2rem, 1.42rem + 2.6vw, 3.75rem);
+  /* The cap here is load-bearing and coupled to the camera.
+
+     The copy column sits inside a centred max-width wrap, so as the viewport
+     grows its left edge moves right faster than the camera moves the module
+     beside it — the headline closes on the 3D object as the screen gets
+     *wider*, the opposite of the intuition. This was 5.25rem while the hero
+     shared its framing with every other left-copy section; raising it now is
+     only safe because `DESKTOP_FRAMING.top` gained its own shot with a larger
+     `aimX`, pushing the trigger module further right.
+
+     If the hero framing changes, re-measure at 1920 before touching this. */
+  --text-h1: clamp(2.75rem, 1.5rem + 5.6vw, 7rem);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ============================================================================
+   Base
+   ========================================================================= */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    background: var(--color-void);
+    color-scheme: dark;
+  }
+
+  /* Lenis drives scrolling; native smooth-scroll would fight it. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  /* Display sizes: the serif, at its single weight. Tracking is much looser
+     than the sans headings were set at — a high-contrast serif already has
+     tight, closed spacing built into the drawing, and pulling it to -0.03em on
+     top of that collides the serifs at large sizes. */
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.012em;
+    line-height: 1.02;
+  }
+
+  /* Card titles and below stay sans. See the note on --font-display. */
+  h3,
+  h4 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.16;
+  }
+
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  canvas {
+    display: block;
+    touch-action: pan-y;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 30%, transparent);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* Only hide the native cursor once the custom one is actually mounted, so
+     touch and reduced-motion users are never left without a pointer. */
+  html[data-cursor='custom'],
+  html[data-cursor='custom'] * {
+    cursor: none;
+  }
+}
+
+/* ============================================================================
+   Components
+   ========================================================================= */
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 4.5rem);
+  }
+
+  .wrap-narrow {
+    width: 100%;
+    max-width: 58rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 4.5rem);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-faint);
+  }
+
+  .eyebrow b {
+    font-weight: 500;
+    color: var(--color-accent);
+  }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-line-strong) 18%,
+      var(--color-line-strong) 82%,
+      transparent
+    );
+  }
+
+  /* Cards are machined plates, not glass. A hairline, a dark lift, and one
+     specular line along the top edge where the key light catches — that last
+     detail is the whole difference between a physical object and a rectangle
+     with a border. No blur, no gradient border, no glass. */
+  .panel {
+    position: relative;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 0.75rem;
+    box-shadow:
+      inset 0 1px 0 rgba(242, 237, 228, 0.055),
+      0 1px 2px rgba(0, 0, 0, 0.35);
+    transition:
+      box-shadow 320ms var(--ease-out-quart),
+      border-color 320ms var(--ease-out-quart);
+  }
+
+  .panel-sheen:hover,
+  .panel-sheen:focus-within {
+    border-color: var(--color-line-strong);
+    box-shadow:
+      inset 0 1px 0 rgba(242, 237, 228, 0.09),
+      0 2px 6px rgba(0, 0, 0, 0.4),
+      0 16px 34px -16px rgba(0, 0, 0, 0.6),
+      /* The plate picks up a trace of copper as it lifts, as though it moved
+         nearer the light rather than simply changing colour. */
+      0 22px 60px -30px rgba(224, 128, 63, 0.42);
+  }
+
+  /* Squared off, monospace, tight.
+
+     The 8px-radius filled pill this replaced is the default silhouette of every
+     UI kit on the internet — it was the last element on the page still wearing
+     one. At a 2px radius with a spaced mono label it reads as a switch on an
+     instrument instead, which is the same language as the module bezels in the
+     scene behind it. */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0 1.5rem;
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition:
+      color 240ms var(--ease-out-quart),
+      background-color 240ms var(--ease-out-quart),
+      border-color 240ms var(--ease-out-quart),
+      box-shadow 240ms var(--ease-out-quart);
+  }
+
+  /* The primary button is the brightest thing in the document, so it is the one
+     element that earns a spill. Three shadows: a tight contact shadow that sits
+     it on the page, a wide soft copper throw, and an inset top highlight that
+     makes the face read as convex. Same logic as the bloom in the 3D scene —
+     light comes off bright things and nothing else. */
+  .btn-primary {
+    color: #1a1208;
+    background: var(--color-accent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 233, 209, 0.5),
+      0 1px 2px rgba(0, 0, 0, 0.5),
+      0 10px 30px -14px rgba(224, 128, 63, 0.65);
+  }
+
+  .btn-primary:hover {
+    background: #eb9052;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 240, 224, 0.62),
+      0 1px 2px rgba(0, 0, 0, 0.5),
+      0 14px 40px -14px rgba(224, 128, 63, 0.8),
+      0 0 60px -22px rgba(224, 128, 63, 0.9);
+  }
+
+  /* The secondary action loses its box entirely and becomes a ruled text link.
+     Two adjacent boxes of near-equal weight is what made the pair read as a
+     component library rather than a decision — a filled switch beside a bare
+     label says which one is the point. */
+  .btn-ghost {
+    color: var(--color-ink-dim);
+    padding: 0 0.15rem;
+    background: none;
+  }
+
+  .btn-ghost::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0.85rem;
+    height: 1px;
+    background: var(--color-line-strong);
+    transform-origin: left;
+    transition:
+      transform 380ms var(--ease-out-quart),
+      background-color 240ms var(--ease-out-quart);
+  }
+
+  .btn-ghost:hover {
+    color: var(--color-ink);
+  }
+
+  .btn-ghost:hover::after {
+    background: var(--color-accent);
+    /* Wipes out and back in from the left rather than simply changing colour,
+       so the rule reads as being drawn. */
+    animation: rule-wipe 520ms var(--ease-out-quart);
+  }
+
+  @keyframes rule-wipe {
+    0% {
+      transform: scaleX(1);
+      transform-origin: right;
+    }
+    45% {
+      transform: scaleX(0);
+      transform-origin: right;
+    }
+    46% {
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+    100% {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+
+  .mono-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.02em;
+    color: var(--color-muted);
+  }
+
+  /**
+   * Paper.
+   *
+   * The one surface on the page that is not espresso. It exists because the
+   * whole document otherwise holds a single value from top to bottom — one
+   * ground, one accent, no relief — and a long scroll with nothing to mark
+   * progress against reads as flat however well each individual screen is set.
+   *
+   * A full light *section* would do more, but it would need an opaque
+   * background and that means losing the continuous 3D scene for its whole
+   * height. This gets most of the effect for none of that: a printed worksheet
+   * lying on the dark desk, which is also exactly what the live demo is.
+   *
+   * It works by redefining the theme's own colour variables on this element.
+   * Tailwind utilities compile to `var(--color-ink)` and friends, so every
+   * `text-ink`, `border-line` and `bg-abyss` inside inverts automatically and
+   * no descendant needs a single extra class.
+   *
+   * `--color-accent` is deliberately NOT redefined: it is used here for fills
+   * and borders rather than text, and the button in this panel needs the bright
+   * copper to keep its own contrast. Every tone below was re-derived against
+   * this ground — 15.3:1, 9.9:1, 5.1:1 and 4.8:1. Contrast never survives an
+   * inversion; do not copy values from the dark palette.
+   */
+  .paper {
+    --color-void: #efe8dc;
+    --color-abyss: #e4dccd;
+    --color-surface: #f6f1e8;
+    --color-surface-2: #ebe3d5;
+    --color-surface-3: #e0d7c6;
+    --color-ink: #1b1611;
+    --color-ink-dim: #3f362c;
+    --color-muted: #6b6053;
+    --color-faint: #6f6456;
+    --color-line: #d6cbb8;
+    --color-line-strong: #b3a68f;
+
+    background: #efe8dc;
+    color: #1b1611;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.6),
+      0 2px 4px rgba(0, 0, 0, 0.5),
+      0 26px 60px -28px rgba(0, 0, 0, 0.85);
+  }
+
+  .paper.panel-sheen:hover,
+  .paper.panel-sheen:focus-within {
+    border-color: var(--color-line-strong);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 2px 4px rgba(0, 0, 0, 0.5),
+      0 30px 70px -30px rgba(0, 0, 0, 0.9);
+  }
+
+  /* The copper halo is a dark-ground device; on paper it reads as a smudge. */
+  .paper .glow-dot {
+    box-shadow: 0 0 0 2px rgba(224, 128, 63, 0.2);
+  }
+
+  /* A lit indicator, not a coloured circle. The halo is a box-shadow rather
+     than a blurred sibling element: shadows are painted by the same pass that
+     draws the element, where a `filter: blur()` would promote it to its own
+     compositing layer — and stacked compositing layers over the WebGL canvas
+     are what took this machine's GPU process down once already. */
+  .glow-dot {
+    box-shadow:
+      0 0 0 2px rgba(224, 128, 63, 0.16),
+      0 0 12px 1px rgba(224, 128, 63, 0.6);
+  }
+}
+
+/* ============================================================================
+   Utilities
+   ========================================================================= */
+@layer utilities {
+  /* Paper grain. On a flat light ground this is most of what separates
+     "printed" from "untextured white rectangle". */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  .edge-fade {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  }
+}
+
+/* ============================================================================
+   Reduced motion — the scroll story still works, it just stops moving on its
+   own. Scroll-linked transforms are disabled at the source in JS.
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html[data-cursor='custom'],
+  html[data-cursor='custom'] * {
+    cursor: auto;
+  }
+}
