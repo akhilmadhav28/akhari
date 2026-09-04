@@ -56,11 +56,21 @@ export function Hero() {
 
       <div className="wrap pointer-events-none">
         <div className="pointer-events-auto max-w-[46rem]">
-          <p className="eyebrow mb-7">
-            <span className="glow-dot inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-            {BRAND.tagline}
+          {/*
+            The tagline and the location are each held together with
+            `whitespace-nowrap`, and the row is allowed to wrap between them.
+
+            Left as bare text nodes they became anonymous flex items that broke
+            mid-phrase on a narrow viewport — "AI AUTOMATION / STUDIO" above
+            "HYDERABAD, / INDIA", with the separating slash stranded on its own
+            in the gap between the two. Wrapping by phrase instead puts the
+            break where a person would put it.
+          */}
+          <p className="eyebrow mb-7 flex-wrap">
+            <span className="glow-dot inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+            <span className="whitespace-nowrap">{BRAND.tagline}</span>
             <span className="text-line-strong">/</span>
-            {BRAND.location}
+            <span className="whitespace-nowrap">{BRAND.location}</span>
           </p>
 
           <SplitHeading

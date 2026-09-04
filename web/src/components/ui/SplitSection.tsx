@@ -32,8 +32,21 @@ const SCRIM_DESKTOP: Record<'left' | 'right', string> = {
     'linear-gradient(260deg, rgba(15,12,10,0.94) 0%, rgba(15,12,10,0.87) 30%, rgba(15,12,10,0.38) 56%, rgba(15,12,10,0) 76%)',
 }
 
+/**
+ * Held nearly flat, because SCRIM_FEATHER below already fades this element out
+ * at both ends.
+ *
+ * This used to ramp 0.30 → 0.88 over its first 14% and fall back to 0.26 across
+ * its last quarter, which double-feathered against the mask and left the bottom
+ * of every section with almost no scrim at all. On a portrait viewport that is
+ * exactly where the copy still is — the About stats row is the last thing in
+ * its section — so a module landing in that band rendered at nearly full
+ * brightness directly behind live text, and the two became equally unreadable.
+ *
+ * Flat here. The mask decides the edges; this decides the strength.
+ */
 const SCRIM_COMPACT =
-  'linear-gradient(180deg, rgba(15,12,10,0.30) 0%, rgba(15,12,10,0.88) 14%, rgba(15,12,10,0.88) 74%, rgba(15,12,10,0.26) 100%)'
+  'linear-gradient(180deg, rgba(15,12,10,0.84) 0%, rgba(15,12,10,0.90) 38%, rgba(15,12,10,0.90) 78%, rgba(15,12,10,0.84) 100%)'
 
 /**
  * Feathers the scrim's top and bottom edges.
