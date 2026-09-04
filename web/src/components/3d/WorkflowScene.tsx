@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { PerformanceMonitor } from '@react-three/drei'
 import { C } from '@/constants/brand'
 import { probeWebGL, useDeviceProfile } from '@/lib/perf/device'
 import { scroll } from '@/lib/scroll/scrollStore'
-import { damp } from '@/lib/animation/math'
+import { clamp, damp } from '@/lib/animation/math'
 import { disposeNodeFaceTextures } from '@/lib/three/nodeFaceTexture'
 
 import { resetFlowState } from '@/lib/scene/flowState'
@@ -112,7 +112,12 @@ export function WorkflowScene() {
  * guaranteed to be looking at the same progress value on a given frame.
  */
 function SceneClock() {
-  useFrame((_, delta) => {
+  const bootStart = useRef<number | null>(null)
+
+  useFrame((state, delta) => {
+    if (bootStart.current === null) bootStart.current = state.clock.elapsedTime
+    scroll.boot = clamp((state.clock.elapsedTime - bootStart.current) / 1.4)
+
     scroll.smoothed = damp(scroll.smoothed, scroll.progress, 7, Math.min(delta, 0.05))
   }, -10)
   return null

@@ -8,7 +8,7 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import type { DeviceProfile } from '@/lib/perf/device'
 import { scroll } from '@/lib/scroll/scrollStore'
-import { damp } from '@/lib/animation/math'
+import { bell, damp } from '@/lib/animation/math'
 
 /**
  * The camera the scene is photographed through.
@@ -185,7 +185,14 @@ export function ScenePost({ profile }: ScenePostProps) {
       // settles — the lights coming up on the rig, not a permanent brightness
       // change. A step would just look like a different scene.
       const surge = Math.sin(Math.min(1, Math.max(0, scroll.reveal)) * Math.PI)
-      const target = BASE_STRENGTH + surge * 0.5 + scroll.reveal * 0.16
+
+      // The same idiom played once on arrival instead of at the close: the
+      // rig visibly powers on rather than opening already mid-scene. `bell`
+      // rises and falls across `scroll.boot`'s 0→1 ramp, so the flare peaks
+      // partway through the 1.4s boot window and is gone by the time it ends.
+      const bootFlare = bell(scroll.boot)
+
+      const target = BASE_STRENGTH + surge * 0.5 + scroll.reveal * 0.16 + bootFlare * 0.55
       strength.current = damp(strength.current, target, 3.5, dt)
       bloom.strength = strength.current
     }

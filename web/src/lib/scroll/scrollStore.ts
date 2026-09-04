@@ -23,6 +23,13 @@ export interface ScrollState {
   reveal: number
   /** True once every module is connected. */
   complete: boolean
+  /**
+   * Real-time (not scroll-driven) ramp from 0-1 over the first ~1.4s after the
+   * scene mounts. The rig opens dark and comes up to its resting light level —
+   * the same "system waking up" idea as `reveal`, played once on arrival
+   * instead of at the close.
+   */
+  boot: number
 }
 
 export const scroll: ScrollState = {
@@ -31,6 +38,7 @@ export const scroll: ScrollState = {
   velocity: 0,
   reveal: 0,
   complete: false,
+  boot: 0,
 }
 
 type ConnectListener = (connected: number, nodeId: string | null, total: number) => void

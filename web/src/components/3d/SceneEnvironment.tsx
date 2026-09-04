@@ -5,6 +5,7 @@ import { Environment, Lightformer } from '@react-three/drei'
 import type { DeviceProfile } from '@/lib/perf/device'
 import { scroll } from '@/lib/scroll/scrollStore'
 import { C } from '@/constants/brand'
+import { easeOutCubic } from '@/lib/animation/math'
 
 /**
  * Lighting, atmosphere and ground — a photographed rig on a dark table.
@@ -133,13 +134,18 @@ function Relight({ shadows }: { shadows: boolean }) {
     // visibly "changes" — the room just gets colder and then warms back up.
     const dip = 0.5 - 0.5 * Math.cos(Math.min(1, p / 0.78) * Math.PI * 2)
 
+    // Boot: the rig opens dim and comes up to its resting level over the
+    // first ~1.4s. A floor rather than zero — arriving from total black reads
+    // as a loading flicker, not a lighting choice.
+    const boot = 0.22 + 0.78 * easeOutCubic(scroll.boot)
+
     if (key.current) {
-      key.current.intensity = 2.4 - dip * 0.95 + reveal * 1.5
+      key.current.intensity = (2.4 - dip * 0.95 + reveal * 1.5) * boot
       scratch.out.copy(scratch.warm).lerp(scratch.cool, dip * 0.55 * (1 - reveal))
       key.current.color.copy(scratch.out)
     }
-    if (fill.current) fill.current.intensity = 0.45 + dip * 0.5 - reveal * 0.2
-    if (ambient.current) ambient.current.intensity = 0.42 - dip * 0.16 + reveal * 0.22
+    if (fill.current) fill.current.intensity = (0.45 + dip * 0.5 - reveal * 0.2) * boot
+    if (ambient.current) ambient.current.intensity = (0.42 - dip * 0.16 + reveal * 0.22) * boot
   })
 
   return (
