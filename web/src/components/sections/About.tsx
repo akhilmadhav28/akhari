@@ -20,11 +20,6 @@ export function About() {
 
       <Reveal stagger className="mt-8 max-w-[34rem] space-y-5 text-ink-dim">
         <p>
-          Akhari is Hari and me — no account manager, no offshore team, and nobody learning on
-          your project. That is a deliberate limit on how much work we take, not a stage we are
-          trying to grow out of.
-        </p>
-        <p>
           We build around how a business here actually runs. Your accounts are in Tally, your
           orders arrive on WhatsApp, half your customers pay cash on delivery. We work with that
           rather than asking you to abandon it.
