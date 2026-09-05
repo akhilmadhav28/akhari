@@ -86,16 +86,6 @@ export const PROJECTS: Project[] = [
     quote: 'No more jumping between spreadsheets to see where things actually stand.',
   },
   {
-    id: 'voice',
-    client: 'Education company',
-    person: 'Hyderabad',
-    title: 'The call nobody has to pick up',
-    body: 'Enquiries were arriving during class hours and going to voicemail. A voice agent now answers every one of them, in a voice that sounds like a person.',
-    architecture: ['inbound call', 'transcribe', 'intent + context', 'calendar write', 'CRM log'],
-    tech: ['Voice API', 'OpenAI', 'Calendar API'],
-    result: 'Answers in three seconds. Books appointments at 11pm on a Sunday.',
-  },
-  {
     id: 'bp-batteries',
     client: 'BP Batteries',
     person: 'Gaurav Shukla — Owner',

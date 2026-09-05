@@ -1,4 +1,5 @@
 import { BRAND } from '@/constants/brand'
+import { PROJECTS } from '@/constants/content'
 import { Reveal } from '@/components/ui/Reveal'
 import { SplitHeading } from '@/components/ui/SplitHeading'
 import { SectionEyebrow, SplitSection } from '@/components/ui/SplitSection'
@@ -67,23 +68,32 @@ export function About() {
             ))}
           </figure>
 
-          <figcaption className="mono-tag mt-2.5 text-faint">Akhil Madhav</figcaption>
+          <figcaption className="mono-tag mt-2.5 text-faint">Akhil Madhav &amp; Hari Prasad</figcaption>
         </Reveal>
 
         <Reveal stagger className="space-y-5 text-ink-dim">
           <p>
-            Akhari is me — no account manager, no offshore team, and nobody learning on your
-            project. That is a deliberate limit on how much work I take, not a stage I am trying
-            to grow out of.
+            Akhari is Hari and me — no account manager, no offshore team, and nobody learning on
+            your project. That is a deliberate limit on how much work we take, not a stage we are
+            trying to grow out of.
           </p>
           <p>
-            I build around how a business here actually runs. Your accounts are in Tally, your
-            orders arrive on WhatsApp, half your customers pay cash on delivery. I work with that
+            We build around how a business here actually runs. Your accounts are in Tally, your
+            orders arrive on WhatsApp, half your customers pay cash on delivery. We work with that
             rather than asking you to abandon it.
           </p>
           <p>
-            The systems I have built are still running months later, because the last step is the
-            one most agencies skip: I keep them alive when APIs change and the business changes.
+            The systems we have built are still running months later, because the last step is the
+            one most agencies skip: we keep them alive when APIs change and the business changes.
+          </p>
+          <p>
+            <a
+              href="/founders"
+              className="inline-flex items-center gap-1.5 font-mono text-[0.72rem] tracking-[0.1em] text-accent uppercase transition-colors hover:text-ink"
+              data-cursor-target
+            >
+              Meet the founders →
+            </a>
           </p>
         </Reveal>
       </div>
@@ -92,7 +102,7 @@ export function About() {
         {[
           ['Based', BRAND.location],
           ['Working since', '2023'],
-          ['Systems live', '4'],
+          ['Systems live', String(PROJECTS.length)],
         ].map(([label, value]) => (
           <div key={label}>
             <p className="mono-tag text-faint">{label}</p>

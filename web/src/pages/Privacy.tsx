@@ -75,8 +75,8 @@ export function Privacy() {
         <h1 className="mt-5 text-[2.25rem] sm:text-[2.75rem]">Privacy Policy</h1>
 
         <p className="mt-6 max-w-[38rem] text-[1.05rem] leading-relaxed text-ink-dim">
-          {BRAND.name} ("{BRAND.name}", "we", "us") is a one-person AI automation studio run by
-          Akhil Madhav out of {BRAND.location}. This policy explains what we collect through{' '}
+          {BRAND.name} ("{BRAND.name}", "we", "us") is an AI automation studio run by Akhil Madhav
+          and Hari Prasad out of {BRAND.location}. This policy explains what we collect through{' '}
           <span className="text-ink">akhari.vercel.app</span> (the "Site"), and how we handle data
           when we design, build and operate automation systems for clients — including systems
           that integrate the LinkedIn API or run on the n8n workflow-automation platform.
@@ -290,7 +290,7 @@ export function Privacy() {
 
           <Section n="15" title="Contact">
             <p>
-              Akhil Madhav, {BRAND.name} — {BRAND.location}.
+              Akhil Madhav &amp; Hari Prasad, {BRAND.name} — {BRAND.location}.
               <br />
               <a href={`mailto:${BRAND.email}`} className="text-accent underline underline-offset-2">
                 {BRAND.email}

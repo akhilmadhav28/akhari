@@ -8,19 +8,22 @@ live source. This folder is the site.
 
 ## What it is
 
-A one-page site for Akhari, a solo AI-automation studio. Its argument is made by
-the page itself: a seven-module automation graph assembles in 3D as you scroll,
-one module per section, and completes as the closing section arrives.
+A one-page site for Akhari, an AI-automation studio run by two founders — Akhil
+Madhav and Hari Prasad. Its argument is made by the page itself: a seven-module
+automation graph assembles in 3D as you scroll, one module per section, and
+completes as the closing section arrives.
 
 React 19 · TypeScript · Vite · Tailwind 4 · three.js + @react-three/fiber ·
 GSAP ScrollTrigger · Lenis.
 
-One route lives outside that experience: `/privacy` (`pages/Privacy.tsx`), a
-plain static page with no 3D scene, no Lenis. There is no router — `main.tsx`
-branches on `window.location.pathname` before anything renders, and the page
-is reached by a real navigation, not client-side routing. `vercel.json`
-rewrites every path to `index.html` so a direct hit to `/privacy` doesn't 404
-once this is deployed.
+Two routes live outside that experience: `/privacy` (`pages/Privacy.tsx`) and
+`/founders` (`pages/Founders.tsx`), both plain static pages with no 3D scene,
+no Lenis. There is no router — `main.tsx` looks the pathname up in a small map
+before anything renders, and each page is reached by a real navigation, not
+client-side routing. `vercel.json` rewrites every path to `index.html` so a
+direct hit to either doesn't 404 once this is deployed. Founder bios and the
+shared philosophy live in `constants/founders.ts`, on the same "copy lives
+outside component code" pattern as `constants/content.ts`.
 
 ```powershell
 npm run dev        # vite, http://localhost:5173

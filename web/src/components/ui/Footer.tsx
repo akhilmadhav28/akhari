@@ -1,4 +1,5 @@
 import { BRAND, NAV_LINKS } from '@/constants/brand'
+import { PROJECTS } from '@/constants/content'
 import { scrollToHash } from '@/lib/scroll/useSmoothScroll'
 
 export function Footer() {
@@ -16,7 +17,7 @@ export function Footer() {
               className="h-16 w-auto opacity-90"
             />
             <p className="mt-5 max-w-[24rem] text-[0.9rem] text-muted">
-              {BRAND.tagline} in {BRAND.location}. Built and maintained by Akhil Madhav.
+              {BRAND.tagline} in {BRAND.location}. Built and run by Akhil Madhav and Hari Prasad.
             </p>
           </div>
 
@@ -37,6 +38,17 @@ export function Footer() {
                   </a>
                 </li>
               ))}
+              {/* A real navigation, not a hash link — scrollToHash only knows
+                  how to find an id on this same page. */}
+              <li>
+                <a
+                  href="/founders"
+                  className="text-[0.9rem] text-muted transition-colors hover:text-ink"
+                  data-cursor-target
+                >
+                  Founders
+                </a>
+              </li>
             </ul>
           </nav>
 
@@ -72,7 +84,8 @@ export function Footer() {
             </a>
           </div>
           <p className="mono-tag flex items-center gap-2 text-faint">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />4 systems live
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+            {PROJECTS.length} systems live
           </p>
         </div>
       </div>
