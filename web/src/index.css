@@ -28,9 +28,16 @@
   --color-ink-dim: #cdc3b5;
   /* Measured against the espresso ground: 6.3:1 and 5.0:1. Both re-derived
      for this ground — contrast does not survive a palette inversion, and the
-     small monospace labels `faint` is used for need the full 4.5:1. */
+     small monospace labels `faint` is used for need the full 4.5:1.
+
+     `faint` was #8a7f70, which is 4.91:1 against a flat --color-void and so
+     looked correct on paper. The rendered ground is not that token: the warm
+     ambient wash, the hero light pool, the scene coming through scrims that
+     stop at 0.86, and the dust all lift it to roughly 0.016 luminance, where
+     #8a7f70 measured 4.07:1 and failed. Re-derived against the photographed
+     frame rather than the swatch. Still a clear step below `muted`. */
   --color-muted: #9c9184;
-  --color-faint: #8a7f70;
+  --color-faint: #968a7a;
 
   /* Rules */
   --color-line: #2b241e;

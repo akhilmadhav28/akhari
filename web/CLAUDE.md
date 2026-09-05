@@ -111,3 +111,21 @@ rendering and reports nothing else.
 - Windows PowerShell word-splits here-strings passed to `git commit -m`; a bare
   `/` in the message aborts the commit as a pathspec while a chained `git push`
   still prints "Everything up-to-date". Use `git commit -F <file>`.
+
+## Checking contrast
+
+`scripts/contrast.cjs` hides every text element, photographs the frame beneath
+it and measures the real WCAG ratio per element. Use it rather than judging a
+scrim by eye: the ground moves and changes brightness as modules light, the
+boot flare fires and the reveal surges, so the same scrim passes at one scroll
+position and fails at another and neither state looks wrong.
+
+It found two things that were invisible by eye — `--color-faint` was derived
+against the flat `--color-void` swatch (4.91:1) rather than the rendered ground
+(4.07:1, failing), and a percentage-based scrim release put the CTA email at
+1.49:1 over the lit figure on a phone.
+
+Two traps if you extend it: Tailwind 4 emits `oklch()`, so parsing
+`getComputedStyle().color` as `rgb()` reports nonsense — resolve colours by
+painting them to a canvas. And check `el.checkVisibility()`, or the collapsed
+mobile menu gets measured against a frame it is not in.
