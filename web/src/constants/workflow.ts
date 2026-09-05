@@ -312,8 +312,16 @@ export const MOBILE_REVEAL_FRAMING: Framing = {
   distance: 16.5,
   height: 0,
   aimX: 0,
-  aimY: -0.9,
-  fov: 52,
+  // Pushed well above the desktop equivalent's proportional push. The footer
+  // is a much larger fraction of a phone's viewport than a desktop one, so by
+  // the time a visitor has scrolled to the true bottom of the page — not just
+  // past the point where the graph reports complete — the footer has risen
+  // over most of the frame. Measured against an iPhone-width viewport: the
+  // footer alone accounts for roughly two-thirds of the viewport height once
+  // the page is fully scrolled, so the payoff has to live in the top third or
+  // it is the one thing on the page a phone visitor never actually sees.
+  aimY: -3.6,
+  fov: 56,
   orbit: 0.04,
   roll: 0,
 }
