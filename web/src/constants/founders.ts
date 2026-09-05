@@ -19,7 +19,7 @@ export const FOUNDERS: Founder[] = [
     id: 'akhil',
     name: 'Akhil Madhav',
     role: 'Co-founder — Build & Delivery',
-    bio: 'Akhil scopes and builds every system Akhari ships — no handoff, no account manager translating between the client and the person doing the work. If something can’t be made faster or cheaper inside a real conversation, he says so instead of proposing a project anyway.',
+    bio: 'Akhil started as an entrepreneur too — a personalized gifting business that had to close when the lockdown hit. He spent the next stretch preparing for the UPSC civil services exam, and after three attempts that didn’t land, joined an EdTech company in sales. It was there, given the chance to build the automations behind his own job, that the pull back toward building things himself became impossible to ignore. Akhari is that: he scopes and builds every system it ships, with no handoff and no account manager standing between him and the work.',
   },
   {
     id: 'hari',
