@@ -15,6 +15,13 @@ one module per section, and completes as the closing section arrives.
 React 19 · TypeScript · Vite · Tailwind 4 · three.js + @react-three/fiber ·
 GSAP ScrollTrigger · Lenis.
 
+One route lives outside that experience: `/privacy` (`pages/Privacy.tsx`), a
+plain static page with no 3D scene, no Lenis. There is no router — `main.tsx`
+branches on `window.location.pathname` before anything renders, and the page
+is reached by a real navigation, not client-side routing. `vercel.json`
+rewrites every path to `index.html` so a direct hit to `/privacy` doesn't 404
+once this is deployed.
+
 ```powershell
 npm run dev        # vite, http://localhost:5173
 npm run build      # tsc -b && vite build

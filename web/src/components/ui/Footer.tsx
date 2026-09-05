@@ -58,10 +58,19 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-7">
-          <p className="mono-tag text-faint">
-            &copy; {new Date().getFullYear()} {BRAND.wordmark}
-          </p>
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-line pt-7">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <p className="mono-tag text-faint">
+              &copy; {new Date().getFullYear()} {BRAND.wordmark}
+            </p>
+            <a
+              href="/privacy"
+              className="mono-tag text-faint transition-colors hover:text-ink"
+              data-cursor-target
+            >
+              Privacy Policy
+            </a>
+          </div>
           <p className="mono-tag flex items-center gap-2 text-faint">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />4 systems live
           </p>
