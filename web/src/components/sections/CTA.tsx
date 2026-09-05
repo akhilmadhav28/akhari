@@ -4,6 +4,16 @@ import { SplitHeading } from '@/components/ui/SplitHeading'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 
 /**
+ * Releases both scrims below the copy.
+ *
+ * The section now runs on past its last line to give the reveal somewhere to
+ * land (see the spacer at the foot of this file). Without this mask the scrim
+ * would hold at full strength across that whole extra height and dim the one
+ * shot the page has been building towards.
+ */
+const SCRIM_RELEASE = 'linear-gradient(to bottom, #000 0%, #000 44%, transparent 76%)'
+
+/**
  * Closing call to action.
  *
  * The last module connects here, which completes the graph and wakes the
@@ -44,6 +54,8 @@ export function CTA() {
         style={{
           background:
             'linear-gradient(180deg, rgba(15,12,10,0.26) 0%, rgba(15,12,10,0.86) 16%, rgba(15,12,10,0.86) 74%, rgba(15,12,10,0.28) 100%)',
+          maskImage: SCRIM_RELEASE,
+          WebkitMaskImage: SCRIM_RELEASE,
         }}
       />
 
@@ -56,6 +68,8 @@ export function CTA() {
             // payoff shot — the complete network — and holding the scrim across
             // the middle of the viewport washed out half of it.
             'linear-gradient(100deg, rgba(15,12,10,0.96) 0%, rgba(15,12,10,0.90) 24%, rgba(15,12,10,0.34) 46%, rgba(15,12,10,0) 64%)',
+          maskImage: SCRIM_RELEASE,
+          WebkitMaskImage: SCRIM_RELEASE,
         }}
       />
 
@@ -98,6 +112,25 @@ export function CTA() {
           </Reveal>
         </div>
       </div>
+
+      {/*
+        Scroll room for the payoff.
+
+        Measured before this existed: the last module landed 557px before the
+        page's scroll ended, so the whole reveal — the graph completing, the
+        system waking, the camera pulling back to the full network — played out
+        in 615px, about 0.6 of a screen. Projects got 1714px and Services
+        1629px. The two acts that argue for the thing had three times the room
+        of the thing itself, which is the peak-end rule backwards: the moment a
+        visitor actually remembers was the most rushed on the page.
+
+        This is authored silence, not dead scroll. Nothing new arrives in it;
+        the completed network is on screen, lit, holding, and it is the only
+        stretch of the page where the visitor is not being told something. The
+        anchors are measured from the DOM on every refresh, so extending the
+        section re-times the reveal automatically — nothing here is hardcoded.
+      */}
+      <div aria-hidden="true" className="h-[36vh] lg:h-[62vh]" />
     </section>
   )
 }
