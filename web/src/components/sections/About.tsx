@@ -42,7 +42,6 @@ export function About() {
       <Reveal className="mt-9 flex flex-wrap gap-x-10 gap-y-5 border-t border-line pt-7">
         {[
           ['Based', BRAND.location],
-          ['Working since', '2023'],
           ['Systems live', String(PROJECTS.length)],
         ].map(([label, value]) => (
           <div key={label}>

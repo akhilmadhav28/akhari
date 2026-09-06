@@ -62,12 +62,18 @@ export function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close the mobile sheet on Escape, and lock the page behind it.
+  // Close the mobile sheet on Escape, and lock the page behind it so a scroll
+  // gesture on the full-screen menu doesn't drag the document underneath. On
+  // phones Lenis leaves touch scrolling native, so `overflow: hidden` is enough.
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
     document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
   }, [open])
 
   const go = (href: string) => {
@@ -163,14 +169,21 @@ export function Nav() {
         </div>
       </nav>
 
+      {/*
+        A full sheet below the bar, not a dropdown that stops after the last
+        link. The collapsing panel it replaced was only as tall as its own
+        contents, so the hero's own copy and buttons sat visible underneath it
+        and the open menu never read as a deliberate surface of its own.
+      */}
       <div
         ref={panel}
         id="mobile-nav"
-        className={`overflow-hidden border-t border-line bg-void/96 backdrop-blur-xl transition-[max-height,opacity] duration-500 md:hidden ${
-          open ? 'max-h-96 opacity-100' : 'pointer-events-none max-h-0 opacity-0'
+        data-lenis-prevent
+        className={`fixed inset-x-0 top-[4.5rem] bottom-0 overflow-y-auto border-t border-line bg-void/98 backdrop-blur-2xl transition-opacity duration-300 md:hidden ${
+          open ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
-        <ul className="wrap flex flex-col gap-1 py-5">
+        <ul className="wrap flex flex-col gap-1 py-8">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <a
@@ -179,13 +192,13 @@ export function Nav() {
                   e.preventDefault()
                   go(link.href)
                 }}
-                className="flex min-h-12 items-center text-lg text-ink-dim"
+                className="flex min-h-14 items-center border-b border-line text-xl text-ink-dim"
               >
                 {link.label}
               </a>
             </li>
           ))}
-          <li className="pt-3">
+          <li className="pt-6">
             <MagneticButton href="#contact" variant="primary" className="w-full">
               Let&rsquo;s automate
             </MagneticButton>

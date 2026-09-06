@@ -100,8 +100,8 @@ const ROUTES: Record<Intent, string> = {
   ORDER: 'Sales queue',
   QUOTE: 'Sales queue',
   SUPPORT: 'Support queue',
-  COMPLAINT: 'Akhil, directly',
-  MEETING: 'Calendar + Akhil',
+  COMPLAINT: 'a founder, directly',
+  MEETING: 'Calendar + a founder',
   GENERAL: 'Triage',
 }
 

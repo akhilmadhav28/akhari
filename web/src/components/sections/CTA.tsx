@@ -98,7 +98,7 @@ export function CTA() {
 
             <Reveal>
               <p className="mt-8 max-w-[34rem] text-[length:var(--text-lede)] text-ink-dim">
-                One conversation, no deck, no obligation. If I cannot save you meaningful hours I
+                One conversation, no deck, no obligation. If we cannot save you meaningful hours we
                 will say so on the call instead of selling you a project.
               </p>
             </Reveal>

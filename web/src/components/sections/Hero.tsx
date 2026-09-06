@@ -94,13 +94,13 @@ export function Hero() {
             This says the same thing as a claim someone could disagree with.
           */}
           <p className="mt-8 max-w-[34rem] text-[length:var(--text-lede)] text-ink-dim">
-            I build the parts of a business that should run without anyone driving them, and I
+            We build the parts of a business that should run without anyone driving them, and we
             keep them running after they ship.
           </p>
 
           <div className="mt-11 flex flex-wrap items-center gap-4">
             <MagneticButton href="#projects" variant="primary">
-              View my work
+              View our work
             </MagneticButton>
             <MagneticButton href="#contact" variant="ghost">
               Let&rsquo;s automate

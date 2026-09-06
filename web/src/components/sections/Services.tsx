@@ -5,7 +5,7 @@ import { SectionEyebrow, SplitSection } from '@/components/ui/SplitSection'
 import { PipelineDemo } from './PipelineDemo'
 
 /**
- * What I build.
+ * What we build.
  *
  * A single compact column rather than a card grid — the section now occupies
  * half the viewport, and five equal boxes squeezed into that space would read as
@@ -16,7 +16,7 @@ export function Services() {
   return (
     <SplitSection id="services" side="right">
       <Reveal>
-        <SectionEyebrow index="02" label="What I build" />
+        <SectionEyebrow index="02" label="What we build" />
       </Reveal>
 
       <SplitHeading
@@ -26,7 +26,7 @@ export function Services() {
 
       <Reveal>
         <p className="mt-6 max-w-[34rem] text-[length:var(--text-lede)] text-ink-dim">
-          Plain names for what other studios call agentic orchestration. Same work — I would just
+          Plain names for what other studios call agentic orchestration. Same work — we would just
           rather tell you what it does.
         </p>
       </Reveal>
