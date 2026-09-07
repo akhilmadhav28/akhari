@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 
 /**
  * The cold open.
@@ -6,27 +6,29 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
  * A ~1-second beat before the site, in Akhari's own visual language: two
  * connectors — copper and brass, the two founders — snap in from the edges and
  * plug together at centre. The join throws a pulse and a warm bloom that the
- * page cross-dissolves out of. Quick — a hard cut with a flash, not a film.
+ * page cross-dissolves out of. Quick — a flash, not a film.
  *
  * No video, no photography, no neon — drawn from the same port-nub and cable
  * motif as the 3D scene, in the same warm palette (`index.css`).
  *
  * Runs once per browser session, never under `prefers-reduced-motion` and never
- * when the URL points at a section. A click or Escape skips; a hard timer
- * unmounts it regardless.
+ * when the URL points at a section. A click or Escape skips.
  *
- * `App` holds the 3D scene unmounted until this fires `akhari:intro-done` —
- * three.js init blocks the main thread for ~1s, which would otherwise both
- * freeze this animation on its last frame and delay the timer that ends it.
- * `data-intro="playing"` on `<html>` is a second guard: `WorkflowScene`'s
- * SceneClock holds the boot ramp shut while it is set.
+ * The whole thing — including the fade-out at the end — is CSS on `transform`
+ * and `opacity`. The React node then unmounts on a generous JS timer; by the
+ * time that fires the overlay is already invisible.
+ *
+ * `App` holds the 3D scene unmounted until this fires `INTRO_DONE_EVENT` at
+ * `VISUAL_MS`. three.js init is a heavy main-thread block; mounting it any
+ * earlier — even behind the opaque overlay — stalls the compositor hand-off of
+ * the intro's own animation and drags a one-second beat out past two. The scene
+ * chunk still downloads during the intro; only the mount waits.
  */
 
 const SEEN_KEY = 'akhari:intro-seen'
 export const INTRO_DONE_EVENT = 'akhari:intro-done'
-/** Must match the end of the CSS timeline below. Together ~1s. */
-const DURATION_MS = 820
-const FADE_MS = 220
+/** When the overlay has faded itself out (matches the `.intro-gate` keyframe). */
+const VISUAL_MS = 950
 
 /** Whether a fresh load will show the intro — `App` reads this to decide
  *  whether to hold the 3D scene back. */
@@ -47,62 +49,70 @@ function shouldPlay(): boolean {
   return true
 }
 
-export function IntroGate() {
-  const [state, setState] = useState<'playing' | 'leaving' | 'gone'>(() =>
-    shouldPlay() ? 'playing' : 'gone',
-  )
-  const ending = useRef(false)
+let released = false
+/** Tell `App` the scene may mount now — once per load. */
+function releaseScene() {
+  if (released) return
+  released = true
+  document.documentElement.removeAttribute('data-intro')
+  window.dispatchEvent(new Event(INTRO_DONE_EVENT))
+}
 
-  const finish = useCallback(() => {
-    if (ending.current) return
-    ending.current = true
+export function IntroGate() {
+  const [gone, setGone] = useState(() => !shouldPlay())
+  const dismiss = useCallback(() => {
+    releaseScene()
+    setGone(true)
+  }, [])
+
+  useLayoutEffect(() => {
+    if (gone) return
     try {
       sessionStorage.setItem(SEEN_KEY, '1')
     } catch {
       /* ignore */
     }
-    document.documentElement.removeAttribute('data-intro')
-    window.dispatchEvent(new Event(INTRO_DONE_EVENT))
-    setState('leaving')
-    window.setTimeout(() => setState('gone'), FADE_MS)
-  }, [])
-
-  // Claim the scene's boot ramp before the lazy 3D chunk has even loaded.
-  useLayoutEffect(() => {
-    if (state !== 'playing') return
     document.documentElement.setAttribute('data-intro', 'playing')
-    const prev = document.body.style.overflow
+    const prevOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+
+    // Once the overlay has visually cleared: free the page and let the scene
+    // mount — independent of the (possibly late) React unmount below.
+    const release = window.setTimeout(() => {
+      document.body.style.overflow = prevOverflow
+      releaseScene()
+    }, VISUAL_MS)
+
     return () => {
-      document.body.style.overflow = prev
-      document.documentElement.removeAttribute('data-intro')
+      window.clearTimeout(release)
+      document.body.style.overflow = prevOverflow
+      releaseScene()
     }
-  }, [state])
+  }, [gone])
 
   useEffect(() => {
-    if (state !== 'playing') return
-    const t = window.setTimeout(finish, DURATION_MS)
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && finish()
+    if (gone) return
+    const cleanup = window.setTimeout(() => setGone(true), VISUAL_MS + 600)
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dismiss()
+    }
     window.addEventListener('keydown', onKey)
     return () => {
-      window.clearTimeout(t)
+      window.clearTimeout(cleanup)
       window.removeEventListener('keydown', onKey)
     }
-  }, [state, finish])
+  }, [gone, dismiss])
 
-  if (state === 'gone') return null
+  if (gone) return null
 
   const centre = { transformBox: 'view-box', transformOrigin: '602px 375px' } as const
 
   return (
     <div
       role="presentation"
-      onClick={finish}
+      onClick={dismiss}
       data-lenis-prevent
-      className={`fixed inset-0 z-[300] overflow-hidden bg-void transition-opacity ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        state === 'leaving' ? 'pointer-events-none opacity-0' : 'opacity-100'
-      }`}
-      style={{ transitionDuration: `${FADE_MS}ms` }}
+      className="intro-gate fixed inset-0 z-[300] overflow-hidden bg-void"
     >
       <svg
         className="h-full w-full"
@@ -160,27 +170,32 @@ export function IntroGate() {
           <circle className="intro-spark" cx="602" cy="375" r="11" fill="url(#intro-glow)" style={centre} />
 
           {/* The light we come out into — grows to fill the frame and holds
-              bright while the page cross-dissolves out of it. */}
+              bright while the overlay fades off it. */}
           <circle className="intro-bloom" cx="602" cy="375" r="200" fill="url(#intro-glow)" style={centre} />
         </g>
       </svg>
 
       <style>{`
-        .intro-pool  { opacity: 0.03; animation: intro-pool 0.9s ease-in both; }
-        .intro-scene { animation: intro-zoom 0.85s cubic-bezier(0.6, 0, 0.5, 1) 0.16s both; }
+        .intro-gate  { animation: intro-gate 0.95s linear both; }
+        .intro-pool  { opacity: 0.03; animation: intro-pool 0.82s ease-in both; }
+        .intro-scene { animation: intro-zoom 0.74s cubic-bezier(0.6, 0, 0.5, 1) 0.12s both; }
 
-        .intro-left  { animation: intro-left  0.34s cubic-bezier(0.36, 0.7, 0.2, 1) both; }
-        .intro-right { animation: intro-right 0.34s cubic-bezier(0.36, 0.7, 0.2, 1) both; }
+        .intro-left  { animation: intro-left  0.32s cubic-bezier(0.36, 0.7, 0.2, 1) both; }
+        .intro-right { animation: intro-right 0.32s cubic-bezier(0.36, 0.7, 0.2, 1) both; }
 
-        .intro-spark { opacity: 0; animation: intro-spark 0.32s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both; }
-        .intro-bloom { opacity: 0; animation: intro-bloom 0.42s cubic-bezier(0.4, 0, 0.5, 1) 0.5s both; }
+        .intro-spark { opacity: 0; animation: intro-spark 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both; }
+        .intro-bloom { opacity: 0; animation: intro-bloom 0.4s cubic-bezier(0.4, 0, 0.5, 1) 0.42s both; }
 
         .intro-ring   { opacity: 0; }
-        .intro-ring-0 { animation: intro-ring 0.52s cubic-bezier(0.25, 0, 0.5, 1) 0.24s both; }
-        .intro-ring-1 { animation: intro-ring 0.52s cubic-bezier(0.25, 0, 0.5, 1) 0.34s both; }
-        .intro-ring-2 { animation: intro-ring 0.52s cubic-bezier(0.25, 0, 0.5, 1) 0.44s both; }
-        .intro-ring-3 { animation: intro-ring 0.52s cubic-bezier(0.25, 0, 0.5, 1) 0.54s both; }
+        .intro-ring-0 { animation: intro-ring 0.48s cubic-bezier(0.25, 0, 0.5, 1) 0.2s  both; }
+        .intro-ring-1 { animation: intro-ring 0.48s cubic-bezier(0.25, 0, 0.5, 1) 0.3s  both; }
+        .intro-ring-2 { animation: intro-ring 0.48s cubic-bezier(0.25, 0, 0.5, 1) 0.4s  both; }
+        .intro-ring-3 { animation: intro-ring 0.48s cubic-bezier(0.25, 0, 0.5, 1) 0.5s  both; }
 
+        @keyframes intro-gate {
+          0%, 66% { opacity: 1; }
+          100%    { opacity: 0; visibility: hidden; }
+        }
         @keyframes intro-left {
           0%   { transform: translateX(-880px); opacity: 0.15; }
           70%  { opacity: 1; }

@@ -34,19 +34,24 @@ const WorkflowScene = lazy(() =>
 export default function App() {
   useSmoothScroll()
 
-  // Hold the 3D scene back until the cold open is done. three.js init is a
-  // ~1s main-thread block; mounting it under the intro would freeze the
-  // animation on its last frame and stall the timer that ends it. The chunk
-  // still downloads during the intro — only the mount waits.
+  // The cold open runs as a plain overlay, but the 3D scene stays unmounted
+  // underneath it until the intro says so. three.js init is a heavy main-thread
+  // block; running it under the intro stalls the animation and stretches a
+  // one-second beat past two. The scene chunk still downloads meanwhile.
   const [sceneOn, setSceneOn] = useState(() => !willPlayIntro())
   useEffect(() => {
     if (sceneOn) return
     void import('@/components/3d/WorkflowScene')
     const on = () => {
       setSceneOn(true)
-      requestAnimationFrame(() => window.dispatchEvent(new Event('resize')))
+      // Nudge R3F to re-measure once layout has fully settled after the
+      // body-scroll lock lifts.
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => window.dispatchEvent(new Event('resize'))),
+      )
     }
     window.addEventListener(INTRO_DONE_EVENT, on)
+    // Belt and braces: never strand the page without its scene.
     const safety = window.setTimeout(on, 4000)
     return () => {
       window.removeEventListener(INTRO_DONE_EVENT, on)
