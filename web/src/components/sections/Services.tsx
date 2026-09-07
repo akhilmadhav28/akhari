@@ -26,8 +26,8 @@ export function Services() {
 
       <Reveal>
         <p className="mt-6 max-w-[34rem] text-[length:var(--text-lede)] text-ink-dim">
-          Plain names for what other studios call agentic orchestration. Same work — we would just
-          rather tell you what it does.
+          Plain names for what others call agentic orchestration. Same work — we would just rather
+          tell you what it does.
         </p>
       </Reveal>
 

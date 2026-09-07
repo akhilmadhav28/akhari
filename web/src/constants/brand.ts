@@ -7,7 +7,7 @@
 export const BRAND = {
   name: 'Akhari',
   wordmark: 'AKHARI',
-  tagline: 'AI Automation Studio',
+  tagline: 'Your AI Partner',
   location: 'Hyderabad, India',
   email: 'akhilmadhavt@gmail.com',
   phone: '+91 80089 84976',

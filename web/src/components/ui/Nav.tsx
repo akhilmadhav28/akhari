@@ -15,9 +15,9 @@ import { MagneticButton } from './MagneticButton'
  * Live readout in the middle of the bar.
  *
  * The count is derived from the case studies rather than typed, so it cannot
- * quietly become a lie when work is added. The clock is Akhil's local time, not
- * the visitor's — the point is that there is a person in Hyderabad on the other
- * end of this, which is the whole pitch of the About section.
+ * quietly become a lie when work is added. The clock is the founders' local
+ * time, not the visitor's — the point is that there is a person in Hyderabad on
+ * the other end of this, which is the whole pitch of the About section.
  *
  * Ticks once a minute. A seconds display would be a per-second re-render of the
  * header for a detail nobody reads.
@@ -114,8 +114,8 @@ export function Nav() {
 
         {/* The centre used to hold the links, which is the most common header
             arrangement on the internet and said nothing. A live readout says
-            something true about the business and belongs to a studio that
-            builds running systems — the links move right, next to the action
+            something true about the business and belongs to a partner that
+            runs live systems — the links move right, next to the action
             they lead to. */}
         <LiveStatus />
 

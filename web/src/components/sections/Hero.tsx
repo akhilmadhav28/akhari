@@ -94,8 +94,9 @@ export function Hero() {
             This says the same thing as a claim someone could disagree with.
           */}
           <p className="mt-8 max-w-[34rem] text-[length:var(--text-lede)] text-ink-dim">
-            We build the parts of a business that should run without anyone driving them, and we
-            keep them running after they ship.
+            We are the AI partner a business keeps on after the build: we find where automation
+            earns its place, fit it to how you already work, and keep it running as the business
+            changes.
           </p>
 
           <div className="mt-11 flex flex-wrap items-center gap-4">

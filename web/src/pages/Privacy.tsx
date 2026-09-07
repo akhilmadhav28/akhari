@@ -75,8 +75,8 @@ export function Privacy() {
         <h1 className="mt-5 text-[2.25rem] sm:text-[2.75rem]">Privacy Policy</h1>
 
         <p className="mt-6 max-w-[38rem] text-[1.05rem] leading-relaxed text-ink-dim">
-          {BRAND.name} ("{BRAND.name}", "we", "us") is an AI automation studio run by Akhil Madhav
-          and Hari Prasad out of {BRAND.location}. This policy explains what we collect through{' '}
+          {BRAND.name} ("{BRAND.name}", "we", "us") is an AI partner for businesses, run by Akhil
+          Madhav and Hari Prasad out of {BRAND.location}. This policy explains what we collect through{' '}
           <span className="text-ink">akhari.vercel.app</span> (the "Site"), and how we handle data
           when we design, build and operate automation systems for clients — including systems
           that integrate the LinkedIn API or run on the n8n workflow-automation platform.
@@ -186,7 +186,7 @@ export function Privacy() {
                 delete it on request.
               </li>
               <li>
-                Akhari is an independent studio and is not affiliated with, endorsed by, or
+                Akhari is an independent business and is not affiliated with, endorsed by, or
                 sponsored by LinkedIn Corporation or Microsoft. "LinkedIn" is a trademark of
                 LinkedIn Corporation.
               </li>
@@ -242,7 +242,7 @@ export function Privacy() {
           <Section n="10" title="Security">
             <p>
               We apply reasonable technical and organizational measures appropriate to a small
-              studio handling client systems: encrypted credential storage, encrypted transport,
+              team handling client systems: encrypted credential storage, encrypted transport,
               least-privilege access to client infrastructure, and no storage of secrets outside
               the tools built to hold them (n8n's credential store, a password manager, or the
               client's own vault). No system is perfectly secure, and we will tell you promptly if

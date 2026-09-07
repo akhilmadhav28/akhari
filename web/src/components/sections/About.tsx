@@ -20,13 +20,15 @@ export function About() {
 
       <Reveal stagger className="mt-8 max-w-[34rem] space-y-5 text-ink-dim">
         <p>
-          We build around how a business here actually runs. Your accounts are in Tally, your
-          orders arrive on WhatsApp, half your customers pay cash on delivery. We work with that
-          rather than asking you to abandon it.
+          We work as your AI partner, not a vendor you brief once and chase afterwards. That means
+          building around how a business here actually runs — your accounts are in Tally, your
+          orders arrive on WhatsApp, half your customers pay cash on delivery — rather than asking
+          you to abandon it.
         </p>
         <p>
           The systems we have built are still running months later, because the last step is the
-          one most agencies skip: we keep them alive when APIs change and the business changes.
+          one most agencies skip: we stay on to keep them alive when APIs change and the business
+          changes.
         </p>
         <p>
           <a

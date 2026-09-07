@@ -8,8 +8,9 @@ live source. This folder is the site.
 
 ## What it is
 
-A one-page site for Akhari, an AI-automation studio run by two founders — Akhil
-Madhav and Hari Prasad. Its argument is made by the page itself: a seven-module
+A one-page site for Akhari, positioned as a business's ongoing **AI partner**
+(not a one-off automation vendor), run by two founders — Akhil Madhav and Hari
+Prasad. Its argument is made by the page itself: a seven-module
 automation graph assembles in 3D as you scroll, one module per section, and
 completes as the closing section arrives.
 
