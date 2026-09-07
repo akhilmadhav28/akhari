@@ -115,8 +115,17 @@ function SceneClock() {
   const bootStart = useRef<number | null>(null)
 
   useFrame((state, delta) => {
-    if (bootStart.current === null) bootStart.current = state.clock.elapsedTime
-    scroll.boot = clamp((state.clock.elapsedTime - bootStart.current) / 1.4)
+    // While the cold-open film is playing (see `intro/IntroGate`) the rig is
+    // hidden behind it — hold the boot ramp at 0 and keep resetting its start,
+    // so the "system waking up" flare fires as the visitor lands on the page
+    // rather than during a clip they can't see.
+    if (document.documentElement.dataset.intro === 'playing') {
+      bootStart.current = state.clock.elapsedTime
+      scroll.boot = 0
+    } else {
+      if (bootStart.current === null) bootStart.current = state.clock.elapsedTime
+      scroll.boot = clamp((state.clock.elapsedTime - bootStart.current) / 1.4)
+    }
 
     scroll.smoothed = damp(scroll.smoothed, scroll.progress, 7, Math.min(delta, 0.05))
   }, -10)

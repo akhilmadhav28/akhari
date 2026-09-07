@@ -17,6 +17,14 @@ completes as the closing section arrives.
 React 19 · TypeScript · Vite · Tailwind 4 · three.js + @react-three/fiber ·
 GSAP ScrollTrigger · Lenis.
 
+Before the page, a cold open: `components/intro/IntroGate.tsx` plays a
+ten-second film (`public/media/intro.mp4` — the two founders plug in, a tunnel,
+then the site). It runs once per browser session (`sessionStorage`), never under
+`prefers-reduced-motion` and never when the URL carries a section hash, and it
+fails open on any load/decode error. While it plays it sets `data-intro` on
+`<html>`; `WorkflowScene`'s `SceneClock` holds the boot ramp at 0 until that
+clears, so the rig powers on as the visitor lands rather than behind the film.
+
 Two routes live outside that experience: `/privacy` (`pages/Privacy.tsx`) and
 `/founders` (`pages/Founders.tsx`), both plain static pages with no 3D scene,
 no Lenis. There is no router — `main.tsx` looks the pathname up in a small map

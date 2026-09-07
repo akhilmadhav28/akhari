@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react'
 import { useSmoothScroll } from '@/lib/scroll/useSmoothScroll'
+import { IntroGate } from '@/components/intro/IntroGate'
 import { Nav } from '@/components/ui/Nav'
 import { Cursor } from '@/components/ui/Cursor'
 import { Footer } from '@/components/ui/Footer'
@@ -35,6 +36,8 @@ export default function App() {
 
   return (
     <>
+      <IntroGate />
+
       <a
         href="#about"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:rounded-full focus:bg-accent focus:px-5 focus:py-3 focus:text-void"
