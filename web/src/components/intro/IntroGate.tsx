@@ -3,25 +3,36 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 /**
  * The cold open.
  *
- * A ~2.3-second beat before the site, in Akhari's own visual language: two
- * connectors — copper and brass, the two founders — travel in from the edges
- * and plug together at centre. The join fires a pulse that rushes the viewer
- * down the wire and out onto the page.
+ * A ~1-second beat before the site, in Akhari's own visual language: two
+ * connectors — copper and brass, the two founders — snap in from the edges and
+ * plug together at centre. The join throws a pulse and a warm bloom that the
+ * page cross-dissolves out of. Quick — a hard cut with a flash, not a film.
  *
  * No video, no photography, no neon — drawn from the same port-nub and cable
  * motif as the 3D scene, in the same warm palette (`index.css`).
  *
  * Runs once per browser session, never under `prefers-reduced-motion` and never
- * when the URL points at a section. While it plays, `data-intro="playing"` on
- * `<html>` holds the scene's boot ramp shut (see `3d/WorkflowScene` SceneClock)
- * so the rig powers on as the viewer lands rather than behind the animation.
- * A click or Escape skips; a hard timer unmounts it regardless.
+ * when the URL points at a section. A click or Escape skips; a hard timer
+ * unmounts it regardless.
+ *
+ * `App` holds the 3D scene unmounted until this fires `akhari:intro-done` —
+ * three.js init blocks the main thread for ~1s, which would otherwise both
+ * freeze this animation on its last frame and delay the timer that ends it.
+ * `data-intro="playing"` on `<html>` is a second guard: `WorkflowScene`'s
+ * SceneClock holds the boot ramp shut while it is set.
  */
 
 const SEEN_KEY = 'akhari:intro-seen'
-/** Must match the end of the CSS timeline below. */
-const DURATION_MS = 1950
-const FADE_MS = 360
+export const INTRO_DONE_EVENT = 'akhari:intro-done'
+/** Must match the end of the CSS timeline below. Together ~1s. */
+const DURATION_MS = 820
+const FADE_MS = 220
+
+/** Whether a fresh load will show the intro — `App` reads this to decide
+ *  whether to hold the 3D scene back. */
+export function willPlayIntro(): boolean {
+  return shouldPlay()
+}
 
 function shouldPlay(): boolean {
   if (typeof window === 'undefined') return false
@@ -51,6 +62,7 @@ export function IntroGate() {
       /* ignore */
     }
     document.documentElement.removeAttribute('data-intro')
+    window.dispatchEvent(new Event(INTRO_DONE_EVENT))
     setState('leaving')
     window.setTimeout(() => setState('gone'), FADE_MS)
   }, [])
@@ -112,7 +124,7 @@ export function IntroGate() {
 
         <g className="intro-scene" style={centre}>
           {/* Pulse rings — the wire, rushing past. */}
-          {[0, 1, 2, 3, 4, 5].map((i) => (
+          {[0, 1, 2, 3].map((i) => (
             <circle
               key={i}
               className={`intro-ring intro-ring-${i}`}
@@ -154,35 +166,33 @@ export function IntroGate() {
       </svg>
 
       <style>{`
-        .intro-pool  { opacity: 0.03; animation: intro-pool 2.2s ease-in both; }
-        .intro-scene { animation: intro-zoom 1.7s cubic-bezier(0.7, 0, 0.55, 1) 0.46s both; }
+        .intro-pool  { opacity: 0.03; animation: intro-pool 0.9s ease-in both; }
+        .intro-scene { animation: intro-zoom 0.85s cubic-bezier(0.6, 0, 0.5, 1) 0.16s both; }
 
-        .intro-left  { animation: intro-left  0.55s cubic-bezier(0.34, 0.72, 0.24, 1) both; }
-        .intro-right { animation: intro-right 0.55s cubic-bezier(0.34, 0.72, 0.24, 1) both; }
+        .intro-left  { animation: intro-left  0.34s cubic-bezier(0.36, 0.7, 0.2, 1) both; }
+        .intro-right { animation: intro-right 0.34s cubic-bezier(0.36, 0.7, 0.2, 1) both; }
 
-        .intro-spark { opacity: 0; animation: intro-spark 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.46s both; }
-        .intro-bloom { opacity: 0; animation: intro-bloom 0.6s cubic-bezier(0.45, 0, 0.55, 1) 1.44s both; }
+        .intro-spark { opacity: 0; animation: intro-spark 0.32s cubic-bezier(0.16, 1, 0.3, 1) 0.26s both; }
+        .intro-bloom { opacity: 0; animation: intro-bloom 0.42s cubic-bezier(0.4, 0, 0.5, 1) 0.5s both; }
 
         .intro-ring   { opacity: 0; }
-        .intro-ring-0 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 0.46s both; }
-        .intro-ring-1 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 0.60s both; }
-        .intro-ring-2 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 0.76s both; }
-        .intro-ring-3 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 0.94s both; }
-        .intro-ring-4 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 1.14s both; }
-        .intro-ring-5 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 1.36s both; }
+        .intro-ring-0 { animation: intro-ring 0.52s cubic-bezier(0.25, 0, 0.5, 1) 0.24s both; }
+        .intro-ring-1 { animation: intro-ring 0.52s cubic-bezier(0.25, 0, 0.5, 1) 0.34s both; }
+        .intro-ring-2 { animation: intro-ring 0.52s cubic-bezier(0.25, 0, 0.5, 1) 0.44s both; }
+        .intro-ring-3 { animation: intro-ring 0.52s cubic-bezier(0.25, 0, 0.5, 1) 0.54s both; }
 
         @keyframes intro-left {
           0%   { transform: translateX(-880px); opacity: 0.15; }
-          72%  { opacity: 1; }
-          88%  { transform: translateX(0); }
-          94%  { transform: translateX(-6px); }
+          70%  { opacity: 1; }
+          86%  { transform: translateX(0); }
+          93%  { transform: translateX(-6px); }
           100% { transform: translateX(0); opacity: 1; }
         }
         @keyframes intro-right {
           0%   { transform: translateX(880px); opacity: 0.15; }
-          72%  { opacity: 1; }
-          88%  { transform: translateX(0); }
-          94%  { transform: translateX(6px); }
+          70%  { opacity: 1; }
+          86%  { transform: translateX(0); }
+          93%  { transform: translateX(6px); }
           100% { transform: translateX(0); opacity: 1; }
         }
         @keyframes intro-spark {
@@ -192,7 +202,7 @@ export function IntroGate() {
         }
         @keyframes intro-ring {
           0%   { transform: scale(0.35); opacity: 0; }
-          16%  { opacity: 0.75; }
+          18%  { opacity: 0.75; }
           100% { transform: scale(7); opacity: 0; }
         }
         @keyframes intro-zoom {
@@ -201,13 +211,12 @@ export function IntroGate() {
         }
         @keyframes intro-bloom {
           0%   { transform: scale(0.4); opacity: 0; }
-          60%  { transform: scale(2.3); opacity: 0.9; }
+          58%  { transform: scale(2.3); opacity: 0.9; }
           100% { transform: scale(3.4); opacity: 0.92; }
         }
         @keyframes intro-pool {
           0%   { opacity: 0.03; }
-          60%  { opacity: 0.12; }
-          100% { opacity: 0.16; }
+          100% { opacity: 0.15; }
         }
       `}</style>
     </div>

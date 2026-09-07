@@ -1,6 +1,6 @@
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { useSmoothScroll } from '@/lib/scroll/useSmoothScroll'
-import { IntroGate } from '@/components/intro/IntroGate'
+import { IntroGate, INTRO_DONE_EVENT, willPlayIntro } from '@/components/intro/IntroGate'
 import { Nav } from '@/components/ui/Nav'
 import { Cursor } from '@/components/ui/Cursor'
 import { Footer } from '@/components/ui/Footer'
@@ -34,6 +34,26 @@ const WorkflowScene = lazy(() =>
 export default function App() {
   useSmoothScroll()
 
+  // Hold the 3D scene back until the cold open is done. three.js init is a
+  // ~1s main-thread block; mounting it under the intro would freeze the
+  // animation on its last frame and stall the timer that ends it. The chunk
+  // still downloads during the intro — only the mount waits.
+  const [sceneOn, setSceneOn] = useState(() => !willPlayIntro())
+  useEffect(() => {
+    if (sceneOn) return
+    void import('@/components/3d/WorkflowScene')
+    const on = () => {
+      setSceneOn(true)
+      requestAnimationFrame(() => window.dispatchEvent(new Event('resize')))
+    }
+    window.addEventListener(INTRO_DONE_EVENT, on)
+    const safety = window.setTimeout(on, 4000)
+    return () => {
+      window.removeEventListener(INTRO_DONE_EVENT, on)
+      window.clearTimeout(safety)
+    }
+  }, [sceneOn])
+
   return (
     <>
       <IntroGate />
@@ -48,11 +68,13 @@ export default function App() {
       <Cursor />
       <Nav />
 
-      <SceneBoundary>
-        <Suspense fallback={null}>
-          <WorkflowScene />
-        </Suspense>
-      </SceneBoundary>
+      {sceneOn && (
+        <SceneBoundary>
+          <Suspense fallback={null}>
+            <WorkflowScene />
+          </Suspense>
+        </SceneBoundary>
+      )}
 
       <WorkflowHUD />
 

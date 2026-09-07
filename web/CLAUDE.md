@@ -17,16 +17,18 @@ completes as the closing section arrives.
 React 19 · TypeScript · Vite · Tailwind 4 · three.js + @react-three/fiber ·
 GSAP ScrollTrigger · Lenis.
 
-Before the page, a ~2.3s cold open: `components/intro/IntroGate.tsx` — two
-connectors (copper + brass, the two founders) travel in and plug together, and
-the join pulses the viewer down the wire onto the site. Pure inline SVG + CSS
+Before the page, a ~1s cold open: `components/intro/IntroGate.tsx` — two
+connectors (copper + brass, the two founders) snap in and plug together, and
+the join flashes a warm bloom the site cross-dissolves out of. Pure inline SVG + CSS
 keyframes in the site palette, no video or image asset. Runs once per browser
 session (`sessionStorage`), never under `prefers-reduced-motion` and never when
 the URL carries a section hash; a click or Escape skips and a hard timer
-unmounts it regardless. While it plays it sets `data-intro` on `<html>`;
-`WorkflowScene`'s `SceneClock` holds the boot ramp at 0 until that clears, so
-the rig powers on as the visitor lands rather than behind the animation. The
-CSS timeline and the `DURATION_MS` constant must stay in sync.
+unmounts it regardless. `App` keeps the whole 3D scene **unmounted** until the
+intro fires `INTRO_DONE_EVENT` — three.js init is a ~1s main-thread block that
+would freeze the animation on its last frame and stall its end timer (the chunk
+still downloads during the intro, only the mount waits). `data-intro` on
+`<html>` is a second guard: `SceneClock` holds the boot ramp at 0 while it is
+set. The CSS timeline and the `DURATION_MS` constant must stay in sync.
 
 Two routes live outside that experience: `/privacy` (`pages/Privacy.tsx`) and
 `/founders` (`pages/Founders.tsx`), both plain static pages with no 3D scene,
