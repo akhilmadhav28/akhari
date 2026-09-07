@@ -17,13 +17,16 @@ completes as the closing section arrives.
 React 19 · TypeScript · Vite · Tailwind 4 · three.js + @react-three/fiber ·
 GSAP ScrollTrigger · Lenis.
 
-Before the page, a cold open: `components/intro/IntroGate.tsx` plays a
-ten-second film (`public/media/intro.mp4` — the two founders plug in, a tunnel,
-then the site). It runs once per browser session (`sessionStorage`), never under
-`prefers-reduced-motion` and never when the URL carries a section hash, and it
-fails open on any load/decode error. While it plays it sets `data-intro` on
-`<html>`; `WorkflowScene`'s `SceneClock` holds the boot ramp at 0 until that
-clears, so the rig powers on as the visitor lands rather than behind the film.
+Before the page, a ~2.3s cold open: `components/intro/IntroGate.tsx` — two
+connectors (copper + brass, the two founders) travel in and plug together, and
+the join pulses the viewer down the wire onto the site. Pure inline SVG + CSS
+keyframes in the site palette, no video or image asset. Runs once per browser
+session (`sessionStorage`), never under `prefers-reduced-motion` and never when
+the URL carries a section hash; a click or Escape skips and a hard timer
+unmounts it regardless. While it plays it sets `data-intro` on `<html>`;
+`WorkflowScene`'s `SceneClock` holds the boot ramp at 0 until that clears, so
+the rig powers on as the visitor lands rather than behind the animation. The
+CSS timeline and the `DURATION_MS` constant must stay in sync.
 
 Two routes live outside that experience: `/privacy` (`pages/Privacy.tsx`) and
 `/founders` (`pages/Founders.tsx`), both plain static pages with no 3D scene,

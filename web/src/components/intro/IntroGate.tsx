@@ -3,40 +3,36 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 /**
  * The cold open.
  *
- * Before the site itself, a ten-second film: the two founders plug in, and the
- * connection pulls the visitor through a tunnel and out the other side onto the
- * page. It runs once per browser session and never for someone who asked not to
- * be moved (`prefers-reduced-motion`) or who followed a deep link to a specific
- * section — in those cases the site is exactly where it always was.
+ * A ~2.3-second beat before the site, in Akhari's own visual language: two
+ * connectors — copper and brass, the two founders — travel in from the edges
+ * and plug together at centre. The join fires a pulse that rushes the viewer
+ * down the wire and out onto the page.
  *
- * The scene behind this holds its boot ramp shut while `data-intro="playing"`
- * is on `<html>` (see `3d/WorkflowScene` SceneClock), so the rig powers on as
- * the tunnel clears rather than during a film nobody can see.
+ * No video, no photography, no neon — drawn from the same port-nub and cable
+ * motif as the 3D scene, in the same warm palette (`index.css`).
  *
- * Everything here fails open: a stalled download, a decode error or a browser
- * that refuses the file drops the visitor straight onto the site instead of a
- * black screen.
+ * Runs once per browser session, never under `prefers-reduced-motion` and never
+ * when the URL points at a section. While it plays, `data-intro="playing"` on
+ * `<html>` holds the scene's boot ramp shut (see `3d/WorkflowScene` SceneClock)
+ * so the rig powers on as the viewer lands rather than behind the animation.
+ * A click or Escape skips; a hard timer unmounts it regardless.
  */
 
 const SEEN_KEY = 'akhari:intro-seen'
-/** Start the hand-off this long before the clip actually ends, so the tunnel
- *  dims into the page instead of cutting to it. */
-const HANDOFF_LEAD = 0.6
-/** Absolute ceiling. If the video hasn't ended by now, something is wrong — leave. */
-const SAFETY_MS = 14_000
+/** Must match the end of the CSS timeline below. */
+const DURATION_MS = 1950
+const FADE_MS = 360
 
 function shouldPlay(): boolean {
   if (typeof window === 'undefined') return false
   try {
     if (sessionStorage.getItem(SEEN_KEY)) return false
   } catch {
-    /* private mode — fall through and just play it */
+    /* private mode — just play it */
   }
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
-  // A link to /#projects means the visitor wants that section, not a preamble.
-  if (window.location.hash && window.location.hash !== '#' && window.location.hash !== '#top') {
-    return false
-  }
+  const h = window.location.hash
+  if (h && h !== '#' && h !== '#top') return false
   return true
 }
 
@@ -44,9 +40,6 @@ export function IntroGate() {
   const [state, setState] = useState<'playing' | 'leaving' | 'gone'>(() =>
     shouldPlay() ? 'playing' : 'gone',
   )
-  const [muted, setMuted] = useState(true)
-  const [progress, setProgress] = useState(0)
-  const video = useRef<HTMLVideoElement>(null)
   const ending = useRef(false)
 
   const finish = useCallback(() => {
@@ -59,8 +52,7 @@ export function IntroGate() {
     }
     document.documentElement.removeAttribute('data-intro')
     setState('leaving')
-    // Match the CSS opacity transition below before unmounting.
-    window.setTimeout(() => setState('gone'), 700)
+    window.setTimeout(() => setState('gone'), FADE_MS)
   }, [])
 
   // Claim the scene's boot ramp before the lazy 3D chunk has even loaded.
@@ -77,122 +69,147 @@ export function IntroGate() {
 
   useEffect(() => {
     if (state !== 'playing') return
-    const el = video.current
-    if (!el) return
-
-    // Try with sound; browsers that block it hand back a rejected promise and
-    // we retry muted, which always goes through.
-    el.muted = false
-    el.play().then(
-      () => setMuted(false),
-      () => {
-        el.muted = true
-        setMuted(true)
-        el.play().catch(finish)
-      },
-    )
-
+    const t = window.setTimeout(finish, DURATION_MS)
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && finish()
     window.addEventListener('keydown', onKey)
-    const safety = window.setTimeout(finish, SAFETY_MS)
     return () => {
+      window.clearTimeout(t)
       window.removeEventListener('keydown', onKey)
-      window.clearTimeout(safety)
     }
   }, [state, finish])
 
   if (state === 'gone') return null
 
-  const onTime = () => {
-    const el = video.current
-    if (!el || !el.duration) return
-    setProgress(el.currentTime / el.duration)
-    if (el.duration - el.currentTime <= HANDOFF_LEAD) finish()
-  }
-
-  const toggleSound = () => {
-    const el = video.current
-    if (!el) return
-    el.muted = !el.muted
-    setMuted(el.muted)
-    if (!el.muted) el.play().catch(() => undefined)
-  }
+  const centre = { transformBox: 'view-box', transformOrigin: '602px 375px' } as const
 
   return (
     <div
-      role="dialog"
-      aria-label="Intro"
+      role="presentation"
+      onClick={finish}
       data-lenis-prevent
-      className={`fixed inset-0 z-[300] bg-black transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`fixed inset-0 z-[300] overflow-hidden bg-void transition-opacity ease-[cubic-bezier(0.16,1,0.3,1)] ${
         state === 'leaving' ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
+      style={{ transitionDuration: `${FADE_MS}ms` }}
     >
-      <video
-        ref={video}
-        className="h-full w-full object-cover"
-        src="/media/intro.mp4"
-        poster="/media/intro-poster.jpg"
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
+      <svg
+        className="h-full w-full"
+        viewBox="0 0 1200 750"
+        preserveAspectRatio="xMidYMid slice"
         aria-hidden="true"
-        onEnded={finish}
-        onError={finish}
-        onTimeUpdate={onTime}
-      />
+      >
+        <defs>
+          <radialGradient id="intro-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#f6e8d6" />
+            <stop offset="10%" stopColor="#e0803f" />
+            <stop offset="46%" stopColor="#b85f22" stopOpacity="0.32" />
+            <stop offset="100%" stopColor="#0f0c0a" stopOpacity="0" />
+          </radialGradient>
+        </defs>
 
-      {/* Feathered vignette so the clip's hard frame edge doesn't sit on the
-          viewport edge. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{ boxShadow: 'inset 0 0 12rem 2rem rgba(0,0,0,0.55)' }}
-      />
+        {/* A subtle warm ground, held low the whole way — matches the hero light pool. */}
+        <circle className="intro-pool" cx="602" cy="375" r="560" fill="url(#intro-glow)" />
 
-      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 px-[clamp(1.25rem,5vw,3rem)] pb-[clamp(1.25rem,4vw,2.25rem)]">
-        <button
-          type="button"
-          onClick={toggleSound}
-          className="flex items-center gap-2 font-mono text-[0.62rem] tracking-[0.22em] text-white/55 uppercase transition-colors hover:text-white"
-        >
-          {muted ? (
-            <>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M11 5 6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6" />
-              </svg>
-              Sound
-            </>
-          ) : (
-            <>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M11 5 6 9H2v6h4l5 4zM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" />
-              </svg>
-              Sound on
-            </>
-          )}
-        </button>
+        <g className="intro-scene" style={centre}>
+          {/* Pulse rings — the wire, rushing past. */}
+          {[0, 1, 2, 3, 4, 5].map((i) => (
+            <circle
+              key={i}
+              className={`intro-ring intro-ring-${i}`}
+              cx="602"
+              cy="375"
+              r="40"
+              fill="none"
+              stroke={i % 2 ? '#c9a227' : '#e0803f'}
+              strokeWidth="2.5"
+              style={centre}
+            />
+          ))}
 
-        <button
-          type="button"
-          autoFocus
-          onClick={finish}
-          className="flex items-center gap-2 font-mono text-[0.62rem] tracking-[0.22em] text-white/55 uppercase transition-colors hover:text-white"
-        >
-          Skip intro
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M13 6l6 6-6 6M5 6l6 6-6 6" />
-          </svg>
-        </button>
-      </div>
+          {/* Left connector — copper. Prongs point right. */}
+          <g className="intro-left">
+            <path d="M -300 375 H 578" stroke="#443a31" strokeWidth="4" fill="none" />
+            <path d="M 430 375 H 578" stroke="#e0803f" strokeWidth="4" fill="none" />
+            <rect x="548" y="351" width="34" height="48" rx="7" fill="#17130f" stroke="#e0803f" strokeWidth="2.5" />
+            <rect x="582" y="361" width="22" height="6" rx="3" fill="#e0803f" />
+            <rect x="582" y="383" width="22" height="6" rx="3" fill="#e0803f" />
+          </g>
 
-      {/* Progress hairline. */}
-      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-white/12">
-        <div
-          className="h-full bg-white/70"
-          style={{ width: `${progress * 100}%`, transition: 'width 120ms linear' }}
-        />
-      </div>
+          {/* Right connector — brass. Socket the prongs enter. */}
+          <g className="intro-right">
+            <path d="M 1500 375 H 622" stroke="#443a31" strokeWidth="4" fill="none" />
+            <path d="M 770 375 H 622" stroke="#c9a227" strokeWidth="4" fill="none" />
+            <rect x="600" y="345" width="46" height="60" rx="9" fill="#17130f" stroke="#c9a227" strokeWidth="2.5" />
+            <rect x="600" y="359" width="18" height="11" rx="3" fill="#0f0c0a" />
+            <rect x="600" y="381" width="18" height="11" rx="3" fill="#0f0c0a" />
+          </g>
+
+          {/* The join. */}
+          <circle className="intro-spark" cx="602" cy="375" r="11" fill="url(#intro-glow)" style={centre} />
+
+          {/* The light we come out into — grows to fill the frame and holds
+              bright while the page cross-dissolves out of it. */}
+          <circle className="intro-bloom" cx="602" cy="375" r="200" fill="url(#intro-glow)" style={centre} />
+        </g>
+      </svg>
+
+      <style>{`
+        .intro-pool  { opacity: 0.03; animation: intro-pool 2.2s ease-in both; }
+        .intro-scene { animation: intro-zoom 1.7s cubic-bezier(0.7, 0, 0.55, 1) 0.46s both; }
+
+        .intro-left  { animation: intro-left  0.55s cubic-bezier(0.34, 0.72, 0.24, 1) both; }
+        .intro-right { animation: intro-right 0.55s cubic-bezier(0.34, 0.72, 0.24, 1) both; }
+
+        .intro-spark { opacity: 0; animation: intro-spark 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.46s both; }
+        .intro-bloom { opacity: 0; animation: intro-bloom 0.6s cubic-bezier(0.45, 0, 0.55, 1) 1.44s both; }
+
+        .intro-ring   { opacity: 0; }
+        .intro-ring-0 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 0.46s both; }
+        .intro-ring-1 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 0.60s both; }
+        .intro-ring-2 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 0.76s both; }
+        .intro-ring-3 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 0.94s both; }
+        .intro-ring-4 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 1.14s both; }
+        .intro-ring-5 { animation: intro-ring 0.9s cubic-bezier(0.25, 0, 0.5, 1) 1.36s both; }
+
+        @keyframes intro-left {
+          0%   { transform: translateX(-880px); opacity: 0.15; }
+          72%  { opacity: 1; }
+          88%  { transform: translateX(0); }
+          94%  { transform: translateX(-6px); }
+          100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes intro-right {
+          0%   { transform: translateX(880px); opacity: 0.15; }
+          72%  { opacity: 1; }
+          88%  { transform: translateX(0); }
+          94%  { transform: translateX(6px); }
+          100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes intro-spark {
+          0%   { transform: scale(0);   opacity: 0; }
+          35%  { transform: scale(1.8); opacity: 1; }
+          100% { transform: scale(0.3); opacity: 0; }
+        }
+        @keyframes intro-ring {
+          0%   { transform: scale(0.35); opacity: 0; }
+          16%  { opacity: 0.75; }
+          100% { transform: scale(7); opacity: 0; }
+        }
+        @keyframes intro-zoom {
+          0%   { transform: scale(1); }
+          100% { transform: scale(2.7); }
+        }
+        @keyframes intro-bloom {
+          0%   { transform: scale(0.4); opacity: 0; }
+          60%  { transform: scale(2.3); opacity: 0.9; }
+          100% { transform: scale(3.4); opacity: 0.92; }
+        }
+        @keyframes intro-pool {
+          0%   { opacity: 0.03; }
+          60%  { opacity: 0.12; }
+          100% { opacity: 0.16; }
+        }
+      `}</style>
     </div>
   )
 }
