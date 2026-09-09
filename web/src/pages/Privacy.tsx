@@ -77,7 +77,7 @@ export function Privacy() {
         <p className="mt-6 max-w-[38rem] text-[1.05rem] leading-relaxed text-ink-dim">
           {BRAND.name} ("{BRAND.name}", "we", "us") is an AI partner for businesses, run by Akhil
           Madhav and Hari Prasad out of {BRAND.location}. This policy explains what we collect through{' '}
-          <span className="text-ink">akhari.vercel.app</span> (the "Site"), and how we handle data
+          <span className="text-ink">akhari.in</span> (the "Site"), and how we handle data
           when we design, build and operate automation systems for clients — including systems
           that integrate the LinkedIn API or run on the n8n workflow-automation platform.
         </p>
