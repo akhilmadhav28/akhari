@@ -143,7 +143,13 @@ export function detectProfile(): DeviceProfile {
   let tier: Tier = 'high'
   if (isTouch || isCompact) tier = 'mid'
   if (cores <= 4 || memory <= 4) tier = 'mid'
-  if (cores <= 2 || memory <= 2) tier = 'low'
+  // A low core count drops a *small* device to 'low' (no dust, no bloom) — but
+  // not a desktop. Brave and Firefox-RFP farble hardwareConcurrency down to 2
+  // on every machine as a fingerprinting defence, and that was quietly handing
+  // their users the flat, sparkless scene on hardware that runs the full one
+  // fine. On a real desktop the GPU probe below is the honest weak-hardware
+  // signal; core count is not.
+  if ((cores <= 2 || memory <= 2) && (isCompact || isTouch)) tier = 'low'
   if (gpuIsWeak()) tier = tier === 'high' ? 'mid' : 'low'
   if (prefersReducedMotion()) tier = tier === 'high' ? 'mid' : tier
 
