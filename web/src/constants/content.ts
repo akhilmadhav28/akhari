@@ -87,14 +87,11 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'bp-batteries',
-    client: 'BP Batteries',
+    client: 'BP Industrial Batteries',
     person: 'Gaurav Shukla — Owner',
     title: 'Posting that does not depend on remembering',
-    // NOTE — the old site carried only the client, the quote and one line:
-    // "Scheduled social posting". `title`, `body`, `architecture`, `tech` and
-    // `result` below are written from that, not from the build. Correct them
-    // if the real pipeline differs. (`tech` is not rendered for listed
-    // projects — only the featured one shows it.)
+    // Confirmed 2026-09-11 as the real pipeline — was previously a
+    // reconstruction from a one-line brief on the old site.
     body: 'Putting content out was a job that only happened when somebody had a free half hour, which meant stretches where nothing went out at all. It runs to a schedule now, with nobody driving it.',
     architecture: ['content queue', 'scheduled publish', 'delivery log'],
     tech: ['n8n', 'Sheets API'],
