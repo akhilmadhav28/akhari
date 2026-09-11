@@ -25,17 +25,17 @@ export const FOUNDERS: Founder[] = [
     id: 'hari',
     name: 'Hari Prasad',
     role: 'Co-founder — Marketing & Sales',
-    bio: 'Hari spent six years in the semiconductor industry, joining one company when it was three people and staying long enough to watch it grow past seventy. Several organizations after that taught him the same lesson from different angles: most companies expect a lot from the people in them without giving those people the guidance to deliver it. Akhari is his answer to that as much as it is a business — built to run differently for the people in it, starting with the two founders.',
+    bio: 'Hari spent six years in the semiconductor industry, joining one company when it was three people and building the sales motion that helped take it past seventy — the pipeline, the outreach, the playbook that made that growth repeatable instead of lucky. Several organizations after that taught him the same lesson from different angles: most companies expect a lot from the people in them without giving those people the guidance to deliver it. Akhari is his answer to that as much as it is a business — built to run differently for the people in it, starting with the two founders.',
   },
 ]
 
 export const ORIGIN =
-  'Hari and Akhil have been friends since the eighth grade, long before either of them had a reason to start a company together. Akhari started as Akhil’s studio, built system by system for businesses in Hyderabad. It is now the two of them, running it the way they think a company should be run in the first place.'
+  'Hari and Akhil have been friends since the eighth grade, long before either of them had a reason to start a company together. Akhari began as one system for one business in Hyderabad, then another, then enough of them that running it properly took two people instead of one. It is now Hari and Akhil, building it the way they think a company should be run in the first place.'
 
 export const PHILOSOPHY: { title: string; body: string }[] = [
   {
     title: 'Stoicism',
-    body: 'Don’t spend energy on what you can’t control — a client’s legacy spreadsheet, an API that changes without notice — and put all of it into the part you can, which is the system in front of you today.',
+    body: 'Don’t spend energy on what you can’t control — a client’s legacy spreadsheet, an API that changes without notice — and put all of it into the part you can, which is the system in front of you today. In practice: when something upstream breaks, we fix what’s ours to fix instead of billing a client to relitigate whose fault it was.',
   },
   {
     title: 'Scientific rationality',

@@ -9,7 +9,7 @@ export const BRAND = {
   wordmark: 'AKHARI',
   tagline: 'Your AI Partner',
   location: 'Hyderabad, India',
-  email: 'akhilmadhavt@gmail.com',
+  email: 'info@akhari.in',
   phone: '+91 80089 84976',
   phoneHref: '+918008984976',
 
