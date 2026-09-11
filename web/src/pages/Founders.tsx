@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { BRAND } from '@/constants/brand'
-import { FOUNDERS, ORIGIN, PHILOSOPHY } from '@/constants/founders'
+import { FOUNDERS, ORIGIN, PHILOSOPHY, PROCESS } from '@/constants/founders'
 
 /**
  * Meet the founders. A plain page, same reasoning as `pages/Privacy.tsx` —
@@ -92,6 +92,22 @@ export function Founders() {
           </p>
           <div className="mt-7 grid gap-8 sm:grid-cols-3">
             {PHILOSOPHY.map((p) => (
+              <div key={p.title}>
+                <h3 className="text-[1rem] font-sans font-semibold text-ink">{p.title}</h3>
+                <p className="mt-3 text-[0.9rem] leading-relaxed text-ink-dim">{p.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-16 border-t border-line pt-10">
+          <p className="eyebrow">
+            <b>Process</b>
+            <span className="h-px w-6 bg-line-strong" />
+            What working with us is actually like
+          </p>
+          <div className="mt-7 grid gap-8 sm:grid-cols-2">
+            {PROCESS.map((p) => (
               <div key={p.title}>
                 <h3 className="text-[1rem] font-sans font-semibold text-ink">{p.title}</h3>
                 <p className="mt-3 text-[0.9rem] leading-relaxed text-ink-dim">{p.body}</p>

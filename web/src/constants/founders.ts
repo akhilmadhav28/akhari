@@ -32,6 +32,34 @@ export const FOUNDERS: Founder[] = [
 export const ORIGIN =
   'Hari and Akhil have been friends since the eighth grade, long before either of them had a reason to start a company together. Akhari began as one system for one business in Hyderabad, then another, then enough of them that running it properly took two people instead of one. It is now Hari and Akhil, building it the way they think a company should be run in the first place.'
 
+/**
+ * "What working with us is like" — the founders page had who-we-are and
+ * what-we-believe but never made the practical part concrete: price, timeline,
+ * effort on the client's side. Numbers are benchmarked against the AI-
+ * automation and n8n freelance/agency market (see the 2026-09-11 research
+ * pass) against what Akhari's own case studies actually are — single-to-
+ * multi-module builds, not enterprise AI-copilot work — not invented.
+ * Revisit if actual quoted prices drift from this range.
+ */
+export const PROCESS: { title: string; body: string }[] = [
+  {
+    title: 'Free audit call',
+    body: 'We look at how the process actually runs today before quoting anything. No cost, no obligation either way.',
+  },
+  {
+    title: 'Fixed price after that',
+    body: 'Most first systems run ₹40,000–₹1,50,000 depending on what is involved. You know the number before we start building, not after.',
+  },
+  {
+    title: 'Live in 2–4 weeks',
+    body: 'From a scoped brief to something running in your business, not a slide deck about it.',
+  },
+  {
+    title: 'Akhil builds it, not a team',
+    body: 'The person who scopes your system is the one who ships it. No handoff, no account manager in between.',
+  },
+]
+
 export const PHILOSOPHY: { title: string; body: string }[] = [
   {
     title: 'Stoicism',
