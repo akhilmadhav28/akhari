@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App'
 import { Privacy } from './pages/Privacy'
 import { Founders } from './pages/Founders'
+import { NotFound } from './pages/NotFound'
 import './index.css'
 
 const root = document.getElementById('root')
@@ -19,11 +20,15 @@ if (!root) throw new Error('Missing #root element')
  * long enough to matter.
  */
 const PAGES: Record<string, ComponentType> = {
+  '/': App,
   '/privacy': Privacy,
   '/founders': Founders,
 }
 
-const Page = PAGES[window.location.pathname] ?? App
+// Any other pathname used to fall through to `?? App` here, which silently
+// rendered the full homepage for a typo'd link or dead bookmark — see
+// `pages/NotFound.tsx` for why that's worse than it sounds.
+const Page = PAGES[window.location.pathname] ?? NotFound
 
 createRoot(root).render(
   <StrictMode>
