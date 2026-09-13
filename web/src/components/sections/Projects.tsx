@@ -38,12 +38,40 @@ export function Projects() {
     <section id="projects" className="pointer-events-none relative py-[clamp(5.5rem,11vw,9.5rem)]">
       {/* Weaker and reaching further right than the other sections' scrims:
           this one has to cover a much wider block of content while still
-          leaving the wide shot of the network legible behind it. */}
+          leaving the wide shot of the network legible behind it. Desktop
+          only — see the portrait scrim below for why.
+
+          The listed items' result/quote column (the rightmost grid column,
+          `md:grid-cols-[...minmax(0,1fr)]`) lands inside the 68-90% stretch of
+          this gradient on common desktop widths, where the original 0.56/0.16
+          stops were too weak: contrast.cjs caught "Vanga Shravanth Reddy —
+          CEO" at 2.44:1 against a bright moment of the scene behind it — the
+          98th-percentile worst case, not the average one, which is exactly
+          the kind of failure that looks fine by eye and isn't. Raised both
+          stops enough to hold up there; still fades to near-transparent
+          before the section's own right edge. */}
       <div
-        className="pointer-events-none absolute inset-0 -z-10"
+        className="pointer-events-none absolute inset-0 -z-10 hidden lg:block"
         style={{
           background:
-            'linear-gradient(100deg, rgba(15,12,10,0.95) 0%, rgba(15,12,10,0.89) 38%, rgba(15,12,10,0.56) 68%, rgba(15,12,10,0.16) 90%)',
+            'linear-gradient(100deg, rgba(15,12,10,0.95) 0%, rgba(15,12,10,0.89) 38%, rgba(15,12,10,0.72) 68%, rgba(15,12,10,0.42) 90%)',
+          maskImage: FEATHER,
+          WebkitMaskImage: FEATHER,
+        }}
+      />
+
+      {/* Portrait scrim. This section had gone without one — the horizontal
+          gradient above was doing double duty on mobile too, and on a phone
+          the listed items' result/quote column sits far enough right that
+          the gradient has already faded past 80% toward transparent there.
+          contrast.cjs measured "Mohammed Imran — Proprietor" at 2.50:1
+          against the network behind it; by eye it looked fine. Flat, per
+          `SCRIM_COMPACT` in SplitSection — FEATHER below still handles the
+          edges, so this only needs to set the strength. */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 lg:hidden"
+        style={{
+          background: 'rgba(15,12,10,0.92)',
           maskImage: FEATHER,
           WebkitMaskImage: FEATHER,
         }}

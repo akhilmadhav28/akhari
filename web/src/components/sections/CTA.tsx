@@ -54,12 +54,28 @@ export function CTA() {
           agree. Slightly lighter than that one because this is still the payoff
           shot. Bled past the copy on both edges so it feathers out rather than
           ending on a line.
+
+          The fade stops are fixed pixel margins, not percentages — this box is
+          `-inset-y-12` (3rem) bigger than the copy on every side, so stopping
+          the flat zone exactly 3rem from each edge always covers precisely the
+          copy and nothing else, no matter how many lines the copy is. A
+          percentage stop doesn't have that property, and it's not just
+          theory: this section's height changed when the price/effort line
+          below was added.
+
+          Separately, 0.86 was not quite dark enough at its own flattest: with
+          a bright moment of the scene directly behind the email line (the
+          worst case, not the average one — see contrast.cjs's 98th-percentile
+          note), 0.86 opacity over that highlight still lets through enough
+          light to read 4.35:1 against `text-faint`, just under the 4.5
+          threshold. Bumped to 0.90, matching SCRIM_COMPACT's own ceiling in
+          SplitSection.
         */}
         <div
           className="pointer-events-none absolute inset-x-0 -inset-y-12 -z-10 lg:hidden"
           style={{
             background:
-              'linear-gradient(180deg, rgba(15,12,10,0) 0%, rgba(15,12,10,0.86) 4%, rgba(15,12,10,0.86) 96%, rgba(15,12,10,0) 100%)',
+              'linear-gradient(180deg, rgba(15,12,10,0) 0, rgba(15,12,10,0.90) 3rem, rgba(15,12,10,0.90) calc(100% - 3rem), rgba(15,12,10,0) 100%)',
           }}
         />
 
@@ -73,10 +89,11 @@ export function CTA() {
               // holding the scrim across the middle of the viewport washed out
               // half of it.
               'linear-gradient(100deg, rgba(15,12,10,0.96) 0%, rgba(15,12,10,0.90) 24%, rgba(15,12,10,0.34) 46%, rgba(15,12,10,0) 64%)',
+            // Fixed pixel margins, same reasoning as the mobile scrim above.
             maskImage:
-              'linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%)',
+              'linear-gradient(to bottom, transparent 0, #000 3rem, #000 calc(100% - 3rem), transparent 100%)',
             WebkitMaskImage:
-              'linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%)',
+              'linear-gradient(to bottom, transparent 0, #000 3rem, #000 calc(100% - 3rem), transparent 100%)',
           }}
         />
 
