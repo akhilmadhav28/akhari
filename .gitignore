@@ -13,3 +13,14 @@ __pycache__/
 .venv/
 .pytest_cache/
 .ruff_cache/
+
+# Auto-installed Claude Code skill packages — fetched from external sources
+# on demand, not authored for this project. Keep them off disk from being
+# committed; they don't belong in a client site's history.
+.claude/skills/
+.agents/skills/
+skills-lock.json
+
+# scripts/contrast.cjs writes its own debug screenshots to cwd — disposable
+# diagnostic output, not site assets.
+web/ct-*.png
