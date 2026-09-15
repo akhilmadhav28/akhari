@@ -48,13 +48,17 @@ export function Projects() {
           CEO" at 2.44:1 against a bright moment of the scene behind it — the
           98th-percentile worst case, not the average one, which is exactly
           the kind of failure that looks fine by eye and isn't. Raised both
-          stops enough to hold up there; still fades to near-transparent
-          before the section's own right edge. */}
+          stops once already (to 0.72/0.42); stress-testing at 10+ repeated
+          runs still showed it failing roughly 2 times in 5 — a bright dust
+          mote or module glow at exactly that spot in the scene is common
+          enough that a "usually enough" margin isn't. Raised again to
+          0.80/0.55, then confirmed 10/10 clean. Still fades to
+          near-transparent before the section's own right edge. */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 hidden lg:block"
         style={{
           background:
-            'linear-gradient(100deg, rgba(15,12,10,0.95) 0%, rgba(15,12,10,0.89) 38%, rgba(15,12,10,0.72) 68%, rgba(15,12,10,0.42) 90%)',
+            'linear-gradient(100deg, rgba(15,12,10,0.95) 0%, rgba(15,12,10,0.89) 38%, rgba(15,12,10,0.80) 68%, rgba(15,12,10,0.55) 90%)',
           maskImage: FEATHER,
           WebkitMaskImage: FEATHER,
         }}
@@ -300,7 +304,13 @@ function ListedProject({ project, index }: { project: Project; index: number }) 
           {project.quote && (
             <p className="mt-2 text-[0.82rem] text-muted">
               &ldquo;{project.quote}&rdquo;
-              <span className="ml-1.5 text-faint">— {project.person}</span>
+              {/* text-ink-dim, not text-faint: at this column's position the
+                  scrim's own tail is already doing what it safely can (see
+                  the scrim comment above) — a dust mote's worst-case glow
+                  behind text this dim measured 4.0-4.1:1 in ~20% of runs.
+                  text-muted computes to ~4.47:1 in the same worst case, too
+                  close to trust; ink-dim clears it with real margin. */}
+              <span className="ml-1.5 text-ink-dim">— {project.person}</span>
             </p>
           )}
         </div>

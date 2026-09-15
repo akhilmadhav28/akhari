@@ -84,6 +84,16 @@ export function Founders() {
           ))}
         </div>
 
+        {/* Addresses "what if one of you is unreachable" without overclaiming
+            technical redundancy neither of us actually has — Akhil is still
+            the one who builds. What's true regardless is the structural
+            point: this is two founders and a real business, not a single
+            freelancer's calendar with a website attached to it. */}
+        <p className="mt-8 max-w-[38rem] text-[0.95rem] leading-relaxed text-ink-dim">
+          Neither of us disappears if the other is unreachable for a day — Akhari is two founders
+          running a real business together, not one freelancer's calendar with a website attached.
+        </p>
+
         <div className="mt-16 border-t border-line pt-10">
           <p className="eyebrow">
             <b>Philosophy</b>

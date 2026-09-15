@@ -40,11 +40,22 @@ export const ORIGIN =
  * pass) against what Akhari's own case studies actually are — single-to-
  * multi-module builds, not enterprise AI-copilot work — not invented.
  * Revisit if actual quoted prices drift from this range.
+ *
+ * The "Free audit call" body was rewritten 2026-09-15 against Nate Herk's
+ * (AI Automation Society) published audit methodology — rank what's found by
+ * volume, labour cost, feasibility and risk, not just "look at the process" —
+ * to make the call sound like a real method instead of a vague first chat.
+ * One open tension worth flagging: Herk's own model prices this step
+ * separately ($500-$2,500, framed as a filter for serious buyers), where
+ * Akhari's is free. Free is the right call for a first client in Hyderabad
+ * with four case studies and no brand yet, not obviously right forever —
+ * revisit once there's enough inbound interest that a free audit is costing
+ * real time on unqualified calls, not before.
  */
 export const PROCESS: { title: string; body: string }[] = [
   {
     title: 'Free audit call',
-    body: 'We look at how the process actually runs today before quoting anything. No cost, no obligation either way.',
+    body: 'We map how the work actually moves — who touches it, what it costs in time, what breaks first — and rank what is worth automating before quoting anything. No cost, no obligation either way.',
   },
   {
     title: 'Fixed price after that',

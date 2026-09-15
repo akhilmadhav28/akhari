@@ -28,7 +28,10 @@ export function About() {
         <p>
           The systems we have built are still running months later, because the last step is the
           one most agencies skip: we stay on to keep them alive when APIs change and the business
-          changes.
+          changes — the WhatsApp integration that quietly breaks, the Tally export that changes
+          shape, the credential about to expire. Staying on means watching for that and keeping the
+          connections between your tools secure, not billing you for an undefined "support" line
+          once a year.
         </p>
         <p>
           <a
