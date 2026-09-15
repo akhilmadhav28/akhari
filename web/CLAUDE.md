@@ -29,9 +29,12 @@ downloads meanwhile). Runs once per browser session (`sessionStorage`), never
 under `prefers-reduced-motion` and never when the URL carries a section hash; a
 click or Escape skips. The CSS timeline and `VISUAL_MS` must stay in sync.
 
-Two routes live outside that experience: `/privacy` (`pages/Privacy.tsx`) and
-`/founders` (`pages/Founders.tsx`), both plain static pages with no 3D scene,
-no Lenis. There is no router — `main.tsx` looks the pathname up in a small map
+Three routes live outside that experience: `/privacy` (`pages/Privacy.tsx`),
+`/founders` (`pages/Founders.tsx`), and `/is-automation-for-you`
+(`pages/IsAutomationForYou.tsx`, an education-first page for visitors who
+don't yet know whether automation applies to their business — no pitch, one
+soft link out at the end), all plain static pages with no 3D scene, no
+Lenis. There is no router — `main.tsx` looks the pathname up in a small map
 before anything renders, and each page is reached by a real navigation, not
 client-side routing. `vercel.json` rewrites every path to `index.html` so a
 direct hit to either doesn't 404 once this is deployed. Founder bios and the

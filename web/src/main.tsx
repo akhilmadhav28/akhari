@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App'
 import { Privacy } from './pages/Privacy'
 import { Founders } from './pages/Founders'
+import { IsAutomationForYou } from './pages/IsAutomationForYou'
 import { NotFound } from './pages/NotFound'
 import './index.css'
 
@@ -23,6 +24,7 @@ const PAGES: Record<string, ComponentType> = {
   '/': App,
   '/privacy': Privacy,
   '/founders': Founders,
+  '/is-automation-for-you': IsAutomationForYou,
 }
 
 // Any other pathname used to fall through to `?? App` here, which silently

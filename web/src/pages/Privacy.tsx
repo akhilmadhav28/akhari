@@ -116,6 +116,14 @@ export function Privacy() {
                 store it, or log it.
               </li>
               <li>
+                <span className="text-ink">The self-assessment checklist</span> on{' '}
+                <a href="/is-automation-for-you" className="text-accent underline underline-offset-2">
+                  Is automation for you?
+                </a>{' '}
+                works the same way — which boxes you tick lives in your browser only, for as long
+                as the page is open, and is never sent anywhere.
+              </li>
+              <li>
                 <span className="text-ink">Standard hosting logs.</span> The Site is served by
                 Vercel, which — like any web host — records basic connection metadata (IP address,
                 user agent, request timestamps) for security and reliability. We do not access

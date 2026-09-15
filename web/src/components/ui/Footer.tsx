@@ -49,6 +49,15 @@ export function Footer() {
                   Founders
                 </a>
               </li>
+              <li>
+                <a
+                  href="/is-automation-for-you"
+                  className="text-[0.9rem] text-muted transition-colors hover:text-ink"
+                  data-cursor-target
+                >
+                  Is automation for you?
+                </a>
+              </li>
             </ul>
           </nav>
 
