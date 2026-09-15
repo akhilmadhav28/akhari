@@ -71,17 +71,39 @@ export const PROCESS: { title: string; body: string }[] = [
   },
 ]
 
+/**
+ * Philosophy, consolidated 2026-09-15 from three unrelated single-line beliefs
+ * (Stoicism / Scientific rationality / Routine, deliberately) into one
+ * connected statement, written by Akhil directly rather than drafted here.
+ * Kept as one intro plus a sequence rather than a 3-card grid on purpose —
+ * these build on each other (the founding risk grounds the first idea, the
+ * first idea leads into the next) rather than standing as parallel,
+ * independent beliefs the way the old grid implied.
+ */
+export const PHILOSOPHY_INTRO = {
+  heading: 'We build the way we think.',
+  body: 'Akhari started with two people who quit stable jobs to bet on this — no safety net, no fallback. That kind of decision only makes sense if you have a clear philosophy about how to act when the outcome isn’t guaranteed. Ours comes from a few consistent ideas, tested in our own lives before we ever applied them to client work.',
+}
+
 export const PHILOSOPHY: { title: string; body: string }[] = [
   {
-    title: 'Stoicism',
-    body: 'Don’t spend energy on what you can’t control — a client’s legacy spreadsheet, an API that changes without notice — and put all of it into the part you can, which is the system in front of you today. In practice: when something upstream breaks, we fix what’s ours to fix instead of billing a client to relitigate whose fault it was.',
+    title: 'Control what’s actually yours to control.',
+    body: 'We don’t spend energy on outcomes we can’t influence — market conditions, what competitors do, whether a lead responds. We spend it entirely on the part that’s ours: the quality of the work, how fast we deliver, whether what we build actually gets used. That discipline isn’t abstract for us — it’s how we handled failing at something the first time, more than once, before finding the path that worked.',
   },
   {
-    title: 'Scientific rationality',
-    body: 'Decisions get made from what’s measured, not from what feels right. If a workflow isn’t provably faster or cheaper than what it replaced, it doesn’t ship as a win.',
+    title: 'Adapt faster than the thing you’re building for.',
+    body: 'Businesses that survive aren’t the ones with the fanciest system — they’re the ones that keep adjusting as conditions change. We build automation the same way: not a rigid, one-time install, but something that gets revised as your business actually runs, because the first version is never the last version.',
   },
   {
-    title: 'Routine, deliberately',
-    body: 'The same discipline that gets a person to show up and do a thing the same way every day is, at the scale of a business, what an automation is. That’s not a metaphor here — it’s the whole company.',
+    title: 'Play the long game, not the trend.',
+    body: 'We’re not chasing whatever’s loud this month. Good systems take patience to build right, and we’d rather be the automation that’s still running quietly in a year than the flashy demo that breaks the first time something unexpected happens.',
+  },
+  {
+    title: 'Use leverage, not just effort.',
+    body: 'The old way to grow a business was to trade more hours for more output. AI changes that math — one well-built system can do the work of hours, every day, without anyone having to be there. That’s the actual product we sell: not a tool, but leverage you didn’t have before.',
+  },
+  {
+    title: 'Prove it before you sell it.',
+    body: 'Before Akhari ever had a paying client, we built real systems for real businesses — for free — because we wanted proof it worked, not just a pitch that sounded good. We still think that way. We’d rather show you something working than tell you it will.',
   },
 ]
