@@ -37,14 +37,14 @@ function Section({
 
 export function Privacy() {
   useEffect(() => {
-    document.title = 'Privacy Policy — Akhari'
+    document.title = 'Privacy Policy · Akhari'
   }, [])
 
   return (
     <div className="min-h-screen bg-void">
       <header className="border-b border-line">
         <div className="wrap-narrow flex h-20 items-center justify-between">
-          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} — home`}>
+          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
             <img
               src="/brand/logo-mark-sm.png"
               alt=""
@@ -78,7 +78,7 @@ export function Privacy() {
           {BRAND.name} ("{BRAND.name}", "we", "us") is an AI partner for businesses, run by Akhil
           Madhav and Hari Prasad out of {BRAND.location}. This policy explains what we collect through{' '}
           <span className="text-ink">akhari.in</span> (the "Site"), and how we handle data
-          when we design, build and operate automation systems for clients — including systems
+          when we design, build and operate automation systems for clients, including systems
           that integrate the LinkedIn API or run on the n8n workflow-automation platform.
         </p>
 
@@ -86,7 +86,7 @@ export function Privacy() {
           <Section n="01" title="Scope">
             <p>
               This policy covers two things: the Site itself, and the automation systems Akhari
-              builds and operates for clients. Where they differ, each section says so — the Site
+              builds and operates for clients. Where they differ, each section says so: the Site
               is small and collects almost nothing on its own; a delivered automation can handle
               real customer data on a client's behalf, and that is where most of this policy
               applies.
@@ -103,7 +103,7 @@ export function Privacy() {
             <p>The Site does not run analytics, does not set tracking cookies, and does not ask you to create an account. Specifically:</p>
             <ul className="list-disc space-y-2 pl-5">
               <li>
-                <span className="text-ink">Contact details you give us directly</span> — if you
+                <span className="text-ink">Contact details you give us directly</span>: if you
                 email {BRAND.email}, call {BRAND.phone}, or write to us some other way, we hold
                 whatever you send (your address, phone number, and the content of the message) for
                 as long as it takes to answer you and, if we start working together, for the
@@ -112,7 +112,7 @@ export function Privacy() {
               <li>
                 <span className="text-ink">The live pipeline demo</span> on the Site (the "Try it
                 on a real message" panel) runs entirely in your browser. Whatever you type into it
-                is parsed on your device and is never transmitted anywhere — we do not see it,
+                is parsed on your device and is never transmitted anywhere: we do not see it,
                 store it, or log it.
               </li>
               <li>
@@ -120,19 +120,19 @@ export function Privacy() {
                 <a href="/is-automation-for-you" className="text-accent underline underline-offset-2">
                   Is automation for you?
                 </a>{' '}
-                works the same way — which boxes you tick lives in your browser only, for as long
+                works the same way: which boxes you tick lives in your browser only, for as long
                 as the page is open, and is never sent anywhere.
               </li>
               <li>
                 <span className="text-ink">Standard hosting logs.</span> The Site is served by
-                Vercel, which — like any web host — records basic connection metadata (IP address,
+                Vercel, which, like any web host, records basic connection metadata (IP address,
                 user agent, request timestamps) for security and reliability. We do not access
                 this beyond what Vercel's own dashboard provides and do not combine it with any
                 other data we hold.
               </li>
             </ul>
             <p>
-              If that changes — for example, if we add product analytics — we will update this
+              If that changes, for example if we add product analytics, we will update this
               policy first and describe what is added and why.
             </p>
           </Section>
@@ -161,21 +161,21 @@ export function Privacy() {
             <p>
               The Site does not use tracking or advertising cookies. Any cookie a browser sets on
               this domain is limited to what is strictly necessary for the page to function (for
-              example, remembering a reduced-motion preference) — nothing that identifies you or
+              example, remembering a reduced-motion preference), nothing that identifies you or
               follows you elsewhere.
             </p>
           </Section>
 
           <Section n="06" title="The LinkedIn API">
             <p>
-              Some systems Akhari builds — for the Site's own outreach or for a client — connect
+              Some systems Akhari builds, for the Site's own outreach or for a client, connect
               to the LinkedIn API to read or act on data a user has explicitly authorized through
               LinkedIn's own OAuth consent screen. In every such integration:
             </p>
             <ul className="list-disc space-y-2 pl-5">
               <li>
                 We request only the scopes an integration actually needs, and only after the
-                LinkedIn account holder has granted permission through LinkedIn directly — we
+                LinkedIn account holder has granted permission through LinkedIn directly: we
                 never ask for or handle a LinkedIn password.
               </li>
               <li>
@@ -205,8 +205,8 @@ export function Privacy() {
             <p>
               Akhari builds automations on n8n, a workflow-automation engine that we typically
               self-host on infrastructure controlled by Akhari or by the client. Where an n8n
-              workflow processes personal data as part of a delivered system — routing a customer
-              message, writing a row to a database, sending a notification — Akhari acts as a data
+              workflow processes personal data as part of a delivered system (routing a customer
+              message, writing a row to a database, sending a notification), Akhari acts as a data
               processor on the client's behalf, not as the owner of that data.
             </p>
             <ul className="list-disc space-y-2 pl-5">
@@ -225,12 +225,12 @@ export function Privacy() {
 
           <Section n="08" title="Sub-processors and third parties we use">
             <ul className="list-disc space-y-2 pl-5">
-              <li><span className="text-ink">Vercel</span> — hosts this Site.</li>
-              <li><span className="text-ink">n8n</span> (self-hosted) — runs delivered automations.</li>
-              <li><span className="text-ink">LinkedIn API</span> — only where a specific integration is authorized, as described in Section&nbsp;6.</li>
+              <li><span className="text-ink">Vercel</span> · hosts this Site.</li>
+              <li><span className="text-ink">n8n</span> (self-hosted) · runs delivered automations.</li>
+              <li><span className="text-ink">LinkedIn API</span> · only where a specific integration is authorized, as described in Section&nbsp;6.</li>
               <li>
                 Any other service a particular client engagement connects to (a CRM, a database, a
-                messaging API) — always disclosed to that client as part of the build, since they
+                messaging API), always disclosed to that client as part of the build, since they
                 are the ones authorizing the connection.
               </li>
             </ul>
@@ -298,7 +298,7 @@ export function Privacy() {
 
           <Section n="15" title="Contact">
             <p>
-              Akhil Madhav &amp; Hari Prasad, {BRAND.name} — {BRAND.location}.
+              Akhil Madhav &amp; Hari Prasad, {BRAND.name} · {BRAND.location}.
               <br />
               <a href={`mailto:${BRAND.email}`} className="text-accent underline underline-offset-2">
                 {BRAND.email}

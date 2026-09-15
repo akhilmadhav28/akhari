@@ -17,7 +17,7 @@
 export const AWARENESS_POINTS: { title: string; body: string }[] = [
   {
     title: "You don't need to call it automation",
-    body: 'If someone on your team retypes a WhatsApp order into a spreadsheet, checks Tally against stock by hand, or sends the same follow-up message every week because otherwise it would not get sent — that is already the kind of work automation replaces. Most owners do not recognise it as that, because it does not look like the "AI" they see written about elsewhere.',
+    body: 'If someone on your team retypes a WhatsApp order into a spreadsheet, checks Tally against stock by hand, or sends the same follow-up message every week because otherwise it would not get sent. That is already the kind of work automation replaces. Most owners do not recognise it as that, because it does not look like the "AI" they see written about elsewhere.',
   },
   {
     title: "The gap is usually what it looks like, not whether it fits",
@@ -28,11 +28,11 @@ export const AWARENESS_POINTS: { title: string; body: string }[] = [
     // because it is not one. The pattern it points at (smallest firms most
     // likely to self-exclude) is what the rest of this page is written
     // around either way.
-    body: 'In one widely cited study, 82% of businesses under five employees said automation just did not apply to them — a number that drops sharply as the business gets bigger, which is a sign it was never really about fit. Most of that research comes from outside India, but the shape of the finding holds here too: the smallest businesses are the ones most likely to assume this is for someone else, and that belief fades the moment they see it done in a business that runs the way theirs does.',
+    body: 'In one widely cited study, 82% of businesses under five employees said automation just did not apply to them, a number that drops sharply as the business gets bigger, which is a sign it was never really about fit. Most of that research comes from outside India, but the shape of the finding holds here too: the smallest businesses are the ones most likely to assume this is for someone else, and that belief fades the moment they see it done in a business that runs the way theirs does.',
   },
   {
     title: 'This is written for how a Hyderabad business actually runs',
-    body: "Orders on WhatsApp, books in Tally, some customers paying cash on delivery — none of that is a reason automation does not apply. It is the starting point every one of Akhari's actual case studies started from.",
+    body: "Orders on WhatsApp, books in Tally, some customers paying cash on delivery; none of that is a reason automation does not apply. It is the starting point every one of Akhari's actual case studies started from.",
   },
 ]
 
@@ -45,12 +45,12 @@ export const MYTHS: Myth[] = [
   {
     claim: '"Automation means buying expensive enterprise software."',
     reality:
-      'The systems behind this page’s own case studies run on a script and a low-cost server, not a six-figure platform. The tool is rarely the expensive part of automating something — working out what is actually worth automating is, which is the whole point of an audit before a quote.',
+      'The systems behind this page’s own case studies run on a script and a low-cost server, not a six-figure platform. The tool is rarely the expensive part of automating something: working out what is actually worth automating is, which is the whole point of an audit before a quote.',
   },
   {
     claim: '"We tried AI tools already and they did not really help."',
     reality:
-      'That is a common outcome, and it is usually not because automation does not work — it is because the wrong thing got automated, or the person who set it up moved on before it was actually working. The fix is not more AI. It is a narrower first target, and someone who is still around three months later when something breaks.',
+      'That is a common outcome, and it is usually not because automation does not work: it is because the wrong thing got automated, or the person who set it up moved on before it was actually working. The fix is not more AI. It is a narrower first target, and someone who is still around three months later when something breaks.',
   },
 ]
 
@@ -71,8 +71,8 @@ export const TIERS: AutomationTier[] = [
   {
     level: '02',
     name: 'AI reading and deciding',
-    description: "Handles input that is not identical every time — reads what came in, works out what it actually means, and responds accordingly.",
-    example: "A customer message gets read, understood, and routed to the right person — not scanned for keywords, actually understood.",
+    description: "Handles input that is not identical every time: reads what came in, works out what it actually means, and responds accordingly.",
+    example: "A customer message gets read, understood, and routed to the right person: not scanned for keywords, actually understood.",
   },
   {
     level: '03',
@@ -90,7 +90,7 @@ export interface GlossaryTerm {
 export const GLOSSARY: GlossaryTerm[] = [
   {
     term: 'Workflow',
-    definition: 'The actual sequence a task follows in your business today — an order becomes a delivery, a message becomes a booking. Automation follows that same sequence; it does not invent a new one.',
+    definition: 'The actual sequence a task follows in your business today: an order becomes a delivery, a message becomes a booking. Automation follows that same sequence; it does not invent a new one.',
   },
   {
     term: 'API',
@@ -98,19 +98,19 @@ export const GLOSSARY: GlossaryTerm[] = [
   },
   {
     term: 'Webhook',
-    definition: 'A doorbell one system rings the moment something happens — a form is submitted, an order lands — so whatever is listening can react immediately instead of someone checking back later.',
+    definition: 'A doorbell one system rings the moment something happens (a form is submitted, an order lands) so whatever is listening can react immediately instead of someone checking back later.',
   },
   {
     term: 'Integration',
-    definition: 'Two tools you already use — Tally and WhatsApp, say — set up to pass information to each other automatically.',
+    definition: 'Two tools you already use (Tally and WhatsApp, say) set up to pass information to each other automatically.',
   },
   {
     term: 'AI agent',
-    definition: 'A system that can read something written in plain language, work out what it is asking for, and act on it — the difference between a phone tree and someone who actually picks up.',
+    definition: 'A system that can read something written in plain language, work out what it is asking for, and act on it: the difference between a phone tree and someone who actually picks up.',
   },
   {
     term: 'n8n',
-    definition: 'The tool most of the systems on this site are actually built on — a way of wiring the steps above together without writing a program from scratch every time.',
+    definition: 'The tool most of the systems on this site are actually built on: a way of wiring the steps above together without writing a program from scratch every time.',
   },
 ]
 
@@ -177,13 +177,13 @@ export const SCORE_BANDS: ScoreBand[] = [
     min: 0,
     max: 1,
     verdict: 'Probably not yet',
-    body: 'Nothing here points at an obvious first system. That is a fine, honest answer — not every business needs this right now, and it is worth revisiting if that changes.',
+    body: 'Nothing here points at an obvious first system. That is a fine, honest answer: not every business needs this right now, and it is worth revisiting if that changes.',
   },
   {
     min: 2,
     max: 3,
     verdict: 'Worth a closer look',
-    body: 'At least one of these is quietly costing you real time. That does not mean a large project — often it means one narrow, specific fix.',
+    body: 'At least one of these is quietly costing you real time. That does not mean a large project: often it means one narrow, specific fix.',
   },
   {
     min: 4,
@@ -195,5 +195,5 @@ export const SCORE_BANDS: ScoreBand[] = [
 
 export const CONSISTENCY_CAVEAT: { title: string; body: string } = {
   title: 'One thing worth knowing first',
-  body: 'You checked at least one box above about how inconsistently this runs today. That is worth fixing before it is worth automating — deciding how the task should go, once, so that automating it does not just make three different versions of it happen faster. This is exactly the kind of thing a free audit call sorts out before anything gets built.',
+  body: 'You checked at least one box above about how inconsistently this runs today. That is worth fixing before it is worth automating: deciding how the task should go, once, so that automating it does not just make three different versions of it happen faster. This is exactly the kind of thing a free audit call sorts out before anything gets built.',
 }

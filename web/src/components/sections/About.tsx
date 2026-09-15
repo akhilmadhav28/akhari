@@ -21,14 +21,14 @@ export function About() {
       <Reveal stagger className="mt-8 max-w-[34rem] space-y-5 text-ink-dim">
         <p>
           We work as your AI partner, not a vendor you brief once and chase afterwards. That means
-          building around how a business here actually runs — your accounts are in Tally, your
-          orders arrive on WhatsApp, half your customers pay cash on delivery — rather than asking
+          building around how a business here actually runs (your accounts are in Tally, your
+          orders arrive on WhatsApp, half your customers pay cash on delivery) rather than asking
           you to abandon it.
         </p>
         <p>
           The systems we have built are still running months later, because the last step is the
           one most agencies skip: we stay on to keep them alive when APIs change and the business
-          changes — the WhatsApp integration that quietly breaks, the Tally export that changes
+          changes: the WhatsApp integration that quietly breaks, the Tally export that changes
           shape, the credential about to expire. Staying on means watching for that and keeping the
           connections between your tools secure, not billing you for an undefined "support" line
           once a year.

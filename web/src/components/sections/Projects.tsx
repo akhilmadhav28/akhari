@@ -310,7 +310,7 @@ function ListedProject({ project, index }: { project: Project; index: number }) 
                   behind text this dim measured 4.0-4.1:1 in ~20% of runs.
                   text-muted computes to ~4.47:1 in the same worst case, too
                   close to trust; ink-dim clears it with real margin. */}
-              <span className="ml-1.5 text-ink-dim">— {project.person}</span>
+              <span className="ml-1.5 text-ink-dim">– {project.person}</span>
             </p>
           )}
         </div>

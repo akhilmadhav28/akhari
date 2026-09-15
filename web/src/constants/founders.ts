@@ -18,14 +18,14 @@ export const FOUNDERS: Founder[] = [
   {
     id: 'akhil',
     name: 'Akhil Madhav',
-    role: 'Co-founder — Build & Delivery',
-    bio: 'Akhil started as an entrepreneur too — a personalized gifting business that had to close when the lockdown hit. He spent the next stretch preparing for the UPSC civil services exam, and after three attempts that didn’t land, joined an EdTech company in sales. It was there, given the chance to build the automations behind his own job, that the pull back toward building things himself became impossible to ignore. Akhari is that: he scopes and builds every system it ships, with no handoff and no account manager standing between him and the work.',
+    role: 'Co-founder · Build & Delivery',
+    bio: 'Akhil started as an entrepreneur too: a personalized gifting business that had to close when the lockdown hit. He spent the next stretch preparing for the UPSC civil services exam, and after three attempts that didn’t land, joined an EdTech company in sales. It was there, given the chance to build the automations behind his own job, that the pull back toward building things himself became impossible to ignore. Akhari is that: he scopes and builds every system it ships, with no handoff and no account manager standing between him and the work.',
   },
   {
     id: 'hari',
     name: 'Hari Prasad',
-    role: 'Co-founder — Marketing & Sales',
-    bio: 'Hari spent six years in the semiconductor industry, joining one company when it was three people and building the sales motion that helped take it past seventy — the pipeline, the outreach, the playbook that made that growth repeatable instead of lucky. Several organizations after that taught him the same lesson from different angles: most companies expect a lot from the people in them without giving those people the guidance to deliver it. Akhari is his answer to that as much as it is a business — built to run differently for the people in it, starting with the two founders.',
+    role: 'Co-founder · Marketing & Sales',
+    bio: 'Hari spent six years in the semiconductor industry, joining one company when it was three people and building the sales motion that helped take it past seventy: the pipeline, the outreach, the playbook that made that growth repeatable instead of lucky. Several organizations after that taught him the same lesson from different angles: most companies expect a lot from the people in them without giving those people the guidance to deliver it. Akhari is his answer to that as much as it is a business, built to run differently for the people in it, starting with the two founders.',
   },
 ]
 
@@ -55,7 +55,7 @@ export const ORIGIN =
 export const PROCESS: { title: string; body: string }[] = [
   {
     title: 'Free audit call',
-    body: 'We map how the work actually moves — who touches it, what it costs in time, what breaks first — and rank what is worth automating before quoting anything. No cost, no obligation either way.',
+    body: 'We map how the work actually moves (who touches it, what it costs in time, what breaks first) and rank what is worth automating before quoting anything. No cost, no obligation either way.',
   },
   {
     title: 'Fixed price after that',
@@ -82,17 +82,17 @@ export const PROCESS: { title: string; body: string }[] = [
  */
 export const PHILOSOPHY_INTRO = {
   heading: 'We build the way we think.',
-  body: 'Akhari started with two people who quit stable jobs to bet on this — no safety net, no fallback. That kind of decision only makes sense if you have a clear philosophy about how to act when the outcome isn’t guaranteed. Ours comes from a few consistent ideas, tested in our own lives before we ever applied them to client work.',
+  body: 'Akhari started with two people who quit stable jobs to bet on this: no safety net, no fallback. That kind of decision only makes sense if you have a clear philosophy about how to act when the outcome isn’t guaranteed. Ours comes from a few consistent ideas, tested in our own lives before we ever applied them to client work.',
 }
 
 export const PHILOSOPHY: { title: string; body: string }[] = [
   {
     title: 'Control what’s actually yours to control.',
-    body: 'We don’t spend energy on outcomes we can’t influence — market conditions, what competitors do, whether a lead responds. We spend it entirely on the part that’s ours: the quality of the work, how fast we deliver, whether what we build actually gets used. That discipline isn’t abstract for us — it’s how we handled failing at something the first time, more than once, before finding the path that worked.',
+    body: 'We don’t spend energy on outcomes we can’t influence: market conditions, what competitors do, whether a lead responds. We spend it entirely on the part that’s ours: the quality of the work, how fast we deliver, whether what we build actually gets used. That discipline isn’t abstract for us. It’s how we handled failing at something the first time, more than once, before finding the path that worked.',
   },
   {
     title: 'Adapt faster than the thing you’re building for.',
-    body: 'Businesses that survive aren’t the ones with the fanciest system — they’re the ones that keep adjusting as conditions change. We build automation the same way: not a rigid, one-time install, but something that gets revised as your business actually runs, because the first version is never the last version.',
+    body: 'Businesses that survive aren’t the ones with the fanciest system. They’re the ones that keep adjusting as conditions change. We build automation the same way: not a rigid, one-time install, but something that gets revised as your business actually runs, because the first version is never the last version.',
   },
   {
     title: 'Play the long game, not the trend.',
@@ -100,10 +100,10 @@ export const PHILOSOPHY: { title: string; body: string }[] = [
   },
   {
     title: 'Use leverage, not just effort.',
-    body: 'The old way to grow a business was to trade more hours for more output. AI changes that math — one well-built system can do the work of hours, every day, without anyone having to be there. That’s the actual product we sell: not a tool, but leverage you didn’t have before.',
+    body: 'The old way to grow a business was to trade more hours for more output. AI changes that math: one well-built system can do the work of hours, every day, without anyone having to be there. That’s the actual product we sell: not a tool, but leverage you didn’t have before.',
   },
   {
     title: 'Prove it before you sell it.',
-    body: 'Before Akhari ever had a paying client, we built real systems for real businesses — for free — because we wanted proof it worked, not just a pitch that sounded good. We still think that way. We’d rather show you something working than tell you it will.',
+    body: 'Before Akhari ever had a paying client, we built real systems for real businesses, for free, because we wanted proof it worked, not just a pitch that sounded good. We still think that way. We’d rather show you something working than tell you it will.',
   },
 ]

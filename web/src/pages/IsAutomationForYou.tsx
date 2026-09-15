@@ -29,7 +29,7 @@ import {
  */
 export function IsAutomationForYou() {
   useEffect(() => {
-    document.title = 'Is automation for you? — Akhari'
+    document.title = 'Is automation for you? · Akhari'
   }, [])
 
   const [checked, setChecked] = useState<Set<string>>(new Set())
@@ -58,7 +58,7 @@ export function IsAutomationForYou() {
     <div className="min-h-screen bg-void">
       <header className="border-b border-line">
         <div className="wrap-narrow flex h-20 items-center justify-between">
-          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} — home`}>
+          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
             <img
               src="/brand/logo-mark-sm.png"
               alt=""
@@ -89,7 +89,7 @@ export function IsAutomationForYou() {
         <h1 className="mt-5 text-[2.25rem] sm:text-[2.75rem]">Is automation for you?</h1>
 
         <p className="mt-6 max-w-[38rem] text-[1.05rem] leading-relaxed text-ink-dim">
-          Not a sales page — a plain answer to a question a lot of small-business owners have
+          Not a sales page, a plain answer to a question a lot of small-business owners have
           and nobody has told them straight: whether any of this is actually meant for a
           business that runs the way yours does.
         </p>
@@ -242,7 +242,7 @@ export function IsAutomationForYou() {
             without selling it; this page has even less reason to end any
             other way. */}
         <p className="mt-14 max-w-[38rem] text-[0.95rem] leading-relaxed text-ink-dim">
-          If any of this looked like your business, the next step is small — one free call that
+          If any of this looked like your business, the next step is small: one free call that
           maps what is actually happening before anyone talks about building anything.{' '}
           <a
             href={`mailto:${BRAND.email}`}

@@ -27,11 +27,11 @@ export interface GuideLine {
 }
 
 const MODULE_LINES: Record<string, string> = {
-  trigger: 'It starts here — a trigger, the moment worth acting on.',
-  api: 'It pulls in the real data. Not a demo — an actual API.',
+  trigger: 'It starts here: a trigger, the moment worth acting on.',
+  api: 'It pulls in the real data. Not a demo. An actual API.',
   ai: 'AI reads it and decides what happens next.',
   database: 'Every decision gets saved, so nothing is lost or repeated.',
-  logic: "Not every case is the same — logic sends it down the right path.",
+  logic: "Not every case is the same. Logic sends it down the right path.",
   notification: "The right person hears about it immediately, on WhatsApp.",
   output: 'Done. No one had to be there for any of it.',
 }
@@ -40,7 +40,7 @@ export const GUIDE_SCRIPT: GuideLine[] = [
   {
     id: 'hero',
     trigger: { kind: 'hero' },
-    text: 'Watch this build itself — the same shape as what we ship.',
+    text: 'Watch this build itself: the same shape as what we ship.',
   },
   ...NODES.map((n) => ({
     id: `module-${n.id}`,
@@ -50,6 +50,6 @@ export const GUIDE_SCRIPT: GuideLine[] = [
   {
     id: 'climax',
     trigger: { kind: 'climax' },
-    text: 'This is what runs behind Akhari — quietly, every day.',
+    text: 'This is what runs behind Akhari, quietly, every day.',
   },
 ]

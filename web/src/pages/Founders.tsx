@@ -10,14 +10,14 @@ import { FOUNDERS, ORIGIN, PHILOSOPHY, PHILOSOPHY_INTRO, PROCESS } from '@/const
  */
 export function Founders() {
   useEffect(() => {
-    document.title = 'Founders — Akhari'
+    document.title = 'Founders · Akhari'
   }, [])
 
   return (
     <div className="min-h-screen bg-void">
       <header className="border-b border-line">
         <div className="wrap-narrow flex h-20 items-center justify-between">
-          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} — home`}>
+          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
             <img
               src="/brand/logo-mark-sm.png"
               alt=""
@@ -90,7 +90,7 @@ export function Founders() {
             point: this is two founders and a real business, not a single
             freelancer's calendar with a website attached to it. */}
         <p className="mt-8 max-w-[38rem] text-[0.95rem] leading-relaxed text-ink-dim">
-          Neither of us disappears if the other is unreachable for a day — Akhari is two founders
+          Neither of us disappears if the other is unreachable for a day: Akhari is two founders
           running a real business together, not one freelancer's calendar with a website attached.
         </p>
 

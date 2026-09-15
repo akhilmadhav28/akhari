@@ -77,7 +77,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'legacy',
     client: 'Legacy Microtronix',
-    person: 'Aravind Nair — Director',
+    person: 'Aravind Nair · Director',
     title: 'Four spreadsheets became one live screen',
     body: 'Profit, stock and staffing lived in separate files that were reconciled by hand, days late. Now they are one dashboard that updates itself.',
     architecture: ['Sheets + ERP export', 'scheduled sync', 'aggregation', 'live dashboard'],
@@ -88,7 +88,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'bp-batteries',
     client: 'BP Industrial Batteries',
-    person: 'Gaurav Shukla — Owner',
+    person: 'Gaurav Shukla · Owner',
     title: 'Posting that does not depend on remembering',
     // Confirmed 2026-09-11 as the real pipeline — was previously a
     // reconstruction from a one-line brief on the old site.
@@ -101,7 +101,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'imu',
     client: 'IMU Imports & Exports',
-    person: 'Mohammed Imran — Proprietor',
+    person: 'Mohammed Imran · Proprietor',
     title: 'Leads that arrive without anyone looking',
     body: 'Prospecting was a person with browser tabs. It became a scheduled job that finds, filters and enriches, then files the result.',
     architecture: ['scheduled crawl', 'filter + dedupe', 'enrichment', 'CRM + daily digest'],
@@ -112,7 +112,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'eight-audio',
     client: 'Eight Audio',
-    person: 'Vanga Shravanth Reddy — CEO',
+    person: 'Vanga Shravanth Reddy · CEO',
     title: 'Attendance and posting that run themselves',
     body: 'Two jobs that only happened when somebody remembered: reconciling attendance, and putting content out. Neither needs a person now.',
     architecture: ['biometric export', 'sync', 'dashboard', 'content queue', 'scheduler'],

@@ -232,9 +232,9 @@ function draftReply(x: Omit<Extraction, 'reply'>, deadline: string | null): stri
 
   switch (x.intent) {
     case 'ORDER':
-      return `Got it${what ? ` — ${what}${dated ? ` for ${dated}` : ''}` : ''}. Checking stock now and I will come back ${via} with confirmation and a delivery date ${soon}.`
+      return `Got it${what ? `, ${what}${dated ? ` for ${dated}` : ''}` : ''}. Checking stock now and I will come back ${via} with confirmation and a delivery date ${soon}.`
     case 'QUOTE':
-      return `Thanks — I can price this${what ? ` for ${what}` : ''}${
+      return `Thanks. I can price this${what ? ` for ${what}` : ''}${
         dated ? `, delivered ${dated}` : ''
       }. Sending the rate ${via} ${
         x.urgency === 'high' ? 'within the hour' : 'by end of day'

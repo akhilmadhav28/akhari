@@ -16,7 +16,7 @@ import { BRAND } from '@/constants/brand'
  */
 export function NotFound() {
   useEffect(() => {
-    document.title = 'Page not found — Akhari'
+    document.title = 'Page not found · Akhari'
     const meta = document.createElement('meta')
     meta.name = 'robots'
     meta.content = 'noindex'
@@ -30,7 +30,7 @@ export function NotFound() {
     <div className="flex min-h-screen flex-col bg-void">
       <header className="border-b border-line">
         <div className="wrap-narrow flex h-20 items-center justify-between">
-          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} — home`}>
+          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
             <img
               src="/brand/logo-mark-sm.png"
               alt=""
@@ -55,7 +55,7 @@ export function NotFound() {
         <h1 className="mt-5 text-[2.25rem] sm:text-[2.75rem]">That page doesn't exist.</h1>
 
         <p className="mt-6 max-w-[34rem] text-[1.05rem] leading-relaxed text-ink-dim">
-          The link that brought you here is either old or mistyped — nothing on{' '}
+          The link that brought you here is either old or mistyped: nothing on{' '}
           <span className="text-ink">akhari.in</span> lives at this address.
         </p>
 

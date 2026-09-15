@@ -98,7 +98,7 @@ export function Nav() {
           }}
           className="flex items-center gap-3"
           data-cursor-target
-          aria-label={`${BRAND.name} — home`}
+          aria-label={`${BRAND.name} · home`}
         >
           <img
             src="/brand/logo-mark-sm.png"

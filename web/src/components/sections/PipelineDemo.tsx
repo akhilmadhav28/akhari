@@ -143,7 +143,7 @@ export function PipelineDemo() {
       </div>
 
       <p className="mt-2 text-[0.85rem] leading-relaxed text-muted">
-        Edit it, or write your own the way a customer actually would. It reads what you type —
+        Edit it, or write your own the way a customer actually would. It reads what you type:
         change the day, drop the phone number, make it a complaint, and watch the routing change.
       </p>
 
