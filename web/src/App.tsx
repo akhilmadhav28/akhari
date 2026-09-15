@@ -5,7 +5,7 @@ import { Nav } from '@/components/ui/Nav'
 import { Cursor } from '@/components/ui/Cursor'
 import { Footer } from '@/components/ui/Footer'
 import { Hero } from '@/components/sections/Hero'
-import { WorkflowHUD } from '@/components/sections/WorkflowHUD'
+import { GuideCaption } from '@/components/sections/GuideCaption'
 import { About } from '@/components/sections/About'
 import { Services } from '@/components/sections/Services'
 import { Projects } from '@/components/sections/Projects'
@@ -81,7 +81,7 @@ export default function App() {
         </SceneBoundary>
       )}
 
-      <WorkflowHUD />
+      <GuideCaption />
 
       {/* z-10 lifts the document above the fixed canvas at z-0. */}
       <main className="relative z-10">

@@ -4,7 +4,8 @@ import { useFrame } from '@react-three/fiber'
 import type { DeviceProfile } from '@/lib/perf/device'
 import { prefersReducedMotion } from '@/lib/perf/device'
 import { scroll } from '@/lib/scroll/scrollStore'
-import { damp } from '@/lib/animation/math'
+import { anchors } from '@/lib/scene/anchors'
+import { clamp, damp, remap } from '@/lib/animation/math'
 import { NODES } from '@/constants/workflow'
 import { C } from '@/constants/brand'
 import { MAX_PULSES } from '@/lib/scene/flowState'
@@ -15,11 +16,18 @@ import { CABLE_FRAG, CABLE_VERT } from './Connection'
 const OUTPUT_NODE = NODES.find((n) => n.id === 'output')!
 
 /**
- * The system waking up.
+ * The guide, waking up.
  *
- * The last cable lands as the closing section arrives, `scroll.reveal` ramps
- * 0→1 from that moment, and this is what it drives: a graded clip mapped onto a
- * plane sitting behind the network, in the same space as the modules.
+ * This used to be a pure payoff — invisible until the closing section, then
+ * powered on by the last cable landing. It is now also the guide the homepage
+ * narrates through (see `GuideCaption`, the DOM half of the same idea) — but
+ * it stays a payoff too, not just a companion, because its position is
+ * outside the camera's frustum for most of the page (see `armThreshold`
+ * below). It fades dimly into frame partway through, well before the climax,
+ * then the last cable landing still switches it fully on exactly as before.
+ * `scroll.reveal` is still the only input driving the climax half of that;
+ * `scroll.progress`, measured against `anchors.revealAt`, drives the new
+ * early-arrival half.
  *
  * ── Why this is in the scene and not in the DOM ─────────────────────────────
  * It was a DOM element for a long time — a `<video>` with `mix-blend-mode:
@@ -55,7 +63,8 @@ const OUTPUT_NODE = NODES.find((n) => n.id === 'output')!
  * additive blending turns directly into a soft edge.
  *
  * This is also the seam for the planned three.js figure: replace the mesh,
- * keep `scroll.reveal` as the only input.
+ * keep `scroll.reveal` (now joined by `scroll.progress`, see above) as the
+ * only input.
  */
 
 const CLIP = '/media/robot.mp4'
@@ -105,14 +114,31 @@ function socketPosition(compact: boolean): THREE.Vector3 {
   )
 }
 
+/** How far before `anchors.revealAt`, in progress units, the figure starts
+ *  fading dimly into frame. Not a magic number in the sense `anchors.ts`
+ *  warns against — it's a lead measured relative to a DOM-derived value, not
+ *  a hardcoded absolute scroll position, so it still moves with the page. */
+const ARM_LEAD = 0.12
+
+/** Opacity ceiling while "not yet arrived" — the climax still has to read as
+ *  brighter than anything shown before it. */
+const BASE_MAX = 0.42
+
 export function RobotFigure({ profile }: RobotFigureProps) {
   const material = useRef<THREE.MeshBasicMaterial>(null)
   const shown = useRef(0)
   const playing = useRef(false)
+  // Scratch object, created once, mutated every frame — see the useFrame
+  // comment below for why this can't be a fresh THREE.Color per call.
+  const gainScratch = useMemo(() => new THREE.Color(), [])
 
-  // Only created once the closing section is near. Until then this component
-  // renders nothing and the clip is never fetched, so it costs visitors who
-  // do not reach the bottom of the page precisely nothing.
+  // Only created once the figure is about to enter frame at all. Until then
+  // this component renders nothing and the clip is never fetched, so it
+  // costs visitors who do not reach that point in the page precisely
+  // nothing. Measured against `anchors.revealAt` rather than a flat scroll
+  // number, so it tracks wherever the closing section actually lands —
+  // `anchors.revealAt` defaults to 1 before layout is measured, so this
+  // stays safely unarmed until real numbers exist.
   const [armed, setArmed] = useState(false)
 
   const video = useMemo(() => {
@@ -155,14 +181,23 @@ export function RobotFigure({ profile }: RobotFigureProps) {
   useFrame((_, delta) => {
     // Arming from the frame loop rather than an IntersectionObserver: the
     // scroll store is already the authority on where the visitor is, and the
-    // 3D layer has no DOM node of its own to observe.
-    if (!armed && scroll.progress > 0.62) setArmed(true)
+    // 3D layer has no DOM node of its own to observe. Threshold is measured
+    // from the DOM (anchors.revealAt), not a flat number — see ARM_LEAD.
+    const armThreshold = clamp(anchors.revealAt - ARM_LEAD)
+    if (!armed && scroll.progress > armThreshold) setArmed(true)
 
     const m = material.current
     if (!m) return
 
     const dt = Math.min(delta, 0.05)
-    shown.current = damp(shown.current, scroll.reveal, 2.6, dt)
+
+    // One continuous target, so there is no seam between "fading in dim" and
+    // the existing climax mechanic: at progress = revealAt this evaluates to
+    // exactly BASE_MAX (guideT = 1, reveal = 0), and rises from there to 1 as
+    // reveal itself rises 0→1.
+    const guideT = clamp(remap(scroll.progress, armThreshold, anchors.revealAt))
+    const target = BASE_MAX * guideT + (1 - BASE_MAX) * scroll.reveal
+    shown.current = damp(shown.current, target, 2.6, dt)
 
     // Each packet that lands down the feed lifts the figure briefly. This is
     // the whole point of the cable existing: without it the figure fades up on
@@ -170,6 +205,20 @@ export function RobotFigure({ profile }: RobotFigureProps) {
     // the graph is visibly the thing switching it on.
     link.arrive = damp(link.arrive, 0, 3.2, dt)
     m.opacity = Math.min(1, shown.current * (1 + link.arrive * 0.5))
+
+    // Opacity saturates at 1 well before the climax finishes building, so the
+    // lever for "beyond anything shown earlier" is gain, not opacity: lerp
+    // from a dim, desaturated baseline up to the existing full ROBOT_GAIN as
+    // the figure arrives, then let each cable pulse punch briefly past even
+    // that resting level. link.arrive is only ever nonzero once reveal ≥ 0.34
+    // (RobotLink's own gate below), so the pulse overshoot is automatically
+    // exclusive to the climax — nothing in the dim early phase can be
+    // mistaken for the payoff. Mutated in place: THREE.Color's copy/lerp/
+    // multiplyScalar don't allocate, matching the no-allocation-in-useFrame
+    // rule the rest of this file already follows.
+    gainScratch.copy(GAIN_BASE).lerp(ROBOT_GAIN, shown.current)
+    gainScratch.multiplyScalar(1 + link.arrive * 0.28)
+    m.color.copy(gainScratch)
 
     if (video && !playing.current && shown.current > 0.03) {
       playing.current = true
@@ -222,6 +271,11 @@ export function RobotFigure({ profile }: RobotFigureProps) {
 
 /** Map gain. See the note on `color` above. */
 const ROBOT_GAIN = new THREE.Color(2.1, 2.05, 1.95)
+
+/** Dim, slightly warm baseline the figure lerps up from while "not yet
+ *  arrived" — desaturated and low enough that it reads as distant/incomplete
+ *  next to the full ROBOT_GAIN it resolves into at the climax. */
+const GAIN_BASE = new THREE.Color(1.05, 1.0, 0.92)
 
 /**
  * The feed from the Output module into the figure.
