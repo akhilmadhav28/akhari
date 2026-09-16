@@ -49,35 +49,32 @@ export function Founders() {
 
         <p className="mt-6 max-w-[38rem] text-[1.05rem] leading-relaxed text-ink-dim">{ORIGIN}</p>
 
-        <figure className="relative mt-12 aspect-[3/2] w-full overflow-hidden rounded-lg border border-line bg-surface">
-          <img
-            src="/founders/hari-akhil.jpg"
-            alt="Hari Prasad and Akhil Madhav"
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover"
-          />
-          {[
-            'top-2 left-2 border-t border-l',
-            'top-2 right-2 border-t border-r',
-            'bottom-2 left-2 border-b border-l',
-            'bottom-2 right-2 border-b border-r',
-          ].map((pos) => (
-            <span
-              key={pos}
-              className={`pointer-events-none absolute h-3 w-3 border-accent/55 ${pos}`}
-              aria-hidden="true"
-            />
-          ))}
-          <figcaption className="mono-tag absolute bottom-2.5 left-4 text-[0.6rem] tracking-[0.16em] text-faint uppercase">
-            Hari Prasad &amp; Akhil Madhav
-          </figcaption>
-        </figure>
-
-        <div className="mt-14 grid gap-x-10 gap-y-10 border-t border-line pt-10 sm:grid-cols-2">
+        <div className="mt-14 grid gap-x-10 gap-y-14 border-t border-line pt-10 sm:grid-cols-2">
           {FOUNDERS.map((f) => (
             <div key={f.id}>
-              <h2 className="text-[1.15rem] font-sans font-semibold">{f.name}</h2>
+              <figure className="relative aspect-square w-full max-w-[16rem] overflow-hidden rounded-lg border border-line bg-surface">
+                <img
+                  src={f.photo}
+                  alt={f.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
+                {[
+                  'top-2 left-2 border-t border-l',
+                  'top-2 right-2 border-t border-r',
+                  'bottom-2 left-2 border-b border-l',
+                  'bottom-2 right-2 border-b border-r',
+                ].map((pos) => (
+                  <span
+                    key={pos}
+                    className={`pointer-events-none absolute h-3 w-3 border-accent/55 ${pos}`}
+                    aria-hidden="true"
+                  />
+                ))}
+              </figure>
+
+              <h2 className="mt-5 text-[1.15rem] font-sans font-semibold">{f.name}</h2>
               <p className="mono-tag mt-1 text-accent">{f.role}</p>
               <div className="mt-4 flex flex-col gap-4">
                 {f.bio.map((para, i) => (

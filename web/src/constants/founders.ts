@@ -13,6 +13,8 @@ export interface Founder {
   role: string
   /** One entry per paragraph — Hari's runs longer than Akhil's, by design. */
   bio: string[]
+  /** Path under `public/founders/`. */
+  photo: string
   email: string
   phone: string
   phoneHref: string
@@ -23,6 +25,7 @@ export const FOUNDERS: Founder[] = [
     id: 'akhil',
     name: 'Akhil Madhav',
     role: 'Co-founder · Delivery & Build',
+    photo: '/founders/akhil.jpg',
     bio: [
       'Before Akhari, Akhil spent years preparing for one of the most competitive paths in the country, and came up short more than once. That led somewhere he didn’t expect: a business development role at an EdTech company, where he started teaching himself to build with AI tools on the side, outside anything the job actually asked for. Voice agents, automated dashboards, lead-scraping systems: none of it was in his job description. It became the reason Akhari exists. He leads delivery and technical build, and sits in on client calls where the technical questions need real answers, not a sales pitch. Off the clock: a daily stoic practice and a few blitz chess games most nights.',
     ],
@@ -34,6 +37,7 @@ export const FOUNDERS: Founder[] = [
     id: 'hari',
     name: 'Hari Prasad',
     role: 'Co-founder · Chief Solutions Officer',
+    photo: '/founders/hari.jpg',
     bio: [
       'Hari brings over six years of experience across sales, business development, and commercial strategy, with a strong understanding of how businesses operate, and where they lose time, money, and momentum.',
       'He began his career at an early-stage startup, joining when the company had just three people, and helped build its sales operation as it grew beyond seventy employees. That experience gave him a practical understanding of customer acquisition, process building, team development, and the difference between isolated effort and a repeatable system.',
