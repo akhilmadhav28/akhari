@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { BRAND, NAV_LINKS } from '@/constants/brand'
+import { BRAND } from '@/constants/brand'
 import { PROJECTS } from '@/constants/content'
 import { scrollToHash } from '@/lib/scroll/useSmoothScroll'
 import { MagneticButton } from './MagneticButton'
@@ -50,10 +50,25 @@ const hyderabadTime = (): string =>
     minute: '2-digit',
   })
 
+/**
+ * Every link the site has, in one place, so the desktop dropdown and the
+ * mobile sheet can't quietly drift apart. `kind: 'anchor'` scrolls within the
+ * homepage via `scrollToHash`; `kind: 'page'` is a real navigation.
+ */
+const MENU_LINKS = [
+  { label: 'About', href: '#about', kind: 'anchor' },
+  { label: 'Services', href: '#services', kind: 'anchor' },
+  { label: 'Work', href: '#projects', kind: 'anchor' },
+  { label: 'Meet the founders', href: '/founders', kind: 'page' },
+  { label: 'Is automation for you?', href: '/is-automation-for-you', kind: 'page' },
+] as const
+
 export function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const panel = useRef<HTMLDivElement>(null)
+  const menu = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -76,8 +91,26 @@ export function Nav() {
     }
   }, [open])
 
+  // The desktop dropdown is a small, weightless panel rather than a full
+  // sheet, so it closes on Escape and on an outside click too — both are
+  // expected of a dropdown in a way neither is of the full-screen mobile menu.
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false)
+    const onClick = (e: MouseEvent) => {
+      if (menu.current && !menu.current.contains(e.target as Node)) setMenuOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('mousedown', onClick)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('mousedown', onClick)
+    }
+  }, [menuOpen])
+
   const go = (href: string) => {
     setOpen(false)
+    setMenuOpen(false)
     scrollToHash(href)
   }
 
@@ -120,38 +153,68 @@ export function Nav() {
         <LiveStatus />
 
         <div className="flex items-center gap-7">
-          <ul className="hidden items-center gap-7 md:flex">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
+          {/* One trigger instead of five links in a row — was the plain
+              inline list until "Meet the founders" and "Is automation for
+              you?" joined the three anchors and the bar started fighting
+              LiveStatus for room around 1024px. A dropdown holds all five at
+              any width instead of trading one problem for another. */}
+          <div className="relative hidden md:block" ref={menu}>
+            <button
+              type="button"
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-expanded={menuOpen}
+              aria-haspopup="true"
+              className="group flex items-center gap-1.5 font-mono text-[0.7rem] tracking-[0.12em] text-muted uppercase transition-colors hover:text-ink"
+              data-cursor-target
+            >
+              Menu
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className={`transition-transform duration-200 ${menuOpen ? 'rotate-180' : ''}`}
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+
+            <div
+              className={`absolute top-full right-0 mt-4 w-64 rounded-lg border border-line bg-void/98 py-2 backdrop-blur-2xl transition-all duration-200 ${
+                menuOpen
+                  ? 'translate-y-0 opacity-100'
+                  : 'pointer-events-none -translate-y-1 opacity-0'
+              }`}
+            >
+              {MENU_LINKS.map((link) => (
                 <a
+                  key={link.href}
                   href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    go(link.href)
-                  }}
-                  className="group relative font-mono text-[0.7rem] tracking-[0.12em] text-muted uppercase transition-colors hover:text-ink"
+                  onClick={
+                    link.kind === 'anchor'
+                      ? (e) => {
+                          e.preventDefault()
+                          go(link.href)
+                        }
+                      : () => setMenuOpen(false)
+                  }
+                  className={`block px-4 py-2.5 text-[0.85rem] transition-colors hover:bg-surface ${
+                    link.href === '/is-automation-for-you'
+                      ? 'text-accent hover:text-accent-deep'
+                      : 'text-ink-dim hover:text-ink'
+                  }`}
                   data-cursor-target
                 >
                   {link.label}
-                  <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
                 </a>
-              </li>
-            ))}
-            {/* A real page, not an anchor, so it skips `go()`/scrollToHash.
-                Accent-colored on purpose: the one page on the Site meant for
-                a visitor who hasn't decided to reach out yet, so it needs to
-                read as different from the anchor links, not blend in. */}
-            <li>
-              <a
-                href="/is-automation-for-you"
-                className="group relative font-mono text-[0.7rem] tracking-[0.12em] text-accent uppercase transition-colors hover:text-accent-deep"
-                data-cursor-target
-              >
-                Is it for you?
-                <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
-              </a>
-            </li>
-          </ul>
+              ))}
+            </div>
+          </div>
 
           <div className="hidden sm:block">
             <MagneticButton href="#contact" variant="primary" className="!min-h-10 !px-4 !text-[0.68rem]">
@@ -198,28 +261,26 @@ export function Nav() {
         }`}
       >
         <ul className="wrap flex flex-col gap-1 py-8">
-          {NAV_LINKS.map((link) => (
+          {MENU_LINKS.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                onClick={(e) => {
-                  e.preventDefault()
-                  go(link.href)
-                }}
-                className="flex min-h-14 items-center border-b border-line text-xl text-ink-dim"
+                onClick={
+                  link.kind === 'anchor'
+                    ? (e) => {
+                        e.preventDefault()
+                        go(link.href)
+                      }
+                    : undefined
+                }
+                className={`flex min-h-14 items-center border-b border-line text-xl ${
+                  link.href === '/is-automation-for-you' ? 'text-accent' : 'text-ink-dim'
+                }`}
               >
                 {link.label}
               </a>
             </li>
           ))}
-          <li>
-            <a
-              href="/is-automation-for-you"
-              className="flex min-h-14 items-center border-b border-line text-xl text-accent"
-            >
-              Is automation for you?
-            </a>
-          </li>
           <li className="pt-6">
             <MagneticButton href="#contact" variant="primary" className="w-full">
               Let&rsquo;s automate
