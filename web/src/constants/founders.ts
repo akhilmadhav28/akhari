@@ -11,7 +11,8 @@ export interface Founder {
   id: string
   name: string
   role: string
-  bio: string
+  /** One entry per paragraph — Hari's runs longer than Akhil's, by design. */
+  bio: string[]
   email: string
   phone: string
   phoneHref: string
@@ -21,8 +22,10 @@ export const FOUNDERS: Founder[] = [
   {
     id: 'akhil',
     name: 'Akhil Madhav',
-    role: 'Co-founder · Build & Delivery',
-    bio: 'Akhil started as an entrepreneur too: a personalized gifting business that had to close when the lockdown hit. He spent the next stretch preparing for the UPSC civil services exam, and after three attempts that didn’t land, joined an EdTech company in sales. It was there, given the chance to build the automations behind his own job, that the pull back toward building things himself became impossible to ignore. Akhari is that: he scopes and builds every system it ships, with no handoff and no account manager standing between him and the work.',
+    role: 'Co-founder · Delivery & Build',
+    bio: [
+      'Before Akhari, Akhil spent years preparing for one of the most competitive paths in the country, and came up short more than once. That led somewhere he didn’t expect: a business development role at an EdTech company, where he started teaching himself to build with AI tools on the side, outside anything the job actually asked for. Voice agents, automated dashboards, lead-scraping systems: none of it was in his job description. It became the reason Akhari exists. He leads delivery and technical build, and sits in on client calls where the technical questions need real answers, not a sales pitch. Off the clock: a daily stoic practice and a few blitz chess games most nights.',
+    ],
     email: 'akhil@akhari.in',
     phone: '+91 94930 60424',
     phoneHref: '+919493060424',
@@ -30,8 +33,14 @@ export const FOUNDERS: Founder[] = [
   {
     id: 'hari',
     name: 'Hari Prasad',
-    role: 'Co-founder · Marketing & Sales',
-    bio: 'Hari spent six years in the semiconductor industry, joining one company when it was three people and building the sales motion that helped take it past seventy: the pipeline, the outreach, the playbook that made that growth repeatable instead of lucky. Several organizations after that taught him the same lesson from different angles: most companies expect a lot from the people in them without giving those people the guidance to deliver it. Akhari is his answer to that as much as it is a business, built to run differently for the people in it, starting with the two founders.',
+    role: 'Co-founder · Chief Solutions Officer',
+    bio: [
+      'Hari brings over six years of experience across sales, business development, and commercial strategy, with a strong understanding of how businesses operate, and where they lose time, money, and momentum.',
+      'He began his career at an early-stage startup, joining when the company had just three people, and helped build its sales operation as it grew beyond seventy employees. That experience gave him a practical understanding of customer acquisition, process building, team development, and the difference between isolated effort and a repeatable system.',
+      'Over the years, working across different organizations and industries, Hari became increasingly interested in a deeper question: why do businesses continue to depend on manual processes, fragmented information, and inconsistent execution when better systems are possible?',
+      'At Akhari, he focuses on identifying those problems, translating them into practical automation opportunities, and shaping solutions that create measurable business value. He works at the intersection of business strategy, process design, technology, and customer needs, ensuring that automation is not implemented simply because it is possible, but because it is useful.',
+      'Akhari is also an expression of how he believes businesses should be built: with clarity, ownership, thoughtful systems, and an environment where people are given the context and tools to do meaningful work.',
+    ],
     email: 'hari@akhari.in',
     phone: '+91 85558 37355',
     phoneHref: '+918555837355',

@@ -79,7 +79,13 @@ export function Founders() {
             <div key={f.id}>
               <h2 className="text-[1.15rem] font-sans font-semibold">{f.name}</h2>
               <p className="mono-tag mt-1 text-accent">{f.role}</p>
-              <p className="mt-4 text-[0.95rem] leading-relaxed text-ink-dim">{f.bio}</p>
+              <div className="mt-4 flex flex-col gap-4">
+                {f.bio.map((para, i) => (
+                  <p key={i} className="text-[0.95rem] leading-relaxed text-ink-dim">
+                    {para}
+                  </p>
+                ))}
+              </div>
               <p className="mono-tag mt-4 flex flex-wrap gap-x-4 gap-y-1 text-faint">
                 <a
                   href={`mailto:${f.email}`}
