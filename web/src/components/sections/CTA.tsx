@@ -129,7 +129,7 @@ export function CTA() {
             */}
             <Reveal>
               <p className="mt-6 max-w-[34rem] font-mono text-[0.72rem] tracking-[0.1em] text-faint uppercase">
-                Free audit call · fixed price after scoping · live in 2–4 weeks
+                Free audit call · priced by what it solves · live in 2–4 weeks
               </p>
             </Reveal>
 
