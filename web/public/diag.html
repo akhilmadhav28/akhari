@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Akhari — WebGL diagnostics</title>
+    <title>Akhari · WebGL diagnostics</title>
     <style>
       :root { color-scheme: dark; }
       body {
@@ -27,7 +27,7 @@
     </style>
   </head>
   <body>
-    <h1>Akhari — WebGL diagnostics</h1>
+    <h1>Akhari · WebGL diagnostics</h1>
     <p class="sub">If the box below shows a spinning cyan triangle, WebGL works and the problem is elsewhere.</p>
 
     <div id="stage"><canvas id="c"></canvas></div>
@@ -59,7 +59,7 @@
         } catch (e) { add('webgl1 threw', e.message, 'bad') }
       }
 
-      add('Context', gl ? version : 'FAILED — no context', gl ? 'ok' : 'bad')
+      add('Context', gl ? version : 'FAILED: no context', gl ? 'ok' : 'bad')
 
       if (gl) {
         const dbg = gl.getExtension('WEBGL_debug_renderer_info')
@@ -93,7 +93,7 @@
         verdict =
           '<b class="ok">WebGL works here.</b><br>' +
           'If the triangle below is spinning but the site still shows no modules, the problem ' +
-          'is the three.js bundle failing to load rather than WebGL itself — open the console ' +
+          'is the three.js bundle failing to load rather than WebGL itself: open the console ' +
           'on the site and look for a red error mentioning <code>three</code> or a failed chunk.'
       }
       document.getElementById('verdict').innerHTML = verdict
