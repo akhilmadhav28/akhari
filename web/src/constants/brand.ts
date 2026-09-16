@@ -10,8 +10,8 @@ export const BRAND = {
   tagline: 'Your AI Partner',
   location: 'Hyderabad, India',
   email: 'info@akhari.in',
-  phone: '+91 80089 84976',
-  phoneHref: '+918008984976',
+  phone: '+91 85558 37355',
+  phoneHref: '+918555837355',
 
   /**
    * Portrait for the About section.

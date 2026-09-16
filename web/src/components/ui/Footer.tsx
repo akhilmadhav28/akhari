@@ -52,7 +52,7 @@ export function Footer() {
               <li>
                 <a
                   href="/is-automation-for-you"
-                  className="text-[0.9rem] text-muted transition-colors hover:text-ink"
+                  className="text-[0.9rem] font-medium text-accent transition-colors hover:text-accent-deep"
                   data-cursor-target
                 >
                   Is automation for you?

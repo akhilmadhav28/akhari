@@ -1,7 +1,7 @@
 import { BRAND } from '@/constants/brand'
 import { Reveal } from '@/components/ui/Reveal'
 import { SplitHeading } from '@/components/ui/SplitHeading'
-import { MagneticButton } from '@/components/ui/MagneticButton'
+import { EnquiryForm } from '@/components/sections/EnquiryForm'
 
 /**
  * Closing call to action.
@@ -132,18 +132,33 @@ export function CTA() {
               </p>
             </Reveal>
 
-            <Reveal className="mt-11 flex flex-wrap gap-4">
-              <MagneticButton href={`mailto:${BRAND.email}`} variant="primary">
-                Let&rsquo;s automate
-              </MagneticButton>
-              <MagneticButton href={`tel:${BRAND.phoneHref}`} variant="ghost">
-                {BRAND.phone}
-              </MagneticButton>
+            <Reveal className="mt-11 max-w-[28rem]">
+              <EnquiryForm />
             </Reveal>
 
             <Reveal>
-              <p className="mt-9 font-mono text-[0.72rem] tracking-[0.14em] text-faint">
-                {BRAND.email}
+              <p className="mt-6 font-mono text-[0.72rem] tracking-[0.14em] text-faint">
+                Or reach us directly:{' '}
+                <a href={`mailto:${BRAND.email}`} className="text-accent hover:text-accent-deep">
+                  {BRAND.email}
+                </a>{' '}
+                ·{' '}
+                <a href={`tel:${BRAND.phoneHref}`} className="text-accent hover:text-accent-deep">
+                  {BRAND.phone}
+                </a>
+              </p>
+            </Reveal>
+
+            <Reveal>
+              <p className="mt-6 text-[0.85rem] text-ink-dim">
+                Not sure yet?{' '}
+                <a
+                  href="/is-automation-for-you"
+                  className="text-accent underline underline-offset-2 hover:text-accent-deep"
+                >
+                  Read “Is automation for you?” first
+                </a>
+                .
               </p>
             </Reveal>
           </div>

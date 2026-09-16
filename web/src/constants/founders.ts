@@ -61,9 +61,11 @@ export const ORIGIN =
  *
  * Pricing deliberately quotes no number or range (changed 2026-09-16, was a
  * ₹40,000–₹1,50,000 band benchmarked against the AI-automation/n8n freelance
- * market). Framed instead as a nominal amount tied to what the system
+ * market). Framed instead as a reasonable amount tied to what the system
  * actually solves — true to how Akhari prices work today, and it never goes
- * stale as real quotes move the way a printed range would.
+ * stale as real quotes move the way a printed range would. Changed again
+ * 2026-09-16 from "nominal" to "reasonable": nominal reads as token/trivial,
+ * which understates real project pricing and sets the wrong expectation.
  *
  * The "Free audit call" body was rewritten 2026-09-15 against Nate Herk's
  * (AI Automation Society) published audit methodology — rank what's found by
@@ -82,8 +84,8 @@ export const PROCESS: { title: string; body: string }[] = [
     body: 'We map how the work actually moves (who touches it, what it costs in time, what breaks first) and rank what is worth automating before quoting anything. No cost, no obligation either way.',
   },
   {
-    title: 'A nominal price for what it solves',
-    body: 'We charge a nominal amount, based on what the system actually solves for your business, not a rate card. You know the number before we start building, not after.',
+    title: 'A reasonable price for what it solves',
+    body: 'We charge a reasonable amount, based on what the system actually solves for your business, not a rate card. You know the number before we start building, not after.',
   },
   {
     title: 'Live in 2–4 weeks',

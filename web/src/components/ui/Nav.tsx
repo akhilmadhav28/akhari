@@ -32,7 +32,7 @@ function LiveStatus() {
 
   return (
     <p
-      className="pointer-events-none hidden items-center gap-2.5 font-mono text-[0.66rem] tracking-[0.16em] text-faint uppercase lg:flex"
+      className="pointer-events-none hidden items-center gap-2.5 font-mono text-[0.66rem] tracking-[0.16em] text-faint uppercase xl:flex"
       aria-hidden="true"
     >
       <span className="glow-dot inline-block h-1.5 w-1.5 rounded-full bg-accent" />
@@ -137,6 +137,20 @@ export function Nav() {
                 </a>
               </li>
             ))}
+            {/* A real page, not an anchor, so it skips `go()`/scrollToHash.
+                Accent-colored on purpose: the one page on the Site meant for
+                a visitor who hasn't decided to reach out yet, so it needs to
+                read as different from the anchor links, not blend in. */}
+            <li>
+              <a
+                href="/is-automation-for-you"
+                className="group relative font-mono text-[0.7rem] tracking-[0.12em] text-accent uppercase transition-colors hover:text-accent-deep"
+                data-cursor-target
+              >
+                Is it for you?
+                <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
+              </a>
+            </li>
           </ul>
 
           <div className="hidden sm:block">
@@ -198,6 +212,14 @@ export function Nav() {
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href="/is-automation-for-you"
+              className="flex min-h-14 items-center border-b border-line text-xl text-accent"
+            >
+              Is automation for you?
+            </a>
+          </li>
           <li className="pt-6">
             <MagneticButton href="#contact" variant="primary" className="w-full">
               Let&rsquo;s automate

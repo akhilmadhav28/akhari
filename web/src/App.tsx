@@ -10,6 +10,7 @@ import { About } from '@/components/sections/About'
 import { Services } from '@/components/sections/Services'
 import { Projects } from '@/components/sections/Projects'
 import { CTA } from '@/components/sections/CTA'
+import { AutomationCheck } from '@/components/sections/AutomationCheck'
 import { SceneBoundary } from '@/components/3d/SceneBoundary'
 
 /**
@@ -91,6 +92,11 @@ export default function App() {
         <Projects />
         <CTA />
       </main>
+
+      {/* Past `#contact`, so past the end of the measured scene range — the
+          fixed WebGL canvas has already settled at its completed frame here,
+          same as `Footer` below. Adding this costs nothing in choreography. */}
+      <AutomationCheck />
 
       <Footer />
     </>

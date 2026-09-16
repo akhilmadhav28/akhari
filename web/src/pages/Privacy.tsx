@@ -110,6 +110,14 @@ export function Privacy() {
                 duration of that engagement.
               </li>
               <li>
+                <span className="text-ink">The enquiry form</span> at the bottom of the homepage
+                sends what you type (name, email or phone, business name, and your message) into
+                our private internal CRM, which only Akhil and Hari can access. It is not
+                analytics and is not shared with or sold to anyone else, and we hold it for as
+                long as it takes to answer you and, if we start working together, for the
+                duration of that engagement.
+              </li>
+              <li>
                 <span className="text-ink">The live pipeline demo</span> on the Site (the "Try it
                 on a real message" panel) runs entirely in your browser. Whatever you type into it
                 is parsed on your device and is never transmitted anywhere: we do not see it,

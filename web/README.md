@@ -193,6 +193,38 @@ scene. `NodeRuntime.demo` exists as its own channel because `glow` is
 overwritten every frame by the execution loop, so anything written there from
 the DOM would survive one frame and never be seen.
 
+## The enquiry form
+
+`sections/EnquiryForm.tsx`, embedded in `CTA` in place of the old mailto/tel
+buttons. Submissions need to land as real leads, not in an inbox, so this
+writes straight into the `leads` table of the Akhari CRM
+(`D:\projects\Akhari- CRM`, a separate Supabase-backed app the founders use to
+work the pipeline) — `lib/crm/client.ts` holds the Supabase client, scoped by
+`VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`.
+
+This site has no backend of its own, so the insert goes directly from the
+visitor's browser to Supabase using the CRM project's anon key. That is safe
+specifically because of `Akhari- CRM/supabase/002_public_website_enquiry.sql`,
+which grants the anon role INSERT on exactly five columns (`name`, `phone`,
+`email`, `business_name`, `remarks`) and nothing else — no SELECT, no UPDATE,
+no DELETE, and a `with check` that pins every anon-created row to
+`stage = 'lead'` / `source = 'inbound'` regardless of what a crafted request
+claims. The founders' own "authenticated users full access" policy in
+`schema.sql` is untouched; this is an additive, narrowly-scoped policy for one
+unauthenticated write path. The anon key being visible in the client bundle is
+the intended Supabase model here — the RLS policy is the actual boundary, not
+the key's secrecy.
+
+The one non-obvious step: the form takes a single "email or phone" field
+(fewer fields, less friction for a business owner on their phone), and
+`splitContact()` decides which CRM column it goes into by whether it contains
+an `@`. The CRM doesn't care which of `email`/`phone` is null.
+
+If `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` are unset, `crm` in
+`lib/crm/client.ts` is `null`, the form still renders and still validates, and
+submitting shows an inline error pointing at the direct email/phone line
+beneath it instead of pretending to send somewhere that doesn't exist.
+
 ## The camera it is photographed through
 
 `3d/ScenePost.tsx` runs a threshold bloom, a vignette and film grain, and takes
