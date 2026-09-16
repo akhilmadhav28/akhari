@@ -89,7 +89,7 @@ export function IsAutomationForYou() {
         <h1 className="mt-5 text-[2.25rem] sm:text-[2.75rem]">Is automation for you?</h1>
 
         <p className="mt-6 max-w-[38rem] text-[1.05rem] leading-relaxed text-ink-dim">
-          Not a sales page, a plain answer to a question a lot of small-business owners have
+          Not a sales page, a plain answer to a question a lot of business owners have
           and nobody has told them straight: whether any of this is actually meant for a
           business that runs the way yours does.
         </p>

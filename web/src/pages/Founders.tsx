@@ -80,6 +80,17 @@ export function Founders() {
               <h2 className="text-[1.15rem] font-sans font-semibold">{f.name}</h2>
               <p className="mono-tag mt-1 text-accent">{f.role}</p>
               <p className="mt-4 text-[0.95rem] leading-relaxed text-ink-dim">{f.bio}</p>
+              <p className="mono-tag mt-4 flex flex-wrap gap-x-4 gap-y-1 text-faint">
+                <a
+                  href={`mailto:${f.email}`}
+                  className="text-accent underline underline-offset-2"
+                >
+                  {f.email}
+                </a>
+                <a href={`tel:${f.phoneHref}`} className="text-accent underline underline-offset-2">
+                  {f.phone}
+                </a>
+              </p>
             </div>
           ))}
         </div>

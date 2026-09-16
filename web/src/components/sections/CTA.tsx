@@ -101,7 +101,6 @@ export function CTA() {
           <div className="pointer-events-auto w-full lg:max-w-[40rem]">
             <Reveal>
               <p className="eyebrow mb-8">
-                <b>04</b>
                 <span className="h-px w-6 bg-line-strong" />
                 Start here
               </p>
@@ -129,13 +128,13 @@ export function CTA() {
             */}
             <Reveal>
               <p className="mt-6 max-w-[34rem] font-mono text-[0.72rem] tracking-[0.1em] text-faint uppercase">
-                Free audit call · priced by what it solves · live in 2–4 weeks
+                Free audit call · priced by what it solves. Live in 2–4 weeks
               </p>
             </Reveal>
 
             <Reveal className="mt-11 flex flex-wrap gap-4">
               <MagneticButton href={`mailto:${BRAND.email}`} variant="primary">
-                Start a project
+                Let&rsquo;s automate
               </MagneticButton>
               <MagneticButton href={`tel:${BRAND.phoneHref}`} variant="ghost">
                 {BRAND.phone}
