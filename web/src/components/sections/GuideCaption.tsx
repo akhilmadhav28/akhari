@@ -98,7 +98,7 @@ export function GuideCaption() {
       <div
         ref={mobileEl}
         data-guide-line={activeId}
-        className="pointer-events-none fixed inset-x-0 top-[4.5rem] z-20 flex justify-center px-5 py-2.5 lg:hidden"
+        className="pointer-events-none fixed inset-x-0 top-[4.5rem] z-20 flex justify-center border-b border-line/60 bg-void/85 px-5 py-2.5 backdrop-blur-md lg:hidden"
         style={{ opacity: 0 }}
         aria-hidden="true"
       >

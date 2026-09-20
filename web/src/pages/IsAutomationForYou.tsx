@@ -18,7 +18,7 @@ import {
  * off a coarse pointer or reduced motion, same as everywhere else).
  *
  * Unlike every other page on the Site, this one is not trying to win a
- * client. It exists because a lot of small-business owners who would
+ * client. It exists because a lot of business owners who would
  * genuinely benefit from automation never get as far as considering it,
  * because nothing they've read has told them plainly whether it applies to a
  * business that runs the way theirs does. Order: awareness (does this apply
@@ -55,10 +55,10 @@ export function IsAutomationForYou() {
   const showResult = checked.size > 0
 
   return (
-    <div className="min-h-screen bg-void">
+    <div className="min-h-dvh bg-void">
       <header className="border-b border-line">
         <div className="wrap-narrow flex h-20 items-center justify-between">
-          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
+          <a href="/" className="tap flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
             <img
               src="/brand/logo-mark-sm.png"
               alt=""
@@ -72,7 +72,7 @@ export function IsAutomationForYou() {
           </a>
           <a
             href="/"
-            className="font-mono text-[0.7rem] tracking-[0.12em] text-muted uppercase transition-colors hover:text-ink"
+            className="tap font-mono text-[0.7rem] max-sm:text-[0.75rem] tracking-[0.12em] text-muted uppercase transition-colors hover:text-ink"
           >
             ← Back to site
           </a>

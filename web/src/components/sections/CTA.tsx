@@ -121,13 +121,13 @@ export function CTA() {
 
             {/*
               The price/effort signal the content review flagged as the
-              biggest thing missing for a nervous small-business buyer — an
+              biggest thing missing for a nervous buyer — an
               open-ended agency bill is the actual fear, not the automation
               itself. Kept to three facts rather than a pricing table: this is
               still "come talk to us", not a checkout page.
             */}
             <Reveal>
-              <p className="mt-6 max-w-[34rem] font-mono text-[0.72rem] tracking-[0.1em] text-faint uppercase">
+              <p className="mt-6 max-w-[34rem] font-mono text-[0.72rem] max-sm:text-[0.75rem] tracking-[0.1em] text-faint uppercase">
                 Free audit call · priced by what it solves. Live in 2–4 weeks
               </p>
             </Reveal>
@@ -137,13 +137,13 @@ export function CTA() {
             </Reveal>
 
             <Reveal>
-              <p className="mt-6 font-mono text-[0.72rem] tracking-[0.14em] text-faint">
+              <p className="mt-6 font-mono text-[0.72rem] max-sm:text-[0.75rem] tracking-[0.14em] text-faint">
                 Or reach us directly:{' '}
-                <a href={`mailto:${BRAND.email}`} className="text-accent hover:text-accent-deep">
+                <a href={`mailto:${BRAND.email}`} className="tap-inline text-accent hover:text-accent-deep">
                   {BRAND.email}
                 </a>{' '}
                 ·{' '}
-                <a href={`tel:${BRAND.phoneHref}`} className="text-accent hover:text-accent-deep">
+                <a href={`tel:${BRAND.phoneHref}`} className="tap-inline text-accent hover:text-accent-deep">
                   {BRAND.phone}
                 </a>
               </p>
@@ -154,7 +154,7 @@ export function CTA() {
                 Not sure yet?{' '}
                 <a
                   href="/is-automation-for-you"
-                  className="text-accent underline underline-offset-2 hover:text-accent-deep"
+                  className="tap-inline text-accent underline underline-offset-2 hover:text-accent-deep"
                 >
                   Read “Is automation for you?” first
                 </a>

@@ -14,10 +14,10 @@ export function Founders() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-void">
+    <div className="min-h-dvh bg-void">
       <header className="border-b border-line">
         <div className="wrap-narrow flex h-20 items-center justify-between">
-          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
+          <a href="/" className="tap flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
             <img
               src="/brand/logo-mark-sm.png"
               alt=""
@@ -31,7 +31,7 @@ export function Founders() {
           </a>
           <a
             href="/"
-            className="font-mono text-[0.7rem] tracking-[0.12em] text-muted uppercase transition-colors hover:text-ink"
+            className="tap font-mono text-[0.7rem] max-sm:text-[0.75rem] tracking-[0.12em] text-muted uppercase transition-colors hover:text-ink"
           >
             ← Back to site
           </a>
@@ -86,13 +86,23 @@ export function Founders() {
               <p className="mono-tag mt-4 flex flex-wrap gap-x-4 gap-y-1 text-faint">
                 <a
                   href={`mailto:${f.email}`}
-                  className="text-accent underline underline-offset-2"
+                  className="tap text-accent underline underline-offset-2"
                 >
                   {f.email}
                 </a>
-                <a href={`tel:${f.phoneHref}`} className="text-accent underline underline-offset-2">
+                <a href={`tel:${f.phoneHref}`} className="tap text-accent underline underline-offset-2">
                   {f.phone}
                 </a>
+                {f.linkedin && (
+                  <a
+                    href={f.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="tap text-accent underline underline-offset-2"
+                  >
+                    LinkedIn
+                  </a>
+                )}
               </p>
             </div>
           ))}
@@ -150,7 +160,27 @@ export function Founders() {
           </div>
         </div>
 
-        <div className="mt-16 border-t border-line pt-8">
+        {/* Closing — one line, same restrained voice as the rest of the page:
+            a way out for a reader the bios and philosophy have already
+            convinced, not a pitch. Two links: back to the actual systems
+            (this page only ever described the people, never the proof), and
+            to the same free-audit-call offer named in Process above. */}
+        <p className="mt-16 max-w-[38rem] border-t border-line pt-10 text-[0.95rem] leading-relaxed text-ink-dim">
+          If you want to see this in practice before anything else,{' '}
+          <a href="/#projects" className="text-accent underline underline-offset-2 hover:text-ink">
+            the systems we've built
+          </a>{' '}
+          are on the homepage. Or start with the free audit call:{' '}
+          <a
+            href={`mailto:${BRAND.email}`}
+            className="text-accent underline underline-offset-2 hover:text-ink"
+          >
+            {BRAND.email}
+          </a>
+          .
+        </p>
+
+        <div className="mt-10 border-t border-line pt-8">
           <p className="mono-tag text-faint">
             &copy; {new Date().getFullYear()} {BRAND.wordmark}
           </p>

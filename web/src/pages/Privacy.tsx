@@ -11,7 +11,7 @@ import { BRAND } from '@/constants/brand'
  * mounting `App`.
  */
 
-const UPDATED = 'September 5, 2026'
+const UPDATED = 'September 20, 2026'
 
 function Section({
   n,
@@ -41,10 +41,10 @@ export function Privacy() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-void">
+    <div className="min-h-dvh bg-void">
       <header className="border-b border-line">
         <div className="wrap-narrow flex h-20 items-center justify-between">
-          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
+          <a href="/" className="tap flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
             <img
               src="/brand/logo-mark-sm.png"
               alt=""
@@ -58,7 +58,7 @@ export function Privacy() {
           </a>
           <a
             href="/"
-            className="font-mono text-[0.7rem] tracking-[0.12em] text-muted uppercase transition-colors hover:text-ink"
+            className="tap font-mono text-[0.7rem] max-sm:text-[0.75rem] tracking-[0.12em] text-muted uppercase transition-colors hover:text-ink"
           >
             ← Back to site
           </a>
@@ -234,6 +234,10 @@ export function Privacy() {
           <Section n="08" title="Sub-processors and third parties we use">
             <ul className="list-disc space-y-2 pl-5">
               <li><span className="text-ink">Vercel</span> · hosts this Site.</li>
+              <li>
+                <span className="text-ink">Supabase</span> · hosts the private CRM database that
+                stores enquiry-form submissions, in the Mumbai region.
+              </li>
               <li><span className="text-ink">n8n</span> (self-hosted) · runs delivered automations.</li>
               <li><span className="text-ink">LinkedIn API</span> · only where a specific integration is authorized, as described in Section&nbsp;6.</li>
               <li>

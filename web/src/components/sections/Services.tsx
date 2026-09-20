@@ -60,7 +60,7 @@ export function Services() {
               <div className="flex items-baseline gap-3">
                 <h3 className="text-[1.0625rem] font-semibold">{service.title}</h3>
                 <span
-                  className="ml-auto font-mono text-[0.6rem] tracking-[0.2em] text-faint transition-colors duration-300 group-hover:text-accent"
+                  className="ml-auto font-mono text-[0.6rem] max-sm:text-[0.75rem] tracking-[0.2em] text-faint transition-colors duration-300 group-hover:text-accent"
                   aria-hidden="true"
                 >
                   {String(i + 1).padStart(2, '0')}

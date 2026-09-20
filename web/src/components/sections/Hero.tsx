@@ -128,7 +128,7 @@ export function Hero() {
         className="absolute inset-x-0 bottom-8 mx-auto flex w-fit flex-col items-center gap-2"
         aria-hidden="true"
       >
-        <span className="font-mono text-[0.62rem] tracking-[0.3em] text-faint uppercase">
+        <span className="font-mono text-[0.62rem] max-sm:text-[0.75rem] tracking-[0.3em] text-faint uppercase">
           Scroll to build
         </span>
         <span className="relative block h-9 w-px overflow-hidden bg-line-strong">

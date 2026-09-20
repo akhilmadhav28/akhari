@@ -21,7 +21,7 @@ export function About() {
       <Reveal stagger className="mt-8 max-w-[34rem] space-y-5 text-ink-dim">
         <p>
           We work as your AI partner, not a vendor you brief once and chase afterwards. That means
-          building around how a business here actually runs (your accounts are in Tally, your
+          building around how your business actually runs (your accounts are in Tally, your
           orders arrive on WhatsApp, half your customers pay cash on delivery) rather than asking
           you to abandon it.
         </p>
@@ -36,7 +36,7 @@ export function About() {
         <p>
           <a
             href="/founders"
-            className="inline-flex items-center gap-1.5 font-mono text-[0.72rem] tracking-[0.1em] text-accent uppercase transition-colors hover:text-ink"
+            className="tap inline-flex items-center gap-1.5 font-mono text-[0.72rem] max-sm:text-[0.75rem] tracking-[0.1em] text-accent uppercase transition-colors hover:text-ink"
             data-cursor-target
           >
             Meet the founders →

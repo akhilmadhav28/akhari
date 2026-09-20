@@ -137,7 +137,7 @@ export function PipelineDemo() {
         <h3 className="text-[0.95rem] font-semibold">Try it on a real message</h3>
         {/* Said plainly and up front. A demo that overstates what it is doing
             is worse than no demo on a page selling honest systems. */}
-        <span className="ml-auto font-mono text-[0.6rem] tracking-[0.14em] text-faint uppercase">
+        <span className="ml-auto font-mono text-[0.6rem] max-sm:text-[0.75rem] tracking-[0.14em] text-faint uppercase">
           Runs in your browser
         </span>
       </div>
@@ -164,7 +164,7 @@ export function PipelineDemo() {
         }}
         rows={3}
         spellCheck={false}
-        className="mt-4 w-full resize-none rounded-lg border border-line bg-abyss/70 p-3.5 font-mono text-[0.78rem] leading-relaxed text-ink-dim outline-none transition-colors focus:border-accent/60"
+        className="mt-4 w-full resize-none rounded-lg border border-line bg-abyss/70 p-3.5 font-mono text-[1rem] leading-relaxed sm:text-[0.78rem] text-ink-dim outline-none transition-colors focus:border-accent/60"
       />
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -173,7 +173,7 @@ export function PipelineDemo() {
             key={s.label}
             type="button"
             onClick={() => reset(s.text)}
-            className="rounded-full border border-line px-3 py-1 font-mono text-[0.62rem] tracking-[0.1em] text-faint uppercase transition-colors hover:border-line-strong hover:text-ink-dim"
+            className="rounded-full border border-line px-3 py-1 max-sm:min-h-11 max-sm:px-4 font-mono text-[0.62rem] max-sm:text-[0.75rem] tracking-[0.1em] text-faint uppercase transition-colors hover:border-line-strong hover:text-ink-dim"
           >
             {s.label}
           </button>
@@ -183,7 +183,7 @@ export function PipelineDemo() {
           type="button"
           onClick={run}
           disabled={running || !value.trim()}
-          className="btn btn-primary ml-auto !min-h-9 !px-4 !text-[0.8rem] disabled:cursor-not-allowed disabled:opacity-55"
+          className="btn btn-primary ml-auto !min-h-9 max-sm:!min-h-11 !px-4 !text-[0.8rem] disabled:cursor-not-allowed disabled:opacity-55"
         >
           {running ? 'Running…' : status === 'done' ? 'Run again' : 'Run'}
         </button>
@@ -224,7 +224,7 @@ export function PipelineDemo() {
                     aria-hidden="true"
                   />
                   <span className="w-[8.5rem] shrink-0 text-[0.8rem] text-ink">{step.label}</span>
-                  <span className="font-mono text-[0.7rem] text-muted">
+                  <span className="font-mono text-[0.7rem] max-sm:text-[0.75rem] text-muted">
                     {landed ? step.detail(result) : '—'}
                   </span>
                 </li>
@@ -238,7 +238,7 @@ export function PipelineDemo() {
                 <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-2 border-t border-line pt-4">
                   {result.fields.map((f) => (
                     <div key={f.label}>
-                      <dt className="font-mono text-[0.58rem] tracking-[0.14em] text-faint uppercase">
+                      <dt className="font-mono text-[0.58rem] max-sm:text-[0.75rem] tracking-[0.14em] text-faint uppercase">
                         {f.label}
                       </dt>
                       <dd className="mt-0.5 text-[0.82rem] text-ink">{f.value}</dd>
@@ -248,13 +248,13 @@ export function PipelineDemo() {
               )}
 
               <div className="mt-5 rounded-lg border border-line bg-abyss/60 p-4">
-                <p className="font-mono text-[0.58rem] tracking-[0.14em] text-faint uppercase">
+                <p className="font-mono text-[0.58rem] max-sm:text-[0.75rem] tracking-[0.14em] text-faint uppercase">
                   Drafted reply · {result.channel}
                 </p>
                 <p className="mt-2 text-[0.85rem] leading-relaxed text-ink-dim">{result.reply}</p>
               </div>
 
-              <p className="mt-3 font-mono text-[0.6rem] tracking-[0.12em] text-faint">
+              <p className="mt-3 font-mono text-[0.6rem] max-sm:text-[0.75rem] tracking-[0.12em] text-faint">
                 {/* Real measurement of the real run, staged delays included —
                     not a number chosen to look impressive. */}
                 {STEPS.length} steps · {Math.round(elapsed)}ms

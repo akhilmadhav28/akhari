@@ -124,7 +124,7 @@ function Featured({ project }: { project: Project }) {
       <article className="pointer-events-auto mt-14" style={BLEED_RIGHT}>
         <div className="grid items-center gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
           <div className="order-2 max-w-[34rem] pr-[clamp(1.25rem,5vw,4.5rem)] lg:order-1 lg:pr-0">
-            <p className="font-mono text-[0.68rem] tracking-[0.18em] text-accent uppercase">
+            <p className="font-mono text-[0.68rem] max-sm:text-[0.75rem] tracking-[0.18em] text-accent uppercase">
               {project.client}
             </p>
 
@@ -138,7 +138,7 @@ function Featured({ project }: { project: Project }) {
                 {project.tech.map((tech) => (
                   <li
                     key={tech}
-                    className="rounded-full border border-line px-2.5 py-0.5 font-mono text-[0.62rem] text-faint"
+                    className="rounded-full border border-line px-2.5 py-0.5 font-mono text-[0.62rem] max-sm:text-[0.75rem] text-faint"
                   >
                     {tech}
                   </li>
@@ -218,27 +218,27 @@ function Plate({ project }: { project: Project }) {
               <g key={step}>
                 {i > 0 && (
                   <path
-                    d={`M ${px} ${py + 13} C ${px} ${py + 34}, ${x} ${y - 34}, ${x} ${y - 13}`}
+                    d={`M ${px} ${py + 15} C ${px} ${py + 36}, ${x} ${y - 36}, ${x} ${y - 15}`}
                     fill="none"
                     stroke="#443a31"
                     strokeWidth="1.4"
                   />
                 )}
                 <rect
-                  x={x - 78}
-                  y={y - 13}
-                  width="156"
-                  height="26"
+                  x={x - 88}
+                  y={y - 15}
+                  width="176"
+                  height="30"
                   rx="4"
                   fill="#17130f"
                   stroke={i === 0 ? '#e0803f' : '#2b241e'}
                 />
-                <circle cx={x - 66} cy={y} r="2.6" fill={i === 0 ? '#e0803f' : '#7e9c86'} />
+                <circle cx={x - 76} cy={y} r="2.8" fill={i === 0 ? '#e0803f' : '#7e9c86'} />
                 <text
-                  x={x - 56}
-                  y={y + 3.4}
+                  x={x - 64}
+                  y={y + 4}
                   fill="#cdc3b5"
-                  fontSize="9"
+                  fontSize="12"
                   fontFamily="'JetBrains Mono', ui-monospace, monospace"
                 >
                   {step.length > 26 ? `${step.slice(0, 25)}…` : step}
@@ -265,7 +265,7 @@ function Plate({ project }: { project: Project }) {
 
       {/* Left, not right: the plate runs off the right edge of the viewport by
           design, so anything anchored to that side gets cut. */}
-      <figcaption className="mono-tag absolute bottom-2.5 left-4 text-[0.58rem] tracking-[0.16em] text-faint uppercase">
+      <figcaption className="mono-tag absolute bottom-2.5 left-4 text-[0.58rem] max-sm:text-[0.75rem] tracking-[0.16em] text-faint uppercase">
         {project.image ? project.client : 'architecture'}
       </figcaption>
     </figure>
@@ -280,16 +280,16 @@ function ListedProject({ project, index }: { project: Project; index: number }) 
   return (
     <li className="group border-b border-line" data-cursor-target>
       <div className="grid grid-cols-[2rem_minmax(0,1fr)] items-baseline gap-x-5 gap-y-3 py-7 md:grid-cols-[2rem_minmax(0,1.15fr)_minmax(0,1fr)]">
-        <span className="font-mono text-[0.68rem] text-faint transition-colors duration-300 group-hover:text-accent">
+        <span className="font-mono text-[0.68rem] max-sm:text-[0.75rem] text-faint transition-colors duration-300 group-hover:text-accent">
           {String(index).padStart(2, '0')}
         </span>
 
         <div className="min-w-0">
-          <p className="font-mono text-[0.62rem] tracking-[0.18em] text-accent/85 uppercase">
+          <p className="font-mono text-[0.62rem] max-sm:text-[0.75rem] tracking-[0.18em] text-accent/85 uppercase">
             {project.client}
           </p>
           <h3 className="mt-2 text-[1.0625rem] font-semibold">{project.title}</h3>
-          <p className="mt-2 font-mono text-[0.66rem] leading-relaxed text-faint transition-colors duration-300 group-hover:text-muted">
+          <p className="mt-2 font-mono text-[0.66rem] max-sm:text-[0.75rem] leading-relaxed text-faint transition-colors duration-300 group-hover:text-muted">
             {project.architecture.map((step, si) => (
               <span key={step}>
                 {si > 0 && <span className="text-accent/50"> → </span>}

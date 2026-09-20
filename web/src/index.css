@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './fonts.css';
 
 /* ============================================================================
    AKHARI — design tokens
@@ -212,18 +213,23 @@
    Components
    ========================================================================= */
 @layer components {
+  /* The gutter never drops below the device's safe-area inset. index.html sets
+     viewport-fit=cover, so in landscape on a notched phone the page runs under
+     the notch and rounded corners; the insets are 0 everywhere else. */
   .wrap {
     width: 100%;
     max-width: 84rem;
     margin-inline: auto;
-    padding-inline: clamp(1.25rem, 5vw, 4.5rem);
+    padding-left: max(clamp(1.25rem, 5vw, 4.5rem), env(safe-area-inset-left));
+    padding-right: max(clamp(1.25rem, 5vw, 4.5rem), env(safe-area-inset-right));
   }
 
   .wrap-narrow {
     width: 100%;
     max-width: 58rem;
     margin-inline: auto;
-    padding-inline: clamp(1.25rem, 5vw, 4.5rem);
+    padding-left: max(clamp(1.25rem, 5vw, 4.5rem), env(safe-area-inset-left));
+    padding-right: max(clamp(1.25rem, 5vw, 4.5rem), env(safe-area-inset-right));
   }
 
   .eyebrow {
@@ -241,6 +247,33 @@
   .eyebrow b {
     font-weight: 500;
     color: var(--color-accent);
+  }
+
+  /* Touch targets. Only on a coarse pointer, so desktop spacing is untouched.
+     .tap is for a link that stands on its own line or in a row: it stretches
+     the link to the 44px that Apple and Google both recommend. .tap-inline is
+     for a link inside a sentence, where a taller box would break the line:
+     vertical padding grows the hit area and the negative margin cancels it, so
+     the text does not move. */
+  @media (pointer: coarse) {
+    .tap {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      min-width: 44px;
+    }
+    .tap-inline {
+      padding-block: 0.9rem;
+      margin-block: -0.9rem;
+    }
+  }
+
+  /* 11px labels are readable on a desktop monitor and not on a phone held at
+     arm's length; 12px is the floor there. Desktop keeps its size. */
+  @media (max-width: 639.98px) {
+    .eyebrow {
+      font-size: var(--text-micro);
+    }
   }
 
   .rule {

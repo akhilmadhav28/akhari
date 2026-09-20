@@ -51,8 +51,8 @@
     <!--
       LOCAL SEO
       =========================================================================
-      Structured data for a small business search — "automation company
-      Hyderabad" is exactly the query a small-business owner actually types,
+      Structured data for a business search — "automation company
+      Hyderabad" is exactly the query a business owner actually types,
       and without this the site is just prose to a crawler. Update alongside
       brand.ts if the founders, contact details or location ever change.
     -->
@@ -81,18 +81,21 @@
 
     <link rel="icon" href="/brand/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/brand/logo-mark-sm.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!--
       Instrument Serif is display-only: headlines and nothing else. It ships a
       single weight, which is the point — it is a face for large sizes, not a
       family to set a page in. Inter still carries body copy and JetBrains Mono
       the technical labels.
+
+      All three are self-hosted (public/fonts, declared in src/fonts.css). The
+      latin files are preloaded so they arrive with the page rather than after
+      the CSS is parsed; that late swap was what shifted the headline on load.
+      Preloads must carry `crossorigin` even for same-origin fonts, or the
+      browser fetches them twice.
     -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" href="/fonts/instrument-serif-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-300-800-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/jetbrains-mono-400-500-latin.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <div id="root"></div>

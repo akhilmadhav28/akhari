@@ -5,7 +5,7 @@ import { scrollToHash } from '@/lib/scroll/useSmoothScroll'
 export function Footer() {
   return (
     <footer className="relative border-t border-line bg-abyss">
-      <div className="wrap py-14">
+      <div className="wrap pt-14 pb-[max(3.5rem,env(safe-area-inset-bottom))]">
         <div className="flex flex-wrap items-start justify-between gap-10">
           <div>
             <img
@@ -31,7 +31,7 @@ export function Footer() {
                       e.preventDefault()
                       scrollToHash(link.href)
                     }}
-                    className="text-[0.9rem] text-muted transition-colors hover:text-ink"
+                    className="tap text-[0.9rem] text-muted transition-colors hover:text-ink"
                     data-cursor-target
                   >
                     {link.label}
@@ -43,7 +43,7 @@ export function Footer() {
               <li>
                 <a
                   href="/founders"
-                  className="text-[0.9rem] text-muted transition-colors hover:text-ink"
+                  className="tap text-[0.9rem] text-muted transition-colors hover:text-ink"
                   data-cursor-target
                 >
                   Founders
@@ -52,7 +52,7 @@ export function Footer() {
               <li>
                 <a
                   href="/is-automation-for-you"
-                  className="text-[0.9rem] font-medium text-accent transition-colors hover:text-accent-deep"
+                  className="tap text-[0.9rem] font-medium text-accent transition-colors hover:text-accent-deep"
                   data-cursor-target
                 >
                   Is automation for you?
@@ -64,14 +64,14 @@ export function Footer() {
           <div className="flex flex-col gap-2.5">
             <a
               href={`mailto:${BRAND.email}`}
-              className="text-[0.9rem] text-muted transition-colors hover:text-accent"
+              className="tap text-[0.9rem] text-muted transition-colors hover:text-accent"
               data-cursor-target
             >
               {BRAND.email}
             </a>
             <a
               href={`tel:${BRAND.phoneHref}`}
-              className="text-[0.9rem] text-muted transition-colors hover:text-accent"
+              className="tap text-[0.9rem] text-muted transition-colors hover:text-accent"
               data-cursor-target
             >
               {BRAND.phone}
@@ -86,7 +86,7 @@ export function Footer() {
             </p>
             <a
               href="/privacy"
-              className="mono-tag text-faint transition-colors hover:text-ink"
+              className="tap mono-tag text-faint transition-colors hover:text-ink"
               data-cursor-target
             >
               Privacy Policy

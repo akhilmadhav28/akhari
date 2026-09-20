@@ -82,7 +82,7 @@ export class SceneBoundary extends Component<Props, State> {
     const badge =
       failed || debug ? (
         <div
-          className="fixed bottom-4 left-4 z-[300] max-w-[22rem] rounded-lg border px-3.5 py-2.5 font-mono text-[0.68rem] leading-relaxed backdrop-blur"
+          className="fixed bottom-4 left-4 z-[300] max-w-[22rem] rounded-lg border px-3.5 py-2.5 font-mono text-[0.68rem] max-sm:text-[0.75rem] leading-relaxed backdrop-blur"
           style={{
             borderColor: failed ? 'rgba(224,128,63,0.5)' : 'rgba(126,156,134,0.4)',
             background: 'rgba(15,12,10,0.92)',

@@ -4,15 +4,17 @@ import { BRAND } from '@/constants/brand'
 /**
  * 404. Same plain-page shape as Privacy/Founders — no Lenis, no WorkflowScene.
  *
- * The Site has no server logic (static hosting via Vercel, `vercel.json`
- * rewrites every path to `/index.html`), so this can't carry a real HTTP 404
- * status — the response is 200 regardless. `main.tsx` renders this for any
- * pathname not in its `PAGES` map, which used to silently fall through to the
- * full homepage: a typo'd link or dead bookmark looked like it worked, and a
- * crawler following a broken link indexed homepage content under the wrong
- * URL. The `noindex` tag below is the client-side mitigation for the missing
- * status code — it tells a crawler not to index this response even though it
- * technically succeeded.
+ * The Site has no server logic (static hosting via Vercel). `vercel.json`
+ * rewrites only the real pages in `main.tsx`'s `PAGES` map to `/index.html`;
+ * every other path falls through to `404.html`, a copy of the built
+ * index.html made by `scripts/copy-404.mjs`, which Vercel serves with a real
+ * HTTP 404 status. That copy boots the same app, and `main.tsx` renders this
+ * page for any pathname not in `PAGES`. It used to fall through to the full
+ * homepage, so a typo'd link or dead bookmark looked like it worked.
+ *
+ * Keep the two lists in step: a page added to `PAGES` also needs adding to the
+ * `vercel.json` rewrite, or it will be served as a 404. The `noindex` tag
+ * below stays as a second layer for crawlers.
  */
 export function NotFound() {
   useEffect(() => {
@@ -27,10 +29,10 @@ export function NotFound() {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col bg-void">
+    <div className="flex min-h-dvh flex-col bg-void">
       <header className="border-b border-line">
         <div className="wrap-narrow flex h-20 items-center justify-between">
-          <a href="/" className="flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
+          <a href="/" className="tap flex items-center gap-3" aria-label={`${BRAND.name} · home`}>
             <img
               src="/brand/logo-mark-sm.png"
               alt=""
@@ -61,7 +63,7 @@ export function NotFound() {
 
         <a
           href="/"
-          className="mono-tag mt-9 inline-flex w-fit items-center gap-2 text-accent transition-colors hover:text-ink"
+          className="tap mono-tag mt-9 inline-flex w-fit items-center gap-2 text-accent transition-colors hover:text-ink"
         >
           ← Back to the homepage
         </a>
