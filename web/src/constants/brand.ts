@@ -12,16 +12,6 @@ export const BRAND = {
   email: 'info@akhari.in',
   phone: '+91 85558 37355',
   phoneHref: '+918555837355',
-
-  /**
-   * Portrait for the About section.
-   *
-   * Set this to '/brand/portrait.jpg' once a real photograph is in
-   * `public/brand/`. While it is null the frame shows the Akhari mark instead —
-   * pointing at a file that isn't there would 404 on every page load, and no
-   * stand-in face is invented. Roughly 4:5, 900px wide or better.
-   */
-  portrait: null as string | null,
 } as const
 
 /**

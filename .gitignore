@@ -24,3 +24,10 @@ skills-lock.json
 # scripts/contrast.cjs writes its own debug screenshots to cwd — disposable
 # diagnostic output, not site assets.
 web/ct-*.png
+
+# Generated/scratch media kept on disk for reference, not part of the site.
+# Nothing in web/ reads these; AI.png stays tracked because web/README.md names
+# it as the source the brand assets were derived from.
+/images/
+/ChatGPT Image*.png
+/final.png
