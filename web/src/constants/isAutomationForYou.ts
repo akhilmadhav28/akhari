@@ -6,11 +6,11 @@
  *
  * Every claim here is either (a) something already true of Akhari's own
  * case studies and copy elsewhere on the Site, or (b) a pattern found across
- * multiple small-business/SMB automation surveys during the 2026-09-15
+ * multiple business automation surveys during the 2026-09-15
  * research pass for this page — cited inline where it's doing real work.
  * Nothing is stated as a precise India-specific statistic unless it actually
  * is one, because most of the source surveys are US/EU/UK/OECD-skewed and
- * a small-business owner in Hyderabad deserves better than a borrowed number
+ * a business owner reading this deserves better than a borrowed number
  * dressed up as local fact.
  */
 
@@ -31,7 +31,7 @@ export const AWARENESS_POINTS: { title: string; body: string }[] = [
     body: 'In one widely cited study, 82% of businesses under five employees said automation just did not apply to them, a number that drops sharply as the business gets bigger, which is a sign it was never really about fit. Most of that research comes from outside India, but the shape of the finding holds here too: the smallest businesses are the ones most likely to assume this is for someone else, and that belief fades the moment they see it done in a business that runs the way theirs does.',
   },
   {
-    title: 'This is written for how a Hyderabad business actually runs',
+    title: 'This is written for how a business like yours actually runs',
     body: "Orders on WhatsApp, books in Tally, some customers paying cash on delivery; none of that is a reason automation does not apply. It is the starting point every one of Akhari's actual case studies started from.",
   },
 ]

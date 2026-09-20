@@ -18,20 +18,26 @@ export interface Founder {
   email: string
   phone: string
   phoneHref: string
+  /** Full profile URL. Optional until both are on hand. */
+  linkedin?: string
 }
 
 export const FOUNDERS: Founder[] = [
   {
     id: 'akhil',
     name: 'Akhil Madhav',
-    role: 'Co-founder · Delivery & Build',
+    role: 'Co-founder · Chief Technology Officer',
     photo: '/founders/akhil.jpg',
     bio: [
-      'Before Akhari, Akhil spent years preparing for one of the most competitive paths in the country, and came up short more than once. That led somewhere he didn’t expect: a business development role at an EdTech company, where he started teaching himself to build with AI tools on the side, outside anything the job actually asked for. Voice agents, automated dashboards, lead-scraping systems: none of it was in his job description. It became the reason Akhari exists. He leads delivery and technical build, and sits in on client calls where the technical questions need real answers, not a sales pitch. Off the clock: a daily stoic practice and a few blitz chess games most nights.',
+      'Before Akhari, Akhil spent years preparing for one of the most competitive paths in the country, and came up short more than once. That led somewhere he didn’t expect: a business development role at an EdTech company, where he started teaching himself to build with AI tools on the side, outside anything the job actually asked for. Voice agents, automated dashboards, lead-scraping systems: none of it required a technical background, just a willingness to actually use the tools available.',
+      'That experience shaped a core belief he builds Akhari around: used the right way, AI is real leverage. It let a non-technical BD hire teach himself to build production systems, and it’s the same leverage he’s since used to build Akhari’s own CRM and internal tools from scratch.',
+      'He leads delivery and technical build, and sits in on client calls where the technical questions need real answers, not a sales pitch. He’s noticed that most people meet a new tool with hesitation long before they’ve actually tried it, and made a habit of leaning in first instead. That’s the same instinct he wants every client to walk away with, not just a system, but the ability to move as fast as the ones already using it.',
+      'Off the clock: a daily stoic practice and a few blitz chess games most nights.',
     ],
     email: 'akhil@akhari.in',
     phone: '+91 94930 60424',
     phoneHref: '+919493060424',
+    linkedin: 'https://www.linkedin.com/in/akkimadhav/',
   },
   {
     id: 'hari',
@@ -48,6 +54,7 @@ export const FOUNDERS: Founder[] = [
     email: 'hari@akhari.in',
     phone: '+91 85558 37355',
     phoneHref: '+918555837355',
+    linkedin: 'https://www.linkedin.com/in/hari-prasad-550141139/',
   },
 ]
 

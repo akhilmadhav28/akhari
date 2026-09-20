@@ -120,7 +120,7 @@ export function WorkflowNode({ def, position, seed, onHover }: WorkflowNodeProps
     // reads as "active" because its display brightens and its bezel picks up
     // the accent — not because it throws light into the room.
     if (faceMat.current) {
-      // Held just under the bloom threshold at its peak, deliberately.
+      // Held under the bloom threshold at its peak, deliberately.
       //
       // The face must never bloom. Its glow is *painted* — the icon and the lit
       // LED are drawn with a canvas shadow, so they read as emitting without
@@ -129,7 +129,15 @@ export function WorkflowNode({ def, position, seed, onHover }: WorkflowNodeProps
       // label text and the icon into each other, and on the close-up beat the
       // whole module turns into a single bright blob. Bloom in this scene
       // belongs to the pulses, the port and the figure, and nothing else.
-      faceMat.current.emissiveIntensity = 0.6 + lit * 0.42
+      //
+      // The old 0.6 + lit*0.42 peaked at 1.02 — above ScenePost's 0.95 bloom
+      // threshold even before the diffuse light hitting the same map added
+      // more on top. The near-white label text is the brightest thing on the
+      // face, so it was the one that bloomed: every connected module's name
+      // sat inside a permanent soft halo, worst on the wide shot where the
+      // (screen-space, near-constant-pixel-width) blur radius is large next
+      // to the module's shrunken on-screen size.
+      faceMat.current.emissiveIntensity = 0.42 + lit * 0.28
       faceMat.current.opacity = rt.build
     }
     if (bezelMat.current) {

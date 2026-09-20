@@ -13,15 +13,17 @@ import type { NodeType } from '@/constants/workflow'
  */
 
 /**
- * Drawn at 2× and sampled down, which is the difference between a screen you
+ * Drawn at 3× and sampled down, which is the difference between a screen you
  * can read and one that looks like a photograph of a screen.
  *
  * A module face fills roughly a fifth of the viewport height when the camera is
  * parked on it. At 512×320 that is close to one texel per device pixel on a
- * 1.5-DPR laptop and under-samples on anything denser, so the label text picked
- * up exactly the soft, slightly blocky quality you get from an upscaled image.
+ * 1.5-DPR laptop and under-samples on anything denser (2-DPR laptops, most
+ * phones), so the label text picked up exactly the soft, slightly blocky
+ * quality you get from an upscaled image. 3× covers the high tier's 2-DPR
+ * ceiling with a texel to spare.
  */
-const SCALE = 2
+const SCALE = 3
 
 /** Physical canvas size. */
 const W = 512 * SCALE
